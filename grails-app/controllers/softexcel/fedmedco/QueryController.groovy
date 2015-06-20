@@ -2,8 +2,12 @@ package softexcel.fedmedco
 
 import grails.plugin.springsecurity.annotation.Secured
 
-import static org.springframework.http.HttpStatus.*
+//import grails.plugins.rest.client.*
+
+//import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+import groovyx.net.http.RESTClient
+import groovyx.net.http.ContentType
 
 @Secured(['ROLE_QUERY'])
 @Transactional(readOnly = true)
@@ -26,6 +30,24 @@ class QueryController {
 
     def query() {
         respond new Query(params)
+    }
+
+    def search() {
+        String category = params.category
+        String subCategory = params.subcategory
+        String field = params.queryField
+        String queryString = params.criteria
+        String openFDAURL = "https://api.fda.gov/"
+        String aPath = category + '/' + subCategory + '.json'
+        String completeQueryStr =  'search=' + field + ':' + queryString;
+
+        log.debug(openFDAURL + completeQueryStr)
+
+        RESTClient client = new RESTClient( openFDAURL )
+        def resp = client.get(path: aPath, query:[search:field + ':' + queryString])
+        log.debug( ">>>>>>>>>>>> Data >>>>>>> " + resp.getData() )
+
+        redirect (action: "query")
     }
 
     @Transactional

@@ -19,41 +19,28 @@
 
 <body>
     <a href="#query-query" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-
-    <div id="searchDiv" class="row">
-        <div class="col-sm-2 col-md-3 col-lg-3"></div>
-        <div class="col-sm-8 col-md-6 col-lg-6">
-            <div class="form-horizontal">
-                <div id="category" class="form-group-sm has-feedback">
-                    <label for="search"  class="control-label">
-                        <g:message code="category.label" default="Select a Category"></g:message>
-                    </label>
-                    <g:select name="category" from="${softexcel.fedmedco.OpenFDACategory.list()}" optionKey="category" optionValue="category"/>
-                </div>
-                <div id="subcategory" class="form-group-sm has-feedback">
-                    <label for="search"  class="control-label">
-                        <g:message code="subcategory.label" default="Select a Sub Category"></g:message>
-                    </label>
-                    <g:select name="subcategory" from="${softexcel.fedmedco.EndPoint.list()}" optionKey="endPoint" optionValue="endPoint"/>
-                </div>
-                <div id="fieldText" class="form-group-sm has-feedback">
-                    <label for="search"  class="control-label">
-                        <g:message code="search.label" default="Search OpenFDA"></g:message>
-                    </label>
-                    <g:textField class="form-control" name="queryField" id="queryField" placeholder="Enter the field to search">
-                    </g:textField>
-                </div>
-                <div id="searchText" class="form-group-sm has-feedback">
-                    <g:textField class="form-control" name="search" id="search" placeholder="Enter search criteria">
-                    </g:textField>
-                    <span class="glyphicon glyphicon-search form-control-feedback"></span>
-                </div>
-
-
-                <select id="queryResults" class="form-control" style="display:none;"></select>
-            </div>
-        </div>
-        <div class="col-sm-2 col-md-3 col-lg-3"></div>
+    <div id="create_contractor" class="content scaffold-create" role="main">
+        <h1><g:message code="default.search.label" default="Search OpenFDA" args="[entityName]" /></h1>
+        <g:if test="${flash.message}">
+            <div class="message" role="status">${flash.message}</div>
+        </g:if>
+        <g:hasErrors bean="${contractorInstance}">
+            <ul class="errors" role="alert">
+                <g:eachError bean="${contractorInstance}" var="error">
+                    <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
+                </g:eachError>
+            </ul>
+        </g:hasErrors>
+        <g:form class="form-horizontal" url="[resource:contractorInstance, action:'search']" >
+            <fieldset class="form">
+                <g:render template="form"/>
+            </fieldset>
+            <fieldset class="buttons">
+                <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Submit</button>
+                <button type="button" class="btn btn-default reset"><span class="glyphicon glyphicon-refresh"></span> Reset</button>
+            </fieldset>
+        </g:form>
     </div>
+
 </body>
 </html>

@@ -5,6 +5,7 @@ grails.project.test.reports.dir = "target/test-reports"
 grails.project.work.dir = "target/work"
 grails.project.target.level = 1.6
 grails.project.source.level = 1.6
+grails.server.port.http = 7300
 //grails.project.war.file = "target/${appName}-${appVersion}.war"
 
 grails.project.fork = [
@@ -64,6 +65,8 @@ grails.project.dependency.resolution = {
         compile ":asset-pipeline:2.1.5"
         compile ":mongodb:3.0.3"
         compile ":spring-security-core:2.0-RC4"
+        compile ":rest-client-builder:2.0.0"
+        compile ":rest:0.8"
 
         // plugins needed at runtime but not for compilation
         runtime ":hibernate4:4.3.8.1" // or ":hibernate:3.6.10.18"

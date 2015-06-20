@@ -114,7 +114,8 @@ log4j.main = {
            'org.springframework',
            'org.hibernate',
            'net.sf.ehcache.hibernate'
-    debug 'grails.app.controllers'
+    debug 'grails.app.controllers',
+            'com.google.gson.Gson'
 }
 
 
