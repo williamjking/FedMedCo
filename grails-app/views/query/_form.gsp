@@ -18,14 +18,14 @@
 
 <div class="form-group  ">
 	<label class="col-sm-4" for="queryField">
-		<g:message code="user.bpaContractNumber.label" default="Search FDA" />
+		<g:message code="user.bpaContractNumber.label" default="openFDA Field" />
 	</label>
 	<input type="text" name="queryField" required="" class="col-sm-4" value="" placeholder="Enter the field to search" />
 </div>
 
 <div class="form-group has-feedback">
     <label class="col-sm-4" for="queryField">
-        <g:message code="user.bpaContractNumber.label" default="Search FDA" />
+        <g:message code="user.bpaContractNumber.label" default="Search Criteria" />
     </label>
 	<input type="text"  class="col-sm-4" required="" name="criteria" value="" placeholder="Enter search criteria"/>
 </div>

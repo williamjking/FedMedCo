@@ -24,9 +24,9 @@
         <g:if test="${flash.message}">
             <div class="message" role="status">${flash.message}</div>
         </g:if>
-        <g:hasErrors bean="${contractorInstance}">
+        <g:hasErrors bean="${queryInstance}">
             <ul class="errors" role="alert">
-                <g:eachError bean="${contractorInstance}" var="error">
+                <g:eachError bean="${queryInstance}" var="error">
                     <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
                 </g:eachError>
             </ul>
@@ -40,6 +40,19 @@
                 <button type="button" class="btn btn-default reset"><span class="glyphicon glyphicon-refresh"></span> Reset</button>
             </fieldset>
         </g:form>
+
+
+        <g:if test="${queryResults != null}">
+            <hr>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Results from OpenFDA</h3>
+                </div>
+                <div class="panel-body">
+                    <small>${queryResults}</small>
+                </div>
+            </div>
+        </g:if>
     </div>
 
 </body>

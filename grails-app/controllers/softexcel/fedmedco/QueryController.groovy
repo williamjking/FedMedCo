@@ -28,26 +28,48 @@ class QueryController {
         respond new Query(params)
     }
 
-    def query() {
-        respond new Query(params)
+    def query(Query queryInstance, String errorMessage, String queryResults) {
+        if (queryResults){
+            log.debug "Yoooohoooo  we have results"
+        }
+        if (errorMessage == null) {
+            render view:"query", model:[queryResults:queryResults]
+            log.debug ("creating a new obhect ")
+        }
+        else {
+            log.debug("Passing errored quwery instance")
+            //respond queryInstance
+            queryInstance.errors.rejectValue('queryField', 'an.error.message')
+            log.debug "Does it have errore  " +queryInstance.hasErrors() + " error message " + errorMessage
+            render view:"query", model:[queryInstance:queryInstance]
+        }
     }
 
     def search() {
-        String category = params.category
-        String subCategory = params.subcategory
-        String field = params.queryField
-        String queryString = params.criteria
-        String openFDAURL = "https://api.fda.gov/"
-        String aPath = category + '/' + subCategory + '.json'
-        String completeQueryStr =  'search=' + field + ':' + queryString;
+        try {
+            String category = params.category
+            String subCategory = params.subcategory
+            String field = params.queryField
+            String queryString = params.criteria
+            String openFDAURL = "https://api.fda.gov/"
+            String aPath = category + '/' + subCategory + '.json'
+            String completeQueryStr =  'search=' + field + ':' + queryString;
 
-        log.debug(openFDAURL + completeQueryStr)
+            log.debug(openFDAURL + completeQueryStr)
 
-        RESTClient client = new RESTClient( openFDAURL )
-        def resp = client.get(path: aPath, query:[search:field + ':' + queryString])
-        log.debug( ">>>>>>>>>>>> Data >>>>>>> " + resp.getData() )
+            RESTClient client = new RESTClient( openFDAURL )
+            def resp = client.get(path: aPath, query:[search:field + ':' + queryString])
+            log.debug( ">>>>>>>>>>>> Data >>>>>>> " + resp.getData() )
 
-        redirect (action: "query")
+            assert resp.getData() instanceof Map
+            forward (action: "query", params:[queryResults: resp.getData()] )
+        } catch (Exception ioe) {
+            log.debug ("Caught Exception " + ioe)
+            Query queryParams = new Query(params)
+            queryParams.errors.rejectValue ('queryField', 'an.error.message')
+            forward (action: "query", params:[queryInstance: queryParams, errorMessage: ioe.message])
+
+        }
     }
 
     @Transactional
