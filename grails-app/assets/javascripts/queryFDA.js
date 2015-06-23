@@ -15,7 +15,8 @@ $(function(){
 
     function reset(){
         clearErrorMessages();
-        $("form > fieldset.form").find("input").val("");;
+        $("form > fieldset.form").find("input").val("");
+        $("#searchResults").hide();
     }
 
 

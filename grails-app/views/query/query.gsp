@@ -44,7 +44,7 @@
 
         <g:if test="${queryResults != null}">
             <hr>
-            <div class="panel panel-default">
+            <div id="searchResults" class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">Results from OpenFDA</h3>
                 </div>

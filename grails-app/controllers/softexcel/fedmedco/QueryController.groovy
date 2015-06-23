@@ -29,18 +29,11 @@ class QueryController {
     }
 
     def query(Query queryInstance, String errorMessage, String queryResults) {
-        if (queryResults){
-            log.debug "Yoooohoooo  we have results"
-        }
         if (errorMessage == null) {
             render view:"query", model:[queryResults:queryResults]
-            log.debug ("creating a new obhect ")
         }
         else {
-            log.debug("Passing errored quwery instance")
-            //respond queryInstance
             queryInstance.errors.rejectValue('queryField', 'an.error.message')
-            log.debug "Does it have errore  " +queryInstance.hasErrors() + " error message " + errorMessage
             render view:"query", model:[queryInstance:queryInstance]
         }
     }
@@ -53,22 +46,28 @@ class QueryController {
             String queryString = params.criteria
             String openFDAURL = "https://api.fda.gov/"
             String aPath = category + '/' + subCategory + '.json'
-            String completeQueryStr =  'search=' + field + ':' + queryString;
 
-            log.debug(openFDAURL + completeQueryStr)
+            if (params.exactCriteria) queryString = '"' + queryString +'"'
+
+            def completeQuery = [search:field + ':' + queryString ]
+
+            if (params.count != '') {
+                if (params.exactCount) completeQuery.put('count', params.count + '.exact')
+                else completeQuery.put('count', params.count)
+            }
+            if (params.limit != '' && params.limit.isInteger()) completeQuery.put('limit', params.limit)
+            if (params.skip != '' && params.skip.isInteger()) completeQuery.put('skip', params.skip)
 
             RESTClient client = new RESTClient( openFDAURL )
-            def resp = client.get(path: aPath, query:[search:field + ':' + queryString])
-            log.debug( ">>>>>>>>>>>> Data >>>>>>> " + resp.getData() )
+            def resp = client.get(path: aPath, query:completeQuery)
 
             assert resp.getData() instanceof Map
             forward (action: "query", params:[queryResults: resp.getData()] )
         } catch (Exception ioe) {
-            log.debug ("Caught Exception " + ioe)
+            log.error ioe
             Query queryParams = new Query(params)
             queryParams.errors.rejectValue ('queryField', 'an.error.message')
             forward (action: "query", params:[queryInstance: queryParams, errorMessage: ioe.message])
-
         }
     }
 
