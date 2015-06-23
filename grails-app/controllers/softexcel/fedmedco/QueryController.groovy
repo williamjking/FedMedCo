@@ -20,8 +20,8 @@ class QueryController {
         respond Query.list(params), model: [queryInstanceCount: Query.count()]
     }
 
-    def show(Query queryInstance) {
-        respond queryInstance
+    def show(Query queryInstance, String queryResults) {
+        render view:"show", model: [queryResults: queryResults]
     }
 
     def create() {
@@ -29,12 +29,21 @@ class QueryController {
     }
 
     def query(Query queryInstance, String errorMessage, String queryResults) {
-        if (errorMessage == null) {
-            render view:"query", model:[queryResults:queryResults]
-        }
-        else {
-            queryInstance.errors.rejectValue('queryField', 'an.error.message')
-            render view:"query", model:[queryInstance:queryInstance]
+        Query aQuery = queryInstance
+        try {
+            if (errorMessage == null) {
+                render view:"query", model:[queryResults:queryResults]
+            }
+            else {
+                if (aQuery == null) aQuery = new Query()
+                aQuery.errors.rejectValue('queryField', 'an.error.message')
+                render view:"query", model:[queryInstance:aQuery]
+            }
+        } catch (Exception e) {
+            log.error e
+            qQuery = new Query(params)
+            aQuery.errors.rejectValue ('queryField', 'an.error.message')
+            render view:"query", model:[queryInstance:aQuery]
         }
     }
 
@@ -55,14 +64,13 @@ class QueryController {
                 if (params.exactCount) completeQuery.put('count', params.count + '.exact')
                 else completeQuery.put('count', params.count)
             }
-            if (params.limit != '' && params.limit.isInteger()) completeQuery.put('limit', params.limit)
-            if (params.skip != '' && params.skip.isInteger()) completeQuery.put('skip', params.skip)
+            if (params.limit != '' && params.limit?.isInteger()) completeQuery.put('limit', params.limit)
+            if (params.skip != '' && params.skip?.isInteger()) completeQuery.put('skip', params.skip)
 
             RESTClient client = new RESTClient( openFDAURL )
             def resp = client.get(path: aPath, query:completeQuery)
 
-            assert resp.getData() instanceof Map
-            forward (action: "query", params:[queryResults: resp.getData()] )
+            forward (action: "show", params:[queryResults: resp.getData()] )
         } catch (Exception ioe) {
             log.error ioe
             Query queryParams = new Query(params)
