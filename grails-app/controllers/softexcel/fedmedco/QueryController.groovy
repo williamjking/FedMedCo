@@ -61,7 +61,6 @@ class QueryController {
 
     def search() {
         try {
-            log.debug ("Params passed to search  ==> " + params.sort{it.key.toLowerCase()})
             String category = params.category
             String subCategory = params.subcategory
             String field = params.queryField
@@ -94,8 +93,6 @@ class QueryController {
             })
 
 
-            log.debug("Assembled criteria " + assembleAllFields)
-
             def completeQuery = [search:assembleAllFields]
 
             if (params.count != '') {
@@ -104,10 +101,6 @@ class QueryController {
             }
             if (params.limit != '' && params.limit?.isInteger()) completeQuery.put('limit', params.limit)
             if (params.skip != '' && params.skip?.isInteger()) completeQuery.put('skip', params.skip)
-
-            log.debug("Complete query = " + completeQuery)
-
-            log.debug(completeQuery)
 
             RESTClient client = new RESTClient( openFDAURL )
             def resp = client.get(path: aPath, query:completeQuery)
@@ -126,7 +119,6 @@ class QueryController {
 
     def medicineReactions() {
         try {
-            log.debug ("Params passed to search  ==> " + params.sort{it.key.toLowerCase()})
             String category = 'drug'
             String subCategory = 'event'
             String medicine = '"' + queryService.replaceSpaceWithPlus(params.medicine) +'"'
@@ -134,14 +126,8 @@ class QueryController {
             String aPath = category + '/' + subCategory + '.json'
 
 
-            def completeQuery = [search:"patient.drug.openfda.pharm_class_epc:"+medicine]
-
+            def completeQuery = [search:"patient.drug.openfda.generic_name:"+medicine+"+brand_name:"+medicine]
             completeQuery.put('count', 'patient.reaction.reactionmeddrapt.exact')
-
-
-            log.debug("Complete query = " + completeQuery)
-
-            log.debug(completeQuery)
 
             RESTClient client = new RESTClient( openFDAURL )
             def resp = client.get(path: aPath, query:completeQuery)
@@ -155,9 +141,6 @@ class QueryController {
             data.results.each{mapToAnalyzeData.put(it.count, it.term)}
             def min = mapToAnalyzeData.min {it.key}
             def max = mapToAnalyzeData.max {it.key}
-
-            log.debug("Minimum is " + min.key + " for " + min.value)
-            log.debug("Maximum is " + max.key + " for " + max.value)
 
             Integer oneThird = (max.key - min.key)/3;
 
@@ -174,10 +157,6 @@ class QueryController {
                 i++
             }
 
-
-
-            log.debug ("Top Three Reactions " + topThreeReactions)
-
             DrugReactions drugReactions = new DrugReactions()
 
             drugReactions.medicine = params.medicine
@@ -186,18 +165,6 @@ class QueryController {
             drugReactions.severeReactions = topThird
             drugReactions.moderateReactions = middleThird
             drugReactions.mildReactions = lowerThird
-
-
-            log.debug("THE LOWEST THIRD")
-            log.debug(lowerThird)
-
-            log.debug("THE MIDDLE THIRD")
-            log.debug(middleThird)
-
-            log.debug("THE TOP THIRD")
-            log.debug(topThird)
-
-            log.debug (" DRUG REAVTION " + drugReactions.medicine)
 
             render(view:'medicineReactions', model:[drugReactions:drugReactions])
         } catch (Exception ioe) {
