@@ -1,5 +1,6 @@
 package softexcel.fedmedco
 
+import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
 import groovy.json.JsonBuilder
@@ -14,9 +15,23 @@ class QueryController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond Query.list(params), model: [queryInstanceCount: Query.count()]
+    def index(Query queryInstance, String errorMessage, String queryResults) {
+        Query aQuery = queryInstance
+        try {
+            if (errorMessage == null) {
+                render view:"index", model:[queryResults:queryResults]
+            }
+            else {
+                if (aQuery == null) aQuery = new Query()
+                aQuery.errors.rejectValue('queryField', 'an.error.message')
+                render view:"index", model:[queryInstance:aQuery]
+            }
+        } catch (Exception e) {
+            log.error e
+            qQuery = new Query(params)
+            aQuery.errors.rejectValue ('queryField', 'an.error.message')
+            render view:"index", model:[queryInstance:aQuery]
+        }
     }
 
     def show(Query queryInstance, String queryResults) {
@@ -96,14 +111,104 @@ class QueryController {
             RESTClient client = new RESTClient( openFDAURL )
             def resp = client.get(path: aPath, query:completeQuery)
 
-            forward (action: "show", params:[queryResults: new JsonBuilder(resp.getData()).toString()] )
+            def dataAsJSON = resp.getData() as JSON
+
+            forward (action: "show", params:[queryResults: dataAsJSON.toString()] )
         } catch (Exception ioe) {
             log.error ioe
             Query queryParams = new Query(params)
             queryParams.errors.rejectValue ('queryField', 'an.error.message')
-            forward (action: "query", params:[queryInstance: queryParams, errorMessage: ioe.message])
+            forward (action: "index", params:[queryInstance: queryParams, errorMessage: ioe.message])
         }
     }
+
+
+    def medicineReactions() {
+        try {
+            log.debug ("Params passed to search  ==> " + params.sort{it.key.toLowerCase()})
+            String category = 'drug'
+            String subCategory = 'event'
+            String medicine = '"' + queryService.replaceSpaceWithPlus(params.medicine) +'"'
+            String openFDAURL = "https://api.fda.gov/"
+            String aPath = category + '/' + subCategory + '.json'
+
+
+            def completeQuery = [search:"patient.drug.openfda.pharm_class_epc:"+medicine]
+
+            completeQuery.put('count', 'patient.reaction.reactionmeddrapt.exact')
+
+
+            log.debug("Complete query = " + completeQuery)
+
+            log.debug(completeQuery)
+
+            RESTClient client = new RESTClient( openFDAURL )
+            def resp = client.get(path: aPath, query:completeQuery)
+
+            def dataAsJSON = resp.getData() as JSON
+
+            def data = resp.getData()
+
+            def mapToAnalyzeData = [:]
+
+            data.results.each{mapToAnalyzeData.put(it.count, it.term)}
+            def min = mapToAnalyzeData.min {it.key}
+            def max = mapToAnalyzeData.max {it.key}
+
+            log.debug("Minimum is " + min.key + " for " + min.value)
+            log.debug("Maximum is " + max.key + " for " + max.value)
+
+            Integer oneThird = (max.key - min.key)/3;
+
+            Map lowerThird = mapToAnalyzeData.subMap(min.key..min.key+oneThird)
+            Map middleThird = mapToAnalyzeData.subMap(min.key+oneThird+1..min.key+oneThird+oneThird)
+            Map topThird = mapToAnalyzeData.subMap(min.key+oneThird+oneThird+1..max.key+1)
+
+            def topThreeReactions = []
+
+            def i = 0
+
+            topThird.reverseEach {
+                if (i<3) topThreeReactions.add(it.value)
+                i++
+            }
+
+
+
+            log.debug ("Top Three Reactions " + topThreeReactions)
+
+            DrugReactions drugReactions = new DrugReactions()
+
+            drugReactions.medicine = params.medicine
+            drugReactions.totalReportedReactions = mapToAnalyzeData.size()
+            drugReactions.topThreeReactions =  topThreeReactions
+            drugReactions.severeReactions = topThird
+            drugReactions.moderateReactions = middleThird
+            drugReactions.mildReactions = lowerThird
+
+
+            log.debug("THE LOWEST THIRD")
+            log.debug(lowerThird)
+
+            log.debug("THE MIDDLE THIRD")
+            log.debug(middleThird)
+
+            log.debug("THE TOP THIRD")
+            log.debug(topThird)
+
+            log.debug (" DRUG REAVTION " + drugReactions.medicine)
+
+            render(view:'medicineReactions', model:[drugReactions:drugReactions])
+        } catch (Exception ioe) {
+            log.error ioe
+            Query queryParams = new Query(params)
+            queryParams.errors.rejectValue ('queryField', 'an.error.message')
+            forward (action: "index", params:[queryInstance: queryParams, errorMessage: ioe.message])
+        }
+    }
+
+
+
 
     protected void notFound() {
         request.withFormat {

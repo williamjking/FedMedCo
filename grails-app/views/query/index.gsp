@@ -6,45 +6,93 @@
 		<meta name="layout" content="main">
 		<g:set var="entityName" value="${message(code: 'query.label', default: 'Query')}" />
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
+		<script>
+			$(function () {
+				$('.collapse').collapse();
+			});
+		</script>
 	</head>
 	<body>
 		<a href="#list-query" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		<div class="nav" role="navigation">
-			<ul>
-				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
+
+
+		<nav id="menu" class="nav" role="navigation">
+			<ul class="nav-pills">
+				<li><a class="btn home" role="button" href="${createLink(uri: '/')}"><span class="glyphicon glyphicon-home"></span>  <g:message class="text-justify" code="default.home.label"/></a></li>
 			</ul>
-		</div>
-		<div id="list-query" class="content scaffold-list" role="main">
-			<h1><g:message code="default.list.label" args="[entityName]" /></h1>
-			<g:if test="${flash.message}">
-				<div class="message" role="status">${flash.message}</div>
-			</g:if>
-			<table>
-			<thead>
-					<tr>
-					
-						<g:sortableColumn property="criteria" title="${message(code: 'query.criteria.label', default: 'Criteria')}" />
-					
-						<g:sortableColumn property="queryField" title="${message(code: 'query.queryField.label', default: 'Query Field')}" />
-					
-					</tr>
-				</thead>
-				<tbody>
-				<g:each in="${queryInstanceList}" status="i" var="queryInstance">
-					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-					
-						<td><g:link action="show" id="${queryInstance.id}">${fieldValue(bean: queryInstance, field: "criteria")}</g:link></td>
-					
-						<td>${fieldValue(bean: queryInstance, field: "queryField")}</td>
-					
-					</tr>
-				</g:each>
-				</tbody>
-			</table>
-			<div class="pagination">
-				<g:paginate total="${queryInstanceCount ?: 0}" />
+		</nav>
+
+		<g:if test="${flash.message}">
+			<div class="message" role="status">${flash.message}</div>
+		</g:if>
+		<g:hasErrors bean="${queryInstance}">
+			<ul class="errors" role="alert">
+				<g:eachError bean="${queryInstance}" var="error">
+					<li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
+				</g:eachError>
+			</ul>
+		</g:hasErrors>
+
+		<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+			<div class="panel panel-default">
+				<div class="panel-heading" role="tab" id="headingOne">
+					<h4 class="panel-title">
+						<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+							Find out reported reactions to a drug
+						</a>
+					</h4>
+				</div>
+				<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+					<div class="panel-body">
+						<g:form class="form-horizontal" url="[resource:contractorInstance, action:'medicineReactions']" >
+							<fieldset class="form">
+								<g:render template="medicine"/>
+							</fieldset>
+							<fieldset class="buttons">
+								<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Submit</button>
+								<button type="button" class="btn btn-default reset"><span class="glyphicon glyphicon-refresh"></span> Reset</button>
+							</fieldset>
+						</g:form>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading" role="tab" id="headingTwo">
+					<h4 class="panel-title">
+						<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+							Find out what drugs to avoid while on a particular diet
+						</a>
+					</h4>
+				</div>
+				<div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+					<div class="panel-body">
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading" role="tab" id="headingThree">
+					<h4 class="panel-title">
+						<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+							Perform Generic Search on openFDA
+						</a>
+					</h4>
+				</div>
+				<div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
+					<div class="panel-body">
+						<g:form class="form-horizontal" url="[resource:contractorInstance, action:'search']" >
+							<fieldset class="form">
+								<g:render template="form"/>
+							</fieldset>
+							<fieldset class="buttons">
+								<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Submit</button>
+								<button type="button" class="btn btn-default reset"><span class="glyphicon glyphicon-refresh"></span> Reset</button>
+							</fieldset>
+						</g:form>
+					</div>
+				</div>
 			</div>
 		</div>
+
+
 	</body>
 </html>

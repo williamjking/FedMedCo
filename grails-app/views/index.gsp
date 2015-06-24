@@ -12,10 +12,10 @@
 
         <div class="text-center">
 		<sec:ifNotLoggedIn>
-			<g:link title="Enter" class="btn btn-primary btn-large" controller="query" action="query"><span class="glyphicon glyphicon-log-in login"/>  Enter!</g:link>
+			<g:link title="Enter" class="btn btn-primary btn-large" controller="query"><span class="glyphicon glyphicon-log-in login"/>  Enter!</g:link>
 		</sec:ifNotLoggedIn>
         <sec:ifLoggedIn>
-			<g:link title="Enter" class="btn btn-primary btn-large" controller="query" action="query"><span class="glyphicon glyphicon-search"/>  <g:message class="text-justify" code="default.search.label" /></g:link>
+			<g:link title="Enter" class="btn btn-primary btn-large" controller="query"><span class="glyphicon glyphicon-search"/>  <g:message class="text-justify" code="default.search.label" /></g:link>
 			<a title="Logout" class="btn btn-primary btn-large" href="${createLink(uri: '/j_spring_security_logout')}"><span class="glyphicon glyphicon-log-out logout"/>  Logout!</a>
         </sec:ifLoggedIn>
         </div>
