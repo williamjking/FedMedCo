@@ -1,13 +1,10 @@
 package softexcel.fedmedco
 
 import grails.plugin.springsecurity.annotation.Secured
-
-//import grails.plugins.rest.client.*
-
-//import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+import groovy.json.JsonBuilder
+import groovy.json.JsonOutput
 import groovyx.net.http.RESTClient
-import groovyx.net.http.ContentType
 
 @Secured(['ROLE_QUERY'])
 @Transactional(readOnly = true)
@@ -95,11 +92,11 @@ class QueryController {
             log.debug("Complete query = " + completeQuery)
 
             log.debug(completeQuery)
-
+			
             RESTClient client = new RESTClient( openFDAURL )
             def resp = client.get(path: aPath, query:completeQuery)
 
-            forward (action: "show", params:[queryResults: resp.getData()] )
+            forward (action: "show", params:[queryResults: new JsonBuilder(resp.getData()).toString()] )
         } catch (Exception ioe) {
             log.error ioe
             Query queryParams = new Query(params)
