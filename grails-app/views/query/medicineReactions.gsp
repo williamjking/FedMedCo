@@ -86,7 +86,7 @@
 						<div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
 							<div class="panel-body">
 								<ul class="list-group">
-									<g:each in="${drugReactions?.moderateReactions}" status="i" var="reaction">
+									<g:each in="${drugReactions?.mildReactions}" status="i" var="reaction">
 										<li class="list-group-item">
 											<span class="badge">${reaction?.key}</span>
 											${reaction?.value}
