@@ -13,7 +13,7 @@
 		<nav id="menu" class="nav" role="navigation">
 			<ul class="nav-pills">
 				<li><a class="btn home" role="button" href="${createLink(uri: '/')}"><span class="glyphicon glyphicon-home"></span>  <g:message class="text-justify" code="default.home.label"/></a></li>
-				<li><g:link class="btn list" role="button" action="query"><span class="glyphicon glyphicon-search"></span>  <g:message class="text-justify" code="default.search.label" args="[entityName]" /></g:link></li>
+				<li><g:link class="btn list" role="button"><span class="glyphicon glyphicon-search"></span>  <g:message class="text-justify" code="default.search.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</nav>
 

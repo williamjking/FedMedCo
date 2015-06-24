@@ -6,5 +6,7 @@ class Query {
     String criteria
 
     static constraints = {
+        queryField nullable: true
+        criteria nullable: true
     }
 }

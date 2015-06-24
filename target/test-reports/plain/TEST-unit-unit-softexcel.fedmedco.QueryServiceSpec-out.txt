@@ -1,0 +1,5 @@
+--Output from test a string--
+--Output from test null string throws exception--
+--Output from test empty string throws exception--
+--Output from test string with numbers--
+--Output from test string with no spaces--
