@@ -16,21 +16,44 @@
 
 </div>
 
-<div class="form-group  ">
-	<label class="col-sm-4" for="queryField">
-		<g:message code="user.bpaContractNumber.label" default="openFDA Field" />
-	</label>
-	<input type="text" id="queryField" name="queryField" required="" class="col-sm-4" value="" placeholder="Enter the field to search" />
-</div>
 
-<div class="form-group has-feedback">
-    <div class="form-inline">
-        <label class="col-sm-4" for="criteria"><g:message code="user.bpaContractNumber.label" default="Search Criteria" /></label>
-	    <input type="text" id="criteria" class="col-sm-4" required="" name="criteria" value="" placeholder="Enter search criteria"/>
-        <label class="col-sm-offset-1" for="exactCriteria">
-            <input type="checkbox" id="exactCriteria" name="exactCriteria"/> Exact </label>
+<div class="form-group">
+    <div class="col-sm-4"></div>
+    <div id="fields" class="col-sm-6 panel panel-default">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-lg-4">Search Fields</div>
+                <div class="col-lg-8">
+                    <p style="text-align:right;">
+                        <a href="#" id="add_another_field">
+                            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                            Add Another Field</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="form-inline" id="default_field">
+                <div>
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1" style="color:rgba(0,0,0,0)">AND</span>
+                        <input type="text" id="fields" size="20" name="fields_0" value="" required="" placeholder="openFDA field name" aria-describedby="basic-addon1"/>
+                    </div>
+
+                    <label for="criteria">
+                        <input type="text" id="criteria" size="20" name="criteria_0" value="" required="" placeholder="Search Criteria" />
+                    </label>
+                    <label for="criteria_exact">
+                        <input type="checkbox" id="criteria_exact" name="criteria_exact_0"/> Exact
+                    </label>
+                </div>
+            </div>
+            <div class="form-inline" id="additional_fields">
+            </div>
+        </div>
     </div>
 </div>
+
 
 <div class="form-group has-feedback">
     <div class="form-inline">

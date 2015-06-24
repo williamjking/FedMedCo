@@ -12,7 +12,9 @@
     <g:set var="entityName" value="${message(code: 'query.label', default: 'Query')}" />
     <title><g:message code="default.create.label" args="[entityName]" /></title>
     <script>
-
+        $(function () {
+            $('a[data-toggle="tooltip"]').tooltip();
+        });
     </script>
 </head>
 

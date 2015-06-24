@@ -39,9 +39,11 @@
       <sourceFolder url="file://$MODULE_DIR$/grails-app/services" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/grails-app/taglib" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target/classes" />
+      <excludeFolder url="file://$MODULE_DIR$/target/test-classes" />
       <excludeFolder url="file://$MODULE_DIR$/target/work/plugin-build-classes" />
       <excludeFolder url="file://$MODULE_DIR$/target/work/plugin-classes" />
       <excludeFolder url="file://$MODULE_DIR$/target/work/plugin-provided-classes" />
+      <excludeFolder url="file://$MODULE_DIR$/target/work/process-lock" />
       <excludeFolder url="file://$MODULE_DIR$/target/work/resources" />
       <excludeFolder url="file://$MODULE_DIR$/target/work/scriptCache" />
       <excludeFolder url="file://$MODULE_DIR$/target/work/tomcat" />
@@ -53,7 +55,6 @@
       <library name="Grails User Library (FedMedCo)">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/org/json/json/20090211/json-20090211.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/commons-beanutils/commons-beanutils/1.8.3/commons-beanutils-1.8.3.jar!/" />
           <root url="jar://$MAVEN_REPOSITORY$/ro/isdc/wro4j/rhino/1.7R5-20130223-1/rhino-1.7R5-20130223-1.jar!/" />
           <root url="jar://$MAVEN_REPOSITORY$/com/github/sommeri/less4j-javascript/0.0.1/less4j-javascript-0.0.1.jar!/" />
           <root url="jar://$MAVEN_REPOSITORY$/antlr/antlr/2.7.7/antlr-2.7.7.jar!/" />
@@ -103,6 +104,16 @@
           <root url="jar://$MAVEN_REPOSITORY$/org/springframework/data/spring-data-commons/1.7.3.RELEASE/spring-data-commons-1.7.3.RELEASE.jar!/" />
           <root url="jar://$MAVEN_REPOSITORY$/org/springframework/data/spring-data-mongodb/1.4.3.RELEASE/spring-data-mongodb-1.4.3.RELEASE.jar!/" />
           <root url="jar://$MAVEN_REPOSITORY$/org/grails/grails-datastore-gorm-mongodb/3.1.4.RELEASE/grails-datastore-gorm-mongodb-3.1.4.RELEASE.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/xml-resolver/xml-resolver/1.2/xml-resolver-1.2.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/xerces/xercesImpl/2.9.1/xercesImpl-2.9.1.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/net/sourceforge/nekohtml/nekohtml/1.9.16/nekohtml-1.9.16.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/net/sf/ezmorph/ezmorph/1.0.6/ezmorph-1.0.6.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/commons-beanutils/commons-beanutils/1.8.0/commons-beanutils-1.8.0.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/net/sf/json-lib/json-lib/2.3/json-lib-2.3-jdk15.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/apache/httpcomponents/httpcore/4.2.1/httpcore-4.2.1.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/apache/httpcomponents/httpclient/4.2.1/httpclient-4.2.1.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/codehaus/groovy/modules/http-builder/http-builder/0.6/http-builder-0.6.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/grails/grails-datastore-rest-client/1.0.0.RELEASE/grails-datastore-rest-client-1.0.0.RELEASE.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

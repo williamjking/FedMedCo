@@ -46,6 +46,10 @@
     </content>
     <content url="file://$MODULE_DIR$/target/work/plugins/less-asset-pipeline-2.0.8" />
     <content url="file://$MODULE_DIR$/target/work/plugins/mongodb-3.0.3" />
+    <content url="file://$MODULE_DIR$/target/work/plugins/rest-0.8">
+      <sourceFolder url="file://$MODULE_DIR$/target/work/plugins/rest-0.8/src/groovy" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/target/work/plugins/rest-client-builder-2.0.0" />
     <content url="file://$MODULE_DIR$/target/work/plugins/scaffolding-2.1.2">
       <sourceFolder url="file://$MODULE_DIR$/target/work/plugins/scaffolding-2.1.2/src/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/target/work/plugins/scaffolding-2.1.2/src/groovy" isTestSource="false" />

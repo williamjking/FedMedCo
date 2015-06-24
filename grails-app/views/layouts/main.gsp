@@ -13,6 +13,7 @@
   		<asset:stylesheet src="application.css"/>
 		<asset:stylesheet src="jumbotron-narrow.css"/>
 		<asset:javascript src="application.js"/>
+		<asset:javascript src="bootstrap.js"/>
 		<g:layoutHead/>
 	</head>
 	<body>
