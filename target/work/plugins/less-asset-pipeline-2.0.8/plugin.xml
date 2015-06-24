@@ -1,9 +1,0 @@
-<plugin name='less-asset-pipeline' version='2.0.8' grailsVersion='2.2 &gt; *'>
-  <author>David Estes</author>
-  <authorEmail>destes@bcap.com</authorEmail>
-  <title>LESS Asset-Pipeline Plugin</title>
-  <description>Provides LESS support for the asset-pipeline static asset management plugin.</description>
-  <documentation>http://github.com/bertramdev/less-grails-asset-pipeline</documentation>
-  <type>LessAssetPipelineGrailsPlugin</type>
-  <resources />
-</plugin>
