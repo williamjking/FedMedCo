@@ -5,14 +5,24 @@
     <label class="col-sm-4" for="search"  class="control-label">
         <g:message code="category.label" default="Select a Category"></g:message>
     </label>
-    <g:select id="categorySelect" name="category" from="${softexcel.fedmedco.OpenFDACategory.list()}" optionKey="category" optionValue="category"/>
+    <g:select id="categorySelect"
+    	name="category"
+    	from="${softexcel.fedmedco.OpenFDACategory.list()}"
+    	optionKey="category"
+    	optionValue="category"
+    	onChange="getFields()" />
 </div>
 
 <div class="form-group  ">
     <label class="col-sm-4" for="search"  class="control-label">
         <g:message code="subcategory.label" default="Select a Sub Category"></g:message>
     </label>
-    <g:select id="subCategorySelect" name="subcategory" from="${softexcel.fedmedco.EndPoint.list()}" optionKey="endPoint" optionValue="endPoint"/>
+    <g:select id="subCategorySelect"
+    	name="subcategory"
+    	from="${softexcel.fedmedco.EndPoint.list()}"
+    	optionKey="endPoint"
+    	optionValue="endPoint"
+    	onChange="getFields()" />
 
 </div>
 
@@ -37,7 +47,7 @@
                 <div>
                     <div class="input-group">
                         <span class="input-group-addon" id="basic-addon1" style="color:rgba(0,0,0,0)">AND</span>
-                        <input type="text" id="fields" size="20" name="fields_0" value="" required="" placeholder="openFDA field name" aria-describedby="basic-addon1"/>
+                        <select id="fieldsSelect" name="fields_0"></select>
                     </div>
 
                     <label for="criteria">
@@ -80,3 +90,29 @@
     </label>
     <input type="text"  id="skip" class="col-sm-4" name="skip" value="" placeholder="Skip this number of records"/>
 </div>
+
+<g:javascript>
+function getFields() {
+	${remoteFunction(
+		controller: 'query',
+		action: 'populateFields',
+		params:'\'category=\' + escape($(\'#categorySelect\').val()) + \'&subcategory=\' + escape($(\'#subCategorySelect\').val())',
+		onSuccess: 'updateFields(data)'
+	)}
+}
+
+function updateFields(newFields) {
+	var fieldOptions = eval("(" + newFields + ")");
+	var $fields = $("#fieldsSelect");
+	$fields.empty();
+	if (fieldOptions.length > 0) {
+		$.each(fieldOptions, function(index, value) {
+			$fields.append($("<option></option>").attr("value", value).text(value));
+		});
+	} else {
+		$fields.append($("<option></option>").attr("value", "").text(""));
+	}
+}
+
+getFields();
+</g:javascript>

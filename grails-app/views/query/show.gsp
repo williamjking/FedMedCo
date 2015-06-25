@@ -26,13 +26,16 @@
 					<h3 class="panel-title">Results from OpenFDA</h3>
 				</div>
 				<div class="panel-body">
+					<p>Disclaimer: ${disclaimer}</p>
+					<p>Last updated: ${lastUpdated}</p>
+					<p>Total results: ${totalResults}</p>
 					<div id="element"></div>
 				</div>
 			</div>
 		</g:if>
 		
-		<script>
+		<g:javascript>
 			$('#element').jsonView(${raw(queryResults)});
-		</script>
+		</g:javascript>
 	</body>
 </html>

@@ -3,9 +3,9 @@ package softexcel.fedmedco
 import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
-import groovy.json.JsonBuilder
-import groovy.json.JsonOutput
+import groovy.json.JsonSlurper
 import groovyx.net.http.RESTClient
+import net.sf.json.JSONObject
 
 @Secured(['ROLE_QUERY'])
 @Transactional(readOnly = true)
@@ -34,9 +34,30 @@ class QueryController {
         }
     }
 
-    def show(Query queryInstance, String queryResults) {
-        render view:"show", model: [queryResults: queryResults]
-    }
+	def populateFields(String category, String subcategory) {
+		def name
+		if (category == "drug" && subcategory == "event") {
+			name = "faers"
+		} else if (category == "drug" && subcategory == "label") {
+			name = "spl"
+		} else if (category == "drug" && subcategory == "enforcement") {
+			name = "res"
+		} else if (category == "device" && subcategory == "event") {
+			name = "maude"
+		} else if (category == "device" && subcategory == "enforcement") {
+			name = "res"
+		} else if (category == "food" && subcategory == "enforcement") {
+			name = "res"
+		}
+		
+		def fieldList = []
+		if (name != null) {
+			fieldList = FieldList.findBySchemaName(name).fields
+		}
+		
+		log.info "Returning field list for category: " + category + ", subcategory: " + subcategory
+		render fieldList
+	}
 
     def query(Query queryInstance, String errorMessage, String queryResults) {
         Query aQuery = queryInstance
@@ -111,9 +132,14 @@ class QueryController {
             RESTClient client = new RESTClient( openFDAURL )
             def resp = client.get(path: aPath, query:completeQuery)
 
-            def dataAsJSON = resp.getData() as JSON
-
-            forward (action: "show", params:[queryResults: dataAsJSON.toString()] )
+            def data = resp.getData()
+			
+            render view:"show", model: [
+				disclaimer: data.meta.disclaimer,
+				lastUpdated: data.meta.last_updated,
+				totalResults: data.meta.results.total,
+				queryResults: (data.results as JSON).toString()
+			]
         } catch (Exception ioe) {
             log.error ioe
             Query queryParams = new Query(params)
