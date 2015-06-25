@@ -60,12 +60,21 @@
 				<div class="panel-heading" role="tab" id="headingTwo">
 					<h4 class="panel-title">
 						<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-							Find out what drugs to avoid while on a particular diet
+							Find out interesting facts about your medication
 						</a>
 					</h4>
 				</div>
 				<div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
 					<div class="panel-body">
+                        <g:form class="form-horizontal" url="[resource:contractorInstance, action:'interestingFacts']" >
+                            <fieldset class="form">
+                                <g:render template="medicine"/>
+                            </fieldset>
+                            <fieldset class="buttons">
+                                <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Submit</button>
+                                <button type="button" class="btn btn-default reset"><span class="glyphicon glyphicon-refresh"></span> Reset</button>
+                            </fieldset>
+                        </g:form>
 					</div>
 				</div>
 			</div>
