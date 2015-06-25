@@ -1,12 +1,9 @@
 package softexcel.fedmedco
 
-import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
 import groovy.json.JsonSlurper
-import groovyx.net.http.RESTClient
-import net.sf.json.JSONObject
-import groovyx.net.http.ContentType
+
 
 @Secured(['ROLE_QUERY'])
 @Transactional(readOnly = true)
@@ -84,14 +81,9 @@ class QueryController {
         try {
             String category = params.category
             String subCategory = params.subcategory
-            String field = params.queryField
-            String queryString = params.criteria
-            String openFDAURL = "https://api.fda.gov/"
-            String aPath = category + '/' + subCategory + '.json'
-
+            String openFDAURLBase = "https://api.fda.gov/"
+            String openFDAURLPath = category + '/' + subCategory + '.json'
             String assembleAllFields = null
-
-            if (params.exactCriteria) queryString = '"' + queryString +'"'
 
             params.each ({key, value ->
                 def matcher = key =~ /fields_(.*)/
@@ -123,17 +115,18 @@ class QueryController {
             if (params.limit != '' && params.limit?.isInteger()) completeQuery.put('limit', params.limit)
             if (params.skip != '' && params.skip?.isInteger()) completeQuery.put('skip', params.skip)
 
-            RESTClient client = new RESTClient( openFDAURL )
-            def resp = client.get(path: aPath, query:completeQuery)
+            def url = openFDAURLBase + openFDAURLPath + "?" + completeQuery.collect { it }.join('&')
 
-            def data = resp.getData()
-			
+            def data = url.toURL().text
+            def parsedData = new JsonSlurper().parseText(data)
+
             render view:"show", model: [
-				disclaimer: data.meta.disclaimer,
-				lastUpdated: data.meta.last_updated,
-				totalResults: data.meta.results.total,
-				queryResults: (data.results as JSON).toString()
-			]
+                    disclaimer: parsedData.meta.disclaimer,
+                    lastUpdated: parsedData.meta.last_updated,
+                    totalResults: parsedData.meta.results.total,
+                    queryResults: data
+            ]
+
         } catch (Exception ioe) {
             log.error ioe
             Query queryParams = new Query(params)
@@ -148,19 +141,16 @@ class QueryController {
             String category = 'drug'
             String subCategory = 'event'
             String medicine = '"' + queryService.replaceSpaceWithPlus(params.medicine) +'"'
-            String openFDAURL = "https://api.fda.gov/"
-            String aPath = category + '/' + subCategory + '.json'
+            String medicineQuery = "https://api.fda.gov/" +
+                    category +
+                    '/' +
+                    subCategory +
+                    '.json?search=' +
+                    'patient.drug.openfda.generic_name:'+medicine+'+brand_name:'+medicine +
+                    '+patient.drug.openfda.pharm_class_epc:'+medicine+
+                    '&count=patient.reaction.reactionmeddrapt.exact'
 
-
-            def completeQuery = [search:"patient.drug.openfda.generic_name:"+medicine+"+brand_name:"+medicine]
-            completeQuery.put('count', 'patient.reaction.reactionmeddrapt.exact')
-
-            RESTClient client = new RESTClient( openFDAURL )
-            def resp = client.get(path: aPath, query:completeQuery)
-
-            def dataAsJSON = resp.getData() as JSON
-
-            def data = resp.getData()
+            def data = new JsonSlurper().parse(medicineQuery.toURL())
 
             def mapToAnalyzeData = [:]
 
