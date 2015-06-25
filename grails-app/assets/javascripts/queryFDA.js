@@ -94,55 +94,53 @@ $(function(){
     $('#subCategorySelect').change(function(){
     	getFields()
     });
-    
-    function enableDisableSubCategories(category) {
-    	var subCategorySelect = $('#subCategorySelect');
-    	subCategorySelect.empty();
-    	if (category == "drug") {
-    		appendOption(subCategorySelect, "event");
-    		appendOption(subCategorySelect, "label");
-    		appendOption(subCategorySelect, "enforcement");
-    	} else if (category == "device") {
-    		appendOption(subCategorySelect, "event");
-    		appendOption(subCategorySelect, "enforcement");
-    	} else if (category == "food") {
-    		appendOption(subCategorySelect, "enforcement");
-    	}
-    }
-    
-    function getFields() {
-    	jQuery.ajax({
-    		type: 'POST',
-    		data: 'category=' + escape($('#categorySelect').val()) + '&subcategory=' + escape($('#subCategorySelect').val()),
-    		url: '/FedMedCo/query/populateFields',
-    		success: function(data,textStatus){
-    			updateFields(data);
-    		},
-    		error: function(XMLHttpRequest,textStatus,errorThrown){}}
-    	);
-    }
-
-    function updateFields(newValues) {
-    	$.fieldOptions = eval("(" + newValues + ")");
-    	var $field = $("[id^=fieldsSelect_]");
-    	updateOptions($field);
-    }
-
-    function updateOptions(field) {
-    	field.empty();
-    	if ($.fieldOptions.length > 0) {
-    		$.each($.fieldOptions, function(index, value) {
-    			appendOption(field, value);
-    		});
-    	} else {
-    		appendOption(field, "");
-    	}
-    }
-    
-    function appendOption(field, value) {
-    	field.append($("<option></option>").attr("value", value).text(value));
-    }
-
-	getFields();
 
 });
+
+function enableDisableSubCategories(category) {
+	var subCategorySelect = $('#subCategorySelect');
+	subCategorySelect.empty();
+	if (category == "drug") {
+		appendOption(subCategorySelect, "event");
+		appendOption(subCategorySelect, "label");
+		appendOption(subCategorySelect, "enforcement");
+	} else if (category == "device") {
+		appendOption(subCategorySelect, "event");
+		appendOption(subCategorySelect, "enforcement");
+	} else if (category == "food") {
+		appendOption(subCategorySelect, "enforcement");
+	}
+}
+
+function updateFields(newValues) {
+	$.fieldOptions = eval("(" + newValues + ")");
+	var $field = $("[id^=fieldsSelect_]");
+	updateOptions($field);
+}
+
+function updateOptions(field) {
+	field.empty();
+	if ($.fieldOptions.length > 0) {
+		$.each($.fieldOptions, function(index, value) {
+			appendOption(field, value);
+		});
+	} else {
+		appendOption(field, "");
+	}
+}
+
+function appendOption(field, value) {
+	field.append($("<option></option>").attr("value", value).text(value));
+}
+
+function getFields() {
+	$.ajax({
+		type: 'POST',
+		data: 'category=' + escape($('#categorySelect').val()) + '&subcategory=' + escape($('#subCategorySelect').val()),
+		url: '/FedMedCo/query/populateFields',
+		success: function(data,textStatus){
+			updateFields(data);
+		},
+		error: function(XMLHttpRequest,textStatus,errorThrown){}}
+	);
+}

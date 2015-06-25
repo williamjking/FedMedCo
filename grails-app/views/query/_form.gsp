@@ -88,3 +88,7 @@
     </label>
     <input type="text"  id="skip" class="col-sm-4" name="skip" value="" placeholder="Skip this number of records"/>
 </div>
+
+<g:javascript>
+	getFields();
+</g:javascript>
