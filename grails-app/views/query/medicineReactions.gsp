@@ -37,7 +37,7 @@
 						<div class="panel-heading" role="tab" id="headingOne">
 							<h4 class="panel-title">
 								<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-									Severe reactions reported for ${drugReactions?.medicine}
+									<span class="badge">${drugReactions?.severeReactions?.size()}</span>Severe reactions reported for ${drugReactions?.medicine}
 								</a>
 							</h4>
 						</div>
@@ -58,7 +58,7 @@
 						<div class="panel-heading" role="tab" id="headingTwo">
 							<h4 class="panel-title">
 								<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-									Moderate reactions reported for ${drugReactions?.medicine}
+									<span class="badge">${drugReactions?.moderateReactions?.size()}</span>Moderate reactions reported for ${drugReactions?.medicine}
 								</a>
 							</h4>
 						</div>
@@ -79,14 +79,14 @@
 						<div class="panel-heading" role="tab" id="headingThree">
 							<h4 class="panel-title">
 								<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-									Mild reactions reported for ${drugReactions?.medicine}
+									<span class="badge">${drugReactions?.mildReactions?.size()}</span>Mild reactions reported for ${drugReactions?.medicine}
 								</a>
 							</h4>
 						</div>
 						<div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
 							<div class="panel-body">
 								<ul class="list-group">
-									<g:each in="${drugReactions?.moderateReactions}" status="i" var="reaction">
+									<g:each in="${drugReactions?.mildReactions}" status="i" var="reaction">
 										<li class="list-group-item">
 											<span class="badge">${reaction?.key}</span>
 											${reaction?.value}
