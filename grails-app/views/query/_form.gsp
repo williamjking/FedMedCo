@@ -2,34 +2,32 @@
 
 
 <div class="form-group  ">
-    <label class="col-sm-4" for="search"  class="control-label">
+    <label class="col-sm-2" for="search"  class="control-label">
         <g:message code="category.label" default="Select a Category"></g:message>
     </label>
     <g:select id="categorySelect"
     	name="category"
     	from="${softexcel.fedmedco.OpenFDACategory.list()}"
     	optionKey="category"
-    	optionValue="category"
-    	onChange="getFields()" />
+    	optionValue="category" />
 </div>
 
 <div class="form-group  ">
-    <label class="col-sm-4" for="search"  class="control-label">
+    <label class="col-sm-2" for="search"  class="control-label">
         <g:message code="subcategory.label" default="Select a Sub Category"></g:message>
     </label>
     <g:select id="subCategorySelect"
     	name="subcategory"
     	from="${softexcel.fedmedco.EndPoint.list()}"
     	optionKey="endPoint"
-    	optionValue="endPoint"
-    	onChange="getFields()" />
+    	optionValue="endPoint" />
 
 </div>
 
 
 <div class="form-group">
-    <div class="col-sm-4"></div>
-    <div id="fields" class="col-sm-6 panel panel-default">
+    <div class="col-sm-2"></div>
+    <div id="fields" class="col-sm-10 panel panel-default">
         <div class="panel-heading">
             <div class="row">
                 <div class="col-lg-4">Search Fields</div>
@@ -47,7 +45,7 @@
                 <div>
                     <div class="input-group">
                         <span class="input-group-addon" id="basic-addon1" style="color:rgba(0,0,0,0)">AND</span>
-                        <select id="fieldsSelect" name="fields_0"></select>
+                        <select id="fieldsSelect_0" name="fields_0"></select>
                     </div>
 
                     <label for="criteria">
@@ -67,7 +65,7 @@
 
 <div class="form-group has-feedback">
     <div class="form-inline">
-            <label class="col-sm-4" for="count">
+            <label class="col-sm-2" for="count">
                 <g:message code="user.bpaContractNumber.label" default="Count" />
             </label>
             <input type="text"  id="count" class="col-sm-4" name="count" value="" placeholder="Count the number of unique values of a certain field"/>
@@ -77,7 +75,7 @@
 </div>
 
 <div class="form-group has-feedback">
-    <label class="col-sm-4" for="limit">
+    <label class="col-sm-2" for="limit">
         <g:message code="user.bpaContractNumber.label" default="Limit" />
     </label>
     <input type="text"  id="limit" class="col-sm-4" name="limit" value="" placeholder="Return up to this number of records"/>
@@ -85,34 +83,8 @@
 
 
 <div class="form-group has-feedback">
-    <label class="col-sm-4" for="skip">
+    <label class="col-sm-2" for="skip">
         <g:message code="user.bpaContractNumber.label" default="Skip" />
     </label>
     <input type="text"  id="skip" class="col-sm-4" name="skip" value="" placeholder="Skip this number of records"/>
 </div>
-
-<g:javascript>
-function getFields() {
-	${remoteFunction(
-		controller: 'query',
-		action: 'populateFields',
-		params:'\'category=\' + escape($(\'#categorySelect\').val()) + \'&subcategory=\' + escape($(\'#subCategorySelect\').val())',
-		onSuccess: 'updateFields(data)'
-	)}
-}
-
-function updateFields(newFields) {
-	var fieldOptions = eval("(" + newFields + ")");
-	var $fields = $("#fieldsSelect");
-	$fields.empty();
-	if (fieldOptions.length > 0) {
-		$.each(fieldOptions, function(index, value) {
-			$fields.append($("<option></option>").attr("value", value).text(value));
-		});
-	} else {
-		$fields.append($("<option></option>").attr("value", "").text(""));
-	}
-}
-
-getFields();
-</g:javascript>
