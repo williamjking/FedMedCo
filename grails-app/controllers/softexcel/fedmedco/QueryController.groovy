@@ -100,7 +100,7 @@ class QueryController {
                         else assembleAllFields = assembleAllFields + '+AND+' +  value + ':' + criteria
                     }
                     catch (NullPointerException npe){
-                        log.error(npe)
+                        log.error(npe.message, npe)
                     }
                 }
             })
@@ -128,7 +128,7 @@ class QueryController {
             ]
 
         } catch (Exception ioe) {
-            log.error ioe
+            log.error ioe.message, ioe
             Query queryParams = new Query(params)
             queryParams.errors.rejectValue ('queryField', 'an.error.message')
             forward (action: "index", params:[queryInstance: queryParams, errorMessage: ioe.message])
@@ -146,7 +146,7 @@ class QueryController {
                     '/' +
                     subCategory +
                     '.json?search=' +
-                    'patient.drug.openfda.generic_name:'+medicine+'+brand_name:'+medicine +
+                    'patient.drug.openfda.generic_name:'+medicine+'+patient.drug.openfda.brand_name:'+medicine +
                     '+patient.drug.openfda.pharm_class_epc:'+medicine+
                     '&count=patient.reaction.reactionmeddrapt.exact'
 
@@ -184,7 +184,7 @@ class QueryController {
 
             render(view:'medicineReactions', model:[drugReactions:drugReactions])
         } catch (Exception ioe) {
-            log.error ioe
+            log.error ioe.message, ioe
             Query queryParams = new Query(params)
             queryParams.errors.rejectValue ('queryField', 'an.error.message')
             forward (action: "index", params:[queryInstance: queryParams, errorMessage: ioe.message])
@@ -192,6 +192,49 @@ class QueryController {
     }
 
 
+    def interestingFacts(){
+        try {
+            String category = 'drug'
+            String subCategory = 'label'
+            String medicine = '"' + queryService.replaceSpaceWithPlus(params.medicine) +'"'
+            String medicineQuery = "https://api.fda.gov/" +
+                    category +
+                    '/' +
+                    subCategory +
+                    '.json?search=' +
+                    'openfda.generic_name:'+medicine+'+openfda.brand_name:'+medicine +
+                    '+openfda.pharm_class_epc:'+medicine
+
+            def data = new JsonSlurper().parse(medicineQuery.toURL())
+            def facts = data.results
+
+            if (facts == null) throw new Exception ("Could not find any interesting data for the drug " + params.medicine)
+
+            InterestingFacts interestingFacts = new InterestingFacts()
+            interestingFacts.medicine = params.medicine
+
+
+            if (facts.purpose && facts.purpose[0])interestingFacts.facts['Purpose'] = facts.purpose[0][0]
+            if (facts.stop_use && facts.stop_use[0])interestingFacts.facts['Stop Using if'] = facts.stop_use[0][0]
+            if (facts.storage_and_handling && facts.storage_and_handling[0])interestingFacts.facts['Storage and Handling'] = facts.storage_and_handling[0][0]
+            if (facts.ask_doctor && facts.ask_doctor[0])interestingFacts.facts['What to ask a doctor'] = facts.ask_doctor[0][0]
+            else if (facts.ask_doctor_pharmasist && facts.ask_doctor_pharmacist[0])interestingFacts.facts['What to ask a pharmacist'] = facts.ask_doctor_pharmacist[0][0]
+            if (facts.boxed_warning && facts.boxed_warning[0])interestingFacts.facts['Serious Warnings'] = facts.boxed_warning[0][0]
+            if (facts.warnings_and_precautions && facts.warnings_and_precautions[0])interestingFacts.facts['Warnings and Precautions'] = facts.warnings_and_precautions[0][0]
+            else if (facts.warnings && facts.warnings[0])interestingFacts.facts['Warnings'] = facts.warnings[0][0]
+            else if (facts.precautions && facts.precautions[0])interestingFacts.facts['Precautions'] = facts.precautions[0][0]
+            if (facts.pregnancy_or_breast_feeding && facts.pregnancy_or_breast_feeding[0])interestingFacts.facts['Pregnancy or Breast Feeding'] = facts.pregnancy_or_breast_feeding[0][0]
+            else if (facts.pregnancy && facts.pregnancy[0])interestingFacts.facts['Pregnancy'] = facts.pregnancy[0][0]
+
+            render(view:'interestingFacts', model:[facts:interestingFacts])
+        }
+        catch (Exception ioe) {
+            log.error ioe.message, ioe
+            Query queryParams = new Query(params)
+            queryParams.errors.rejectValue('queryField', 'an.error.message')
+            forward(action: "index", params: [queryInstance: queryParams, errorMessage: ioe.message])
+        }
+    }
 
 
     protected void notFound() {
