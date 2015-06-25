@@ -26,7 +26,7 @@
 					<table class="table table-striped">
 						<tbody>
 							<g:each in="${facts?.facts}">
-								<tr><td class="col-md-3">${it.key}</td><td class="col-md-8">${it.value}</td></tr>
+								<tr><th class="col-md-3">${it.key}</th><td class="col-md-8">${it.value}</td></tr>
 							</g:each>
 						</tbody>
 					</table>

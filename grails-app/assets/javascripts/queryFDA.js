@@ -12,11 +12,6 @@ $(function(){
         $(".message").remove();
     }
 
-    function clearErrorMessages(){
-        $(".errors").remove();
-        $(".message").remove();
-    }
-
     function reset(){
         clearErrorMessages();
         $("form > fieldset.form").find("input").val("");
