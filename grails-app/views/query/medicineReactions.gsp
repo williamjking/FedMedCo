@@ -37,7 +37,7 @@
 						<div class="panel-heading" role="tab" id="headingOne">
 							<h4 class="panel-title">
 								<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-									Severe reactions reported for ${drugReactions?.medicine}
+									<span class="badge">${drugReactions?.severeReactions?.size()}</span>Severe reactions reported for ${drugReactions?.medicine}
 								</a>
 							</h4>
 						</div>
@@ -58,7 +58,7 @@
 						<div class="panel-heading" role="tab" id="headingTwo">
 							<h4 class="panel-title">
 								<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-									Moderate reactions reported for ${drugReactions?.medicine}
+									<span class="badge">${drugReactions?.moderateReactions?.size()}</span>Moderate reactions reported for ${drugReactions?.medicine}
 								</a>
 							</h4>
 						</div>
@@ -79,7 +79,7 @@
 						<div class="panel-heading" role="tab" id="headingThree">
 							<h4 class="panel-title">
 								<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-									Mild reactions reported for ${drugReactions?.medicine}
+									<span class="badge">${drugReactions?.mildReactions?.size()}</span>Mild reactions reported for ${drugReactions?.medicine}
 								</a>
 							</h4>
 						</div>

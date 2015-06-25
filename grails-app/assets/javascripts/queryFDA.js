@@ -50,6 +50,8 @@ $(function(){
             '</div>'
         ).appendTo(additional_fields);
 
+        $('[data-toggle="tooltip"]').tooltip();
+
         return false;
     });
 
