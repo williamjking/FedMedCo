@@ -9,19 +9,16 @@
     	name="category"
     	from="${softexcel.fedmedco.OpenFDACategory.list()}"
     	optionKey="category"
-    	optionValue="category" />
+    	optionValue="category"
+    	value="null"
+    	noSelection="['null':'-SELECT-']" />
 </div>
 
 <div class="form-group  ">
     <label class="col-sm-2" for="search"  class="control-label">
         <g:message code="subcategory.label" default="Select a Sub Category"></g:message>
     </label>
-    <g:select id="subCategorySelect"
-    	name="subcategory"
-    	from="${softexcel.fedmedco.EndPoint.list()}"
-    	optionKey="endPoint"
-    	optionValue="endPoint" />
-
+    <select id="subCategorySelect" name="subcategory"></select>
 </div>
 
 
@@ -88,7 +85,3 @@
     </label>
     <input type="text"  id="skip" class="col-sm-4" name="skip" value="" placeholder="Skip this number of records"/>
 </div>
-
-<g:javascript>
-	getFields();
-</g:javascript>
