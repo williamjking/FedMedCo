@@ -65,7 +65,6 @@ $(function(){
 
     $('#additional_fields').on('click', '#booleanSpan', function(){
         var name = $(this).attr('name');
-        console.log('name is ' + name);
         if ($(this).html() == 'AND') {
             $(this).html('OR ');
             $("#booleanOp_"+name).val('OR');

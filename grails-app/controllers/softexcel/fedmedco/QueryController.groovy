@@ -25,7 +25,7 @@ class QueryController {
                 render view:"index", model:[queryInstance:aQuery]
             }
         } catch (Exception e) {
-            log.error e
+            log.error e.message, e
             qQuery = new Query(params)
             aQuery.errors.rejectValue ('queryField', 'an.error.message')
             render view:"index", model:[queryInstance:aQuery]
@@ -70,7 +70,7 @@ class QueryController {
                 render view:"query", model:[queryInstance:aQuery]
             }
         } catch (Exception e) {
-            log.error e
+            log.error e.message, e
             qQuery = new Query(params)
             aQuery.errors.rejectValue ('queryField', 'an.error.message')
             render view:"query", model:[queryInstance:aQuery]

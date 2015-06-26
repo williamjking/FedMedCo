@@ -54,8 +54,8 @@
 							</div>
 						</div>
 					</div>
-					<div class="panel panel-warning">
-						<div class="panel-heading" role="tab" id="headingTwo">
+					<div class="panel panel-warning moderate-reactions">
+						<div class="panel-heading moderate-reactions" role="tab" id="headingTwo">
 							<h4 class="panel-title">
 								<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
 									<span class="badge">${drugReactions?.moderateReactions?.size()}</span>Moderate reactions reported for ${drugReactions?.medicine}
