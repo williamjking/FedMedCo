@@ -70,7 +70,7 @@ class BootStrap {
 	private String mapToFieldList(List list, String currentField, Map jsonMap) {
 		jsonMap.each {
 			prop, value -> 
-			if (!prop.endsWith("_exact")) {
+			if (!prop.endsWith("_exact") && !prop.startsWith("@")) {
 				def updatedField = currentField
 				if (prop == "properties") {
 					updatedField += "."
