@@ -121,9 +121,9 @@ class QueryController {
             def parsedData = new JsonSlurper().parseText(data)
 
             render view:"show", model: [
-                    disclaimer: parsedData.meta.disclaimer,
-                    lastUpdated: parsedData.meta.last_updated,
-                    totalResults: parsedData.meta.results.total,
+                    disclaimer: parsedData?.meta?.disclaimer,
+                    lastUpdated: parsedData?.meta?.last_updated,
+                    totalResults: parsedData?.meta?.results?.total,
                     queryResults: data
             ]
 
