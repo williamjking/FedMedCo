@@ -82,15 +82,15 @@
 				<div class="panel-heading" role="tab" id="headingThree">
 					<h4 class="panel-title">
 						<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-							Perform Generic Search on openFDA
+							Find out what other drugs or food may interact with your medication
 						</a>
 					</h4>
 				</div>
 				<div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
 					<div class="panel-body">
-						<g:form class="form-horizontal" url="[resource:contractorInstance, action:'search']" >
+						<g:form class="form-horizontal" url="[resource:contractorInstance, action:'drugFoodInteractions']" >
 							<fieldset class="form">
-								<g:render template="form"/>
+								<g:render template="foodInteractions"/>
 							</fieldset>
 							<fieldset class="buttons">
 								<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Submit</button>
@@ -100,6 +100,28 @@
 					</div>
 				</div>
 			</div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingFour">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                            Perform Generic Search on openFDA
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseFour" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingFour">
+                    <div class="panel-body">
+                        <g:form class="form-horizontal" url="[resource:contractorInstance, action:'search']" >
+                            <fieldset class="form">
+                                <g:render template="form"/>
+                            </fieldset>
+                            <fieldset class="buttons">
+                                <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Submit</button>
+                                <button type="button" class="btn btn-default reset"><span class="glyphicon glyphicon-refresh"></span> Reset</button>
+                            </fieldset>
+                        </g:form>
+                    </div>
+                </div>
+            </div>
 		</div>
 
 

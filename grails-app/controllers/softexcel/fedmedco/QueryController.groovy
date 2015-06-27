@@ -237,6 +237,84 @@ class QueryController {
     }
 
 
+    def drugFoodInteractions(){
+        try{
+            String category = 'drug'
+            String subCategory = 'label'
+            String medicine = '"' + queryService.replaceSpaceWithPlus(params.medicine) +'"'
+            String food = '"' + queryService.replaceSpaceWithPlus(params.food) +'"'
+
+            def jsonSlurper = new JsonSlurper();
+
+            String baseQuery =  "https://api.fda.gov/" +
+                    category +
+                    '/' +
+                    subCategory +
+                    '.json?search=' +
+                    '(openfda.generic_name:'+medicine+'+openfda.brand_name:'+ medicine +
+                    '+openfda.pharm_class_epc:'+medicine
+
+            String drugInteractionQuery =  baseQuery + ')+AND+drug_interactions:' + food
+
+            DrugInteractions drugInteractions = new DrugInteractions()
+            drugInteractions.medicine = params.medicine
+            drugInteractions.otherDrugOrFood = params.food
+
+            try{
+                def response = jsonSlurper.parse(drugInteractionQuery.toURL())
+                if (response?.results?.drug_interactions[0])
+                    drugInteractions.interactions = response?.results?.drug_interactions[0][0].replaceAll(~"(?i)(${params.food})"){all, text -> "<mark>${text}</mark>"}
+
+            }
+            catch (Exception e){
+            }
+
+            try{
+                drugInteractionQuery = baseQuery + ')+AND+adverse_reactions:' + food
+                def response = jsonSlurper.parse(drugInteractionQuery.toURL())
+                if (response?.results?.adverse_reactions[0])
+                    drugInteractions.adverseReactions = response?.results?.adverse_reactions[0][0].replaceAll(~"(?i)(${params.food})"){all, text -> "<mark>${text}</mark>"}
+            }
+            catch (Exception e){
+            }
+
+            try{
+                drugInteractionQuery = baseQuery + ')+AND+boxed_warning:' + food
+                def response = jsonSlurper.parse(drugInteractionQuery.toURL())
+                if (response?.results?.boxed_warning[0])
+                    drugInteractions.boxedWarnings = response?.results?.boxed_warning[0][0].replaceAll(~"(?i)(${params.food})"){all, text -> "<mark>${text}</mark>"}
+            }
+            catch (Exception e){
+            }
+
+            try{
+                drugInteractionQuery = baseQuery + ')+AND+user_safety_warnings:' + food
+                def response = jsonSlurper.parse(drugInteractionQuery.toURL())
+                if (response?.results?.user_safety_warnings[0])
+                    drugInteractions.warningAndPrecautions = response?.results?.user_safety_warnings[0][0].replaceAll(~"(?i)(${params.food})"){all, text -> "<mark>${text}</mark>"}
+            }
+            catch (Exception e){
+            }
+
+
+            render(view:'drugInteractions', model:[drugInteractions: drugInteractions])
+        }
+        catch(NullPointerException npe){
+            log.error e.message, e
+            Query queryParams = new Query(params)
+            queryParams.errors.rejectValue('queryField', 'required.fields.messaage')
+            forward(action: "index", params: [queryInstance: queryParams, errorMessage: e.message])
+        }
+        catch (Exception e){
+            log.error e.message, e
+            Query queryParams = new Query(params)
+            queryParams.errors.rejectValue('queryField', 'an.error.message')
+            forward(action: "index", params: [queryInstance: queryParams, errorMessage: e.message])
+        }
+
+    }
+
+
     protected void notFound() {
         request.withFormat {
             form multipartForm {

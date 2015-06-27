@@ -9,8 +9,8 @@ class QueryService {
         if (input == null || input == '')
             throw new NullPointerException("Empty String")
 
-        def wordsMatcher = input =~ /([a-zA-Z0-9_\-]*)\s/
-        def lastWord = input =~ /([a-zA-Z0-9_\-]*)$/
+        def wordsMatcher = input =~ /([\x21-\x7E]*)\s/
+        def lastWord = input =~ /([\x21-\x7E]*)$/
         def words = []
         wordsMatcher.each {aList -> words.add(aList[1])}
 

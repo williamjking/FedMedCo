@@ -31,7 +31,7 @@
 					</sec:ifLoggedIn>
 
                     <li role="presentation"><a title="Contact" class="glyphicon glyphicon-earphone contact" href="#" target="_blank"></a></li>
-					<li role="presentation"><a title="Help" class="glyphicon glyphicon-question-sign help" href="#"></a></li>
+					<li role="presentation"><a title="Help" class="glyphicon glyphicon-question-sign help" href="https://open.fda.gov" target="_blank"></a></li>
 				</ul>
 			</nav>
 			<a class="logo" href="${createLink(uri: '/')}"><asset:image src="FedMedCo.png" alt="FedMedCo"/></a>
