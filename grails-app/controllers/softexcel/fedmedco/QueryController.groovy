@@ -191,7 +191,7 @@ class QueryController {
 
             InterestingFacts interestingFacts = new InterestingFacts()
             interestingFacts.medicine = params.medicine
-
+            interestingFacts.message = 'Information of interest about the drug'
 
             if (facts.purpose && facts.purpose[0])interestingFacts.facts['Purpose'] = facts.purpose[0][0]
             if (facts.stop_use && facts.stop_use[0])interestingFacts.facts['Stop Using if'] = facts.stop_use[0][0]
@@ -204,6 +204,43 @@ class QueryController {
             else if (facts.precautions && facts.precautions[0])interestingFacts.facts['Precautions'] = facts.precautions[0][0]
             if (facts.pregnancy_or_breast_feeding && facts.pregnancy_or_breast_feeding[0])interestingFacts.facts['Pregnancy or Breast Feeding'] = facts.pregnancy_or_breast_feeding[0][0]
             else if (facts.pregnancy && facts.pregnancy[0])interestingFacts.facts['Pregnancy'] = facts.pregnancy[0][0]
+
+            render(view:'interestingFacts', model:[facts:interestingFacts])
+        }
+        catch (Exception ioe) {
+            log.error ioe.message, ioe
+            Query queryParams = new Query(params)
+            queryParams.errors.rejectValue('queryField', 'an.error.message')
+            render(view: "index", model: [queryInstance: queryParams, errorMessage: ioe.message])
+        }
+    }
+
+
+    def drugNames(){
+        try {
+            String category = 'drug'
+            String subCategory = 'label'
+            String medicine = '"' + queryService.replaceSpaceWithPlus(params.medicine) +'"'
+            String medicineQuery = "https://api.fda.gov/" +
+                    category +
+                    '/' +
+                    subCategory +
+                    '.json?search=' +
+                    'openfda.generic_name:'+medicine+'+openfda.brand_name:'+medicine +
+                    '+openfda.pharm_class_epc:'+medicine
+
+            def data = new JsonSlurper().parse(medicineQuery.toURL())
+            def facts = data.results
+
+            if (facts == null) throw new Exception ("Could not find any drug names " + params.medicine)
+
+            InterestingFacts interestingFacts = new InterestingFacts()
+            interestingFacts.medicine = params.medicine
+            interestingFacts.message = 'All the known names for the drug '
+
+            if (facts.openfda?.brand_name && facts.openfda?.brand_name[0])interestingFacts.facts['Brand Name(s)'] = facts.openfda?.brand_name[0][0]
+            if (facts.openfda?.generic_name && facts.openfda?.generic_name[0])interestingFacts.facts['Generic Name(s)'] = facts.openfda?.generic_name[0][0]
+            if (facts.openfda?.pharm_class_epc && facts.openfda?.pharm_class_epc[0])interestingFacts.facts['Established pharmacologic class'] = facts.openfda?.pharm_class_epc[0][0]
 
             render(view:'interestingFacts', model:[facts:interestingFacts])
         }

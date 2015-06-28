@@ -245,7 +245,7 @@ class QueryControllerSpec extends Specification {
 
         when: "The search action is executed with valid parameters"
         params.category = 'drug'
-        params.subcategory = 'event'
+        params.subcategory = 'label'
         params.medicine='bogus medicine'
 
         controller.interestingFacts()
@@ -263,7 +263,7 @@ class QueryControllerSpec extends Specification {
 
         when: "The search action is executed with valid parameters"
         params.category = 'drug'
-        params.subcategory = 'event'
+        params.subcategory = 'label'
         params.medicine='advil'
 
         controller.interestingFacts()
@@ -272,18 +272,59 @@ class QueryControllerSpec extends Specification {
         view == '/query/interestingFacts'
         model.facts != null
         model.facts.medicine == 'advil'
+        model.facts.message =='Information of interest about the drug'
         model.facts.facts != null
 
     }
 
-    void "Test that derugFoodInteraction throws an error when no food is passed"() {
+    void "Test that drugNames throws an error when invalid medicine is passed"() {
         setup:
         controller.queryService = queryService
         queryService.transactionManager = Mock(PlatformTransactionManager) { getTransaction(_) >> Mock(TransactionStatus) }
 
         when: "The search action is executed with valid parameters"
         params.category = 'drug'
-        params.subcategory = 'event'
+        params.subcategory = 'label'
+        params.medicine='bogus medicine'
+
+        controller.drugNames()
+
+        then: "Them the index action is forwarded"
+        view == '/query/index'
+        model.queryInstance.hasErrors() == true
+    }
+
+
+    void "Test that drugNames works when valid medicine is passed"() {
+        setup:
+        controller.queryService = queryService
+        queryService.transactionManager = Mock(PlatformTransactionManager) { getTransaction(_) >> Mock(TransactionStatus) }
+
+        when: "The search action is executed with valid parameters"
+        params.category = 'drug'
+        params.subcategory = 'label'
+        params.medicine='advil'
+
+        controller.drugNames()
+
+        then: "Them the index action is forwarded"
+        view == '/query/interestingFacts'
+        model.facts != null
+        model.facts.medicine == 'advil'
+        model.facts.message == 'All the known names for the drug '
+        model.facts.facts != null
+
+    }
+
+
+    void "Test that drugFoodInteraction throws an error when no food is passed"() {
+        setup:
+        controller.queryService = queryService
+        queryService.transactionManager = Mock(PlatformTransactionManager) { getTransaction(_) >> Mock(TransactionStatus) }
+
+        when: "The search action is executed with valid parameters"
+        params.category = 'drug'
+        params.subcategory = 'label'
         params.medicine='bogus medicine'
 
         controller.drugFoodInteractions()
@@ -293,14 +334,14 @@ class QueryControllerSpec extends Specification {
         model.queryInstance.hasErrors() == true
     }
 
-    void "Test that derugFoodInteraction throws an error when no medicine is passed"() {
+    void "Test that drugFoodInteraction throws an error when no medicine is passed"() {
         setup:
         controller.queryService = queryService
         queryService.transactionManager = Mock(PlatformTransactionManager) { getTransaction(_) >> Mock(TransactionStatus) }
 
         when: "The search action is executed with valid parameters"
         params.category = 'drug'
-        params.subcategory = 'event'
+        params.subcategory = 'label'
         params.food='bogus food'
 
         controller.drugFoodInteractions()
@@ -318,7 +359,7 @@ class QueryControllerSpec extends Specification {
 
         when: "The search action is executed with valid parameters"
         params.category = 'drug'
-        params.subcategory = 'event'
+        params.subcategory = 'label'
         params.medicine='bogus'
         params.food='bogus'
 

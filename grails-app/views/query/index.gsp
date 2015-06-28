@@ -35,6 +35,28 @@
 
 		<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 			<div class="panel panel-default">
+				<div class="panel-heading" role="tab" id="headingZero">
+					<h4 class="panel-title">
+						<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseZero" aria-expanded="false" aria-controls="collapseZero">
+							Find out all the names for your medication
+						</a>
+					</h4>
+				</div>
+				<div id="collapseZero" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingZero">
+					<div class="panel-body">
+						<g:form class="form-horizontal" url="[resource:contractorInstance, action:'drugNames']" >
+							<fieldset class="form">
+								<g:render template="medicine"/>
+							</fieldset>
+							<fieldset class="buttons">
+								<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Submit</button>
+								<button type="button" class="btn btn-default reset"><span class="glyphicon glyphicon-refresh"></span> Reset</button>
+							</fieldset>
+						</g:form>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
 				<div class="panel-heading" role="tab" id="headingOne">
 					<h4 class="panel-title">
 						<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
