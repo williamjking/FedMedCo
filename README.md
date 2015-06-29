@@ -38,7 +38,7 @@ Lockheed Martin has provided a Minimum Viable Product (MVP) directed at three ma
 
 1. Start MongoDB
 2. Deploy WAR to Tomcat
-  1. Make sure Tomcat's default file limit is modified because it will not deploy otherwise, e.g. (�/webapps/manager/WEB-INF/web.xml)
+  1. Make sure Tomcat's default file limit is modified because it will not deploy otherwise, e.g. (.../webapps/manager/WEB-INF/web.xml)
   ```xml
     <multipart-config>
       <!-- 50MB max -->
