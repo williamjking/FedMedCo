@@ -2,7 +2,7 @@
 
 Provides a responsive human centered design interface that enables both novice and experienced users to search the openFDA data to identify critical drug information and display results across multiple devices.
 
-# Features
+## Features
 
 * Reported Drug Reactions
 * Drug to Food Interaction
@@ -10,7 +10,7 @@ Provides a responsive human centered design interface that enables both novice a
 * Open Query for search engine
 * Multi-Device compatibility
 
-# Web Technologies
+## Web Technologies
 
 |   | **Technology** | **Description** | **License** | **Version** | **Date** |
 | --- | --- | --- | --- | --- | --- |
@@ -24,18 +24,18 @@ Provides a responsive human centered design interface that enables both novice a
 | 8. | Selenium | Web Testing | Apache 2 | 2.46 | 2015 |
 | 9. | Spock | Integration Test | Apache 2 | <Need Version> | 2012 |
 
-# Approach
+## Approach
 
 Lockheed Martin has provided a Minimum Viable Product (MVP) directed at three main categories of users: patients, pharmaceutical manufacturers, and regulatory agencies. The drug reaction and food to drug interaction features are primarily for patients seeking information about medications they are using. The interesting facts about drugs feature and the open query are for both pharmaceutical manufacturers and regulatory agencies who have pharmaceutical domain knowledge and are performing a deep dive.
 
-# Design Documents
+## Design Documents
 
 * Architecture Diagrams
 * Use Cases
 * Personas
 * Screen Mockups
 
-# Installation
+## Installation
 
 1. Start MongoDB
 2. Deploy WAR to Tomcat
@@ -53,19 +53,19 @@ Lockheed Martin has provided a Minimum Viable Product (MVP) directed at three ma
 4. Verify application running and can access each of the three queries
   1. I'm planning to get Z to automate this and execute it as part of the deployment monitoring process.
 
-# API Reference
+## API Reference
 
 [https://open.fda.gov/api/reference/](https://open.fda.gov/api/reference/)
 
-# Test
+## Test
 
 JUnit unit testing.
 
-# Contributors
+## Contributors
 
 Lockheed Martin
 
-# License
+## License
 
 All license agreements are Free and Open Source
 
