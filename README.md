@@ -39,7 +39,7 @@ Lockheed Martin has provided a Minimum Viable Product (MVP) directed at three ma
 
 1. Start MongoDB
 2. Deploy WAR to Tomcat
-  a. Make sure Tomcat's default file limit is modified because it will not deploy otherwise, e.g. (…/webapps/manager/WEB-INF/web.xml)
+  1. Make sure Tomcat's default file limit is modified because it will not deploy otherwise, e.g. (…/webapps/manager/WEB-INF/web.xml)
 ```xml
     <multipart-config>
       <!-- 50MB max -->
@@ -48,10 +48,10 @@ Lockheed Martin has provided a Minimum Viable Product (MVP) directed at three ma
       <file-size-threshold>0</file-size-threshold>
     </multipart-config>
 ```
-  b. The WAR is built automatically by Jenkins and archived as part of the build for easy access.
+  2. The WAR is built automatically by Jenkins and archived as part of the build for easy access.
 3. Start application on Tomcat
 4. Verify application running and can access each of the three queries
-  a. I'm planning to get Z to automate this and execute it as part of the deployment monitoring process.
+  1. I'm planning to get Z to automate this and execute it as part of the deployment monitoring process.
 
 # API Reference
 
