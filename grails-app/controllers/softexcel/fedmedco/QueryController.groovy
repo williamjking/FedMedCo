@@ -173,6 +173,7 @@ class QueryController {
         } catch (Exception ioe) {
             log.error ioe.message, ioe
             Query queryParams = new Query(params)
+            queryParams.errors.rejectValue ('queryField', 'an.error.message')
             render (view: "index", model:[queryInstance: queryParams, errorMessage: ioe.message])
         }
     }
@@ -220,6 +221,7 @@ class QueryController {
         catch (Exception ioe) {
             log.error ioe.message, ioe
             Query queryParams = new Query(params)
+            queryParams.errors.rejectValue ('queryField', 'an.error.message')
             render(view: "index", model: [queryInstance: queryParams, errorMessage: ioe.message])
         }
     }
