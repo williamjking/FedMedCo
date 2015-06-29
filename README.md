@@ -15,14 +15,13 @@ Provides a responsive human centered design interface that enables both novice a
 |   | **Technology** | **Description** | **License** | **Version** | **Date** |
 | --- | --- | --- | --- | --- | --- |
 | 1. | Grails/Groovy | Web Framework/ language | Apache 2 | 2.4 | 2014 |
-| 2. | Gradle | Automated Build | Apache 2 | <Need Version> |   |
-| 3. | HTML5/CSS3 using Bootstrap | Presentation / Responsive design supporting multi-device | MIT | 3.3.4 | 2015 |
-| 4. | Sitemesh | HTML template framework based on Decoration Model | OpenSymphony(Apache) | <Need Version> |   |
-| 5. | GORM | Object relationship mapping | Apache 2 | <Need Version> |   |
-| 6. | MongoDB | NoSQL database JSON-like documents | GNU GPL | 3.0.4 | 2015 |
-| 7. | JQuery | JavaScript library | MIT | 1.11.1 | 2014 |
-| 8. | Selenium | Web Testing | Apache 2 | 2.46 | 2015 |
-| 9. | Spock | Integration Test | Apache 2 | <Need Version> | 2012 |
+| 2. | HTML5/CSS3 using Bootstrap | Presentation / Responsive design supporting multi-device | MIT | 3.3.4 | 2015 |
+| 3. | Sitemesh | HTML template framework based on Decoration Model | OpenSymphony(Apache) | 2.1.5 |   |
+| 4. | GORM | Object relationship mapping | Apache 2 | 2.5.0 |   |
+| 5. | MongoDB | NoSQL database JSON-like documents | GNU GPL | 3.0.4 | 2015 |
+| 6. | JQuery | JavaScript library | MIT | 1.11.1 | 2014 |
+| 7. | Selenium | Web Testing | Apache 2 | 2.46 | 2015 |
+| 8. | Spock | Integration Test | Apache 2 | 0.7 | 2012 |
 
 ## Approach
 
@@ -39,7 +38,7 @@ Lockheed Martin has provided a Minimum Viable Product (MVP) directed at three ma
 
 1. Start MongoDB
 2. Deploy WAR to Tomcat
-  1. Make sure Tomcat's default file limit is modified because it will not deploy otherwise, e.g. (…/webapps/manager/WEB-INF/web.xml)
+  1. Make sure Tomcat's default file limit is modified because it will not deploy otherwise, e.g. (ï¿½/webapps/manager/WEB-INF/web.xml)
   ```xml
     <multipart-config>
       <!-- 50MB max -->
