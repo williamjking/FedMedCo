@@ -1,5 +1,7 @@
 import groovy.json.JsonSlurper
+import softexcel.fedmedco.EndPoint
 import softexcel.fedmedco.FieldList
+import softexcel.fedmedco.OpenFDACategory
 import softexcel.fedmedco.Role
 import softexcel.fedmedco.User
 import softexcel.fedmedco.UserRole
@@ -36,6 +38,32 @@ class BootStrap {
         UserRole.create su, queryRole, true
         UserRole.create john, queryRole, true
 
+		def drugCat = OpenFDACategory.findByCategory('drug')
+		if (drugCat == null) {
+			OpenFDACategory.create 'drug' true
+		}
+		def deviceCat = OpenFDACategory.findByCategory('device')
+		if (deviceCat == null) {
+			OpenFDACategory.create 'device' true
+		}
+		def foodCat = OpenFDACategory.findByCategory('food')
+		if (foodCat == null) {
+			OpenFDACategory.create 'food' true
+		}
+				
+		def eventEndPoint = EndPoint.findByEndPoint('event')
+		if (eventEndPoint == null) {
+			EndPoint.create 'event' true
+		}
+		def labelEndPoint = EndPoint.findByEndPoint('label')
+		if (labelEndPoint == null) {
+			EndPoint.create 'label' true
+		}
+		def enforcementEndPoint = EndPoint.findByEndPoint('enforcement')
+		if (enforcementEndPoint == null) {
+			EndPoint.create 'enforcement' true
+		}
+ 		
 		def faersSchema = 'https://raw.githubusercontent.com/FDA/openfda/master/schemas/faers_mapping.json'.toURL().text
 		def splSchema = 'https://raw.githubusercontent.com/FDA/openfda/master/schemas/spl_mapping.json'.toURL().text
 		def resSchema = 'https://raw.githubusercontent.com/FDA/openfda/master/schemas/res_mapping.json'.toURL().text
