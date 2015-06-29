@@ -6,11 +6,6 @@
 		<meta name="layout" content="main">
 		<g:set var="entityName" value="${message(code: 'query.label', default: 'Query')}" />
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
-		<script>
-			$(function () {
-				$('.collapse').collapse();
-			});
-		</script>
 	</head>
 	<body>
 		<a href="#list-query" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
@@ -42,7 +37,7 @@
 						</a>
 					</h4>
 				</div>
-				<div id="collapseZero" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingZero">
+				<div id="collapseZero" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingZero">
 					<div class="panel-body">
 						<g:form class="form-horizontal" url="[resource:contractorInstance, action:'drugNames']" >
 							<fieldset class="form">
@@ -64,7 +59,7 @@
 						</a>
 					</h4>
 				</div>
-				<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+				<div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
 					<div class="panel-body">
 						<g:form class="form-horizontal" url="[resource:contractorInstance, action:'medicineReactions']" >
 							<fieldset class="form">
@@ -86,7 +81,7 @@
 						</a>
 					</h4>
 				</div>
-				<div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+				<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
 					<div class="panel-body">
                         <g:form class="form-horizontal" url="[resource:contractorInstance, action:'interestingFacts']" >
                             <fieldset class="form">
@@ -108,7 +103,7 @@
 						</a>
 					</h4>
 				</div>
-				<div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
+				<div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
 					<div class="panel-body">
 						<g:form class="form-horizontal" url="[resource:contractorInstance, action:'drugFoodInteractions']" >
 							<fieldset class="form">
@@ -130,7 +125,7 @@
                         </a>
                     </h4>
                 </div>
-                <div id="collapseFour" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingFour">
+                <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
                     <div class="panel-body">
                         <g:form class="form-horizontal" url="[resource:contractorInstance, action:'search']" >
                             <fieldset class="form">
