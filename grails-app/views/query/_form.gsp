@@ -42,7 +42,7 @@
                 <div>
                     <div class="input-group col-xs-7">
                         <span class="input-group-addon" id="basic-addon1" style="color:rgba(0,0,0,0)">AND</span>
-                        <select id="fieldsSelect_0" name="fields_0" class="form-control"></select>
+                        <select required="" id="fieldsSelect_0" name="fields_0" class="form-control"></select>
                     </div>
 
                     <label for="criteria">
