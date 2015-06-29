@@ -30,7 +30,7 @@ $(function(){
         fieldCounter++;
         $('<div class="groupParent"> ' +
             '<input type="hidden" class="hiddenClass" id="booleanOp_'+fieldCounter+'" name="booleanOp_' + fieldCounter +'" value="AND"/>' +
-            '<div class="input-group col-xs-5">'+
+            '<div class="input-group col-xs-7">'+
             '<a href="#" name="'+fieldCounter+'" data-toggle="tooltip" title="Click to toggle" id="booleanSpan" class="input-group-addon" id="basic-addon1">AND</a>' +
             '<select class="form-control" id="fieldsSelect_' + fieldCounter +'" name="fields_' + fieldCounter +'" aria-describedby="basic-addon1"></select>' +
              '</div>' +
