@@ -1,13 +1,16 @@
-# Agile Delivery Services (ADS 1) FedMedCo
+# Supporting Documentation
 
-Provides a responsive human centered design interface that enables both novice and experienced users to search the openFDA data to identify critical drug information and display results across multiple devices.
+This directory contains supplementary resources used in the documentation of the application.
 
-## Design Documents
+## Architecture Diagrams
+
 ![alt text](architecture.png "Architecture")
-* Architecture Diagrams
-* Use Cases
-* Personas
-* Screen Mockups
+
+## Use Cases
+
+## Personas
+
+## Screen Mockups
 
 ## Monitoring
 
