@@ -54,29 +54,8 @@ class QueryController {
 		if (name != null) {
 			fieldList = FieldList.findBySchemaName(name).fields
 		}
-		
 		render fieldList
 	}
-
-    def query(Query queryInstance, String errorMessage, String queryResults) {
-        Query aQuery = queryInstance
-        try {
-
-            if (errorMessage == null) {
-                render view:"query", model:[queryResults:queryResults]
-            }
-            else {
-                if (aQuery == null) aQuery = new Query()
-                aQuery.errors.rejectValue('queryField', 'an.error.message')
-                render view:"query", model:[queryInstance:aQuery]
-            }
-        } catch (Exception e) {
-            log.error e.message, e
-            qQuery = new Query(params)
-            aQuery.errors.rejectValue ('queryField', 'an.error.message')
-            render view:"query", model:[queryInstance:aQuery]
-        }
-    }
 
     def search() {
         try {
@@ -109,25 +88,17 @@ class QueryController {
 
             def completeQuery = [search:assembleAllFields]
 
-            if (params.count != '') {
+            if (params.count && params.count != '') {
                 if (params.exactCount) completeQuery.put('count', params.count + '.exact')
                 else completeQuery.put('count', params.count)
             }
-            if (params.limit != '' && params.limit?.isInteger()) completeQuery.put('limit', params.limit)
-            if (params.skip != '' && params.skip?.isInteger()) completeQuery.put('skip', params.skip)
+            if (params.limit && params.limit != '' && params.limit?.isInteger()) completeQuery.put('limit', params.limit)
+            if (params.skip && params.skip != '' && params.skip?.isInteger()) completeQuery.put('skip', params.skip)
 
             def url = openFDAURLBase + openFDAURLPath + "?" + completeQuery.collect { it }.join('&')
 
-			def connection = url.toURL().openConnection()
-			if (connection.responseCode > 400) {
-				def data = connection.errorStream.text
-		        def parsedData = new JsonSlurper().parseText(data)
-				def errorMessage = parsedData?.error?.message
-	            Query queryParams = new Query()
-	            queryParams.errors.rejectValue('queryField', 'query.error.message', [errorMessage] as Object[], "")
-				render view:"index", model:[queryInstance:queryParams]
-			} else {
-				def data = connection.content.text
+			def data = getURLContent(url);
+			if (data != null) {
 		        def parsedData = new JsonSlurper().parseText(data)
 	            render view:"show", model: [
 	                    disclaimer: parsedData?.meta?.disclaimer,
@@ -135,13 +106,13 @@ class QueryController {
 	                    totalResults: parsedData?.meta?.results?.total,
 	                    queryResults: data
 	            ]
-					
 			}
 
         } catch (Exception ioe) {
             log.error ioe.message, ioe
             Query queryParams = new Query(params)
-            forward (action: "index", params:[queryInstance: queryParams, errorMessage: ioe.message])
+            queryParams.errors.rejectValue ('queryField', 'an.error.message')
+            render (view: "index", model:[queryInstance: queryParams, errorMessage: ioe.message])
         }
     }
 
@@ -159,17 +130,10 @@ class QueryController {
                     'patient.drug.openfda.generic_name:'+medicine+'+patient.drug.openfda.brand_name:'+medicine +
                     '+patient.drug.openfda.pharm_class_epc:'+medicine+
                     '&count=patient.reaction.reactionmeddrapt.exact'
-
-			def connection = medicineQuery.toURL().openConnection()
-			if (connection.responseCode > 400) {
-				def data = connection.errorStream.text
-				def parsedData = new JsonSlurper().parseText(data)
-				def errorMessage = parsedData?.error?.message
-				Query queryParams = new Query()
-				queryParams.errors.rejectValue('queryField', 'query.error.message', [errorMessage] as Object[], "")
-				render view:"index", model:[queryInstance:queryParams]
-			} else {
-	            def data = new JsonSlurper().parse(connection.content.text)
+					
+			def content = getURLContent(medicineQuery);
+			if (content != null) {
+	            def data = new JsonSlurper().parseText(content)
 	
 	            def mapToAnalyzeData = [:]
 	
@@ -206,7 +170,7 @@ class QueryController {
         } catch (Exception ioe) {
             log.error ioe.message, ioe
             Query queryParams = new Query(params)
-            forward (action: "index", params:[queryInstance: queryParams, errorMessage: ioe.message])
+            render (view: "index", model:[queryInstance: queryParams, errorMessage: ioe.message])
         }
     }
 
@@ -224,23 +188,16 @@ class QueryController {
                     'openfda.generic_name:'+medicine+'+openfda.brand_name:'+medicine +
                     '+openfda.pharm_class_epc:'+medicine
 
-			def connection = medicineQuery.toURL().openConnection()
-			if (connection.responseCode > 400) {
-				def data = connection.errorStream.text
-				def parsedData = new JsonSlurper().parseText(data)
-				def errorMessage = parsedData?.error?.message
-				Query queryParams = new Query()
-				queryParams.errors.rejectValue('queryField', 'query.error.message', [errorMessage] as Object[], "")
-				render view:"index", model:[queryInstance:queryParams]
-			} else {
-				def data = new JsonSlurper().parse(connection.content.text)
+			def content = getURLContent(medicineQuery);
+			if (content != null) {
+				def data = new JsonSlurper().parseText(content)
 	            def facts = data.results
 	
 	            if (facts == null) throw new Exception ("Could not find any interesting data for the drug " + params.medicine)
 	
 	            InterestingFacts interestingFacts = new InterestingFacts()
 	            interestingFacts.medicine = params.medicine
-	
+	            interestingFacts.message = 'Information of interest about the drug'
 	
 	            if (facts.purpose && facts.purpose[0])interestingFacts.facts['Purpose'] = facts.purpose[0][0]
 	            if (facts.stop_use && facts.stop_use[0])interestingFacts.facts['Stop Using if'] = facts.stop_use[0][0]
@@ -260,8 +217,126 @@ class QueryController {
         catch (Exception ioe) {
             log.error ioe.message, ioe
             Query queryParams = new Query(params)
-            forward(action: "index", params: [queryInstance: queryParams, errorMessage: ioe.message])
+            render(view: "index", model: [queryInstance: queryParams, errorMessage: ioe.message])
         }
+    }
+
+
+    def drugNames(){
+        try {
+            String category = 'drug'
+            String subCategory = 'label'
+            String medicine = '"' + queryService.replaceSpaceWithPlus(params.medicine) +'"'
+            String medicineQuery = "https://api.fda.gov/" +
+                    category +
+                    '/' +
+                    subCategory +
+                    '.json?search=' +
+                    'openfda.generic_name:'+medicine+'+openfda.brand_name:'+medicine +
+                    '+openfda.pharm_class_epc:'+medicine
+
+			def content = getURLContent(medicineQuery);
+			if (content != null) {
+	            def data = new JsonSlurper().parseText(content)
+	            def facts = data.results
+	
+	            if (facts == null) throw new Exception ("Could not find any drug names " + params.medicine)
+	
+	            InterestingFacts interestingFacts = new InterestingFacts()
+	            interestingFacts.medicine = params.medicine
+	            interestingFacts.message = 'All the known names for the drug '
+	
+	            if (facts.openfda?.brand_name && facts.openfda?.brand_name[0])interestingFacts.facts['Brand Name(s)'] = facts.openfda?.brand_name[0][0]
+	            if (facts.openfda?.generic_name && facts.openfda?.generic_name[0])interestingFacts.facts['Generic Name(s)'] = facts.openfda?.generic_name[0][0]
+	            if (facts.openfda?.pharm_class_epc && facts.openfda?.pharm_class_epc[0])interestingFacts.facts['Established pharmacologic class'] = facts.openfda?.pharm_class_epc[0][0]
+	
+	            render(view:'interestingFacts', model:[facts:interestingFacts])
+			}
+        }
+        catch (Exception ioe) {
+            log.error ioe.message, ioe
+            Query queryParams = new Query(params)
+            queryParams.errors.rejectValue('queryField', 'an.error.message')
+            render(view: "index", model: [queryInstance: queryParams, errorMessage: ioe.message])
+        }
+    }
+
+
+    def drugFoodInteractions(){
+        try{
+            String category = 'drug'
+            String subCategory = 'label'
+            String medicine = '"' + queryService.replaceSpaceWithPlus(params.medicine) +'"'
+            String food = '"' + queryService.replaceSpaceWithPlus(params.food) +'"'
+
+            def jsonSlurper = new JsonSlurper();
+
+            String baseQuery =  "https://api.fda.gov/" +
+                    category +
+                    '/' +
+                    subCategory +
+                    '.json?search=' +
+                    '(openfda.generic_name:'+medicine+'+openfda.brand_name:'+ medicine +
+                    '+openfda.pharm_class_epc:'+medicine
+
+            String drugInteractionQuery =  baseQuery + ')+AND+drug_interactions:' + food
+
+            DrugInteractions drugInteractions = new DrugInteractions()
+            drugInteractions.medicine = params.medicine
+            drugInteractions.otherDrugOrFood = params.food
+
+            try{
+                def response = jsonSlurper.parse(drugInteractionQuery.toURL())
+                if (response?.results?.drug_interactions[0])
+                    drugInteractions.interactions = response?.results?.drug_interactions[0][0].replaceAll(~"(?i)(${params.food})"){all, text -> "<mark>${text}</mark>"}
+
+            }
+            catch (Exception e){
+            }
+
+            try{
+                drugInteractionQuery = baseQuery + ')+AND+adverse_reactions:' + food
+                def response = jsonSlurper.parse(drugInteractionQuery.toURL())
+                if (response?.results?.adverse_reactions[0])
+                    drugInteractions.adverseReactions = response?.results?.adverse_reactions[0][0].replaceAll(~"(?i)(${params.food})"){all, text -> "<mark>${text}</mark>"}
+            }
+            catch (Exception e){
+            }
+
+            try{
+                drugInteractionQuery = baseQuery + ')+AND+boxed_warning:' + food
+                def response = jsonSlurper.parse(drugInteractionQuery.toURL())
+                if (response?.results?.boxed_warning[0])
+                    drugInteractions.boxedWarnings = response?.results?.boxed_warning[0][0].replaceAll(~"(?i)(${params.food})"){all, text -> "<mark>${text}</mark>"}
+            }
+            catch (Exception e){
+            }
+
+            try{
+                drugInteractionQuery = baseQuery + ')+AND+user_safety_warnings:' + food
+                def response = jsonSlurper.parse(drugInteractionQuery.toURL())
+                if (response?.results?.user_safety_warnings[0])
+                    drugInteractions.warningAndPrecautions = response?.results?.user_safety_warnings[0][0].replaceAll(~"(?i)(${params.food})"){all, text -> "<mark>${text}</mark>"}
+            }
+            catch (Exception e){
+            }
+
+
+            render(view:'drugInteractions', model:[drugInteractions: drugInteractions])
+        }
+        catch(NullPointerException npe){
+            log.error npe.message, npe
+            Query queryParams = new Query(params)
+            queryParams.errors.rejectValue('queryField', 'required.fields.messaage')
+            render(view: "index", model: [queryInstance: queryParams, errorMessage: npe.message])
+        }
+        catch (Exception e){
+            log.error e.message, e
+            Query queryParams = new Query(params)
+            queryParams.errors.rejectValue('queryField', 'an.error.message')
+            render(view: "index", model: [queryInstance: queryParams, errorMessage: e.message])
+        }
+
     }
 
 
@@ -274,4 +349,19 @@ class QueryController {
             '*' { render status: NOT_FOUND }
         }
     }
+	
+	private String getURLContent(String url) {
+		def connection = url.toURL().openConnection()
+		if (connection.responseCode > 400) {
+			def data = connection.errorStream.text
+			def parsedData = new JsonSlurper().parseText(data)
+			def errorMessage = parsedData?.error?.message
+			Query queryParams = new Query()
+			queryParams.errors.rejectValue('queryField', 'query.error.message', [errorMessage] as Object[], "")
+			render view:"index", model:[queryInstance:queryParams]
+			return null
+		} else {
+			return connection.content.text
+		}
+	}
 }

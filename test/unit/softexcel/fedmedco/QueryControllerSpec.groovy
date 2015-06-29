@@ -2,11 +2,17 @@ package softexcel.fedmedco
 
 
 import grails.test.mixin.*
+import org.springframework.transaction.PlatformTransactionManager
+import org.springframework.transaction.TransactionStatus
 import spock.lang.*
 
+
 @TestFor(QueryController)
-@Mock(Query)
+@Mock([Query, FieldList])
 class QueryControllerSpec extends Specification {
+
+    QueryService queryService = new QueryService()
+
 
     def populateValidParams(params) {
         assert params != null
@@ -14,138 +20,362 @@ class QueryControllerSpec extends Specification {
         //params["name"] = 'someValidName'
     }
 
+
     void "Test the index action returns the correct model"() {
 
-        when: "The index action is executed"
-        controller.index()
+        when: "The index action is executed with no error message"
+        controller.index(null, null, "Error Message is null")
 
         then: "The model is correct"
-        !model.queryInstanceList
-        model.queryInstanceCount == 0
+        view == '/query/index'
+        model.queryResults == 'Error Message is null'
     }
 
     void "Test the create action returns the correct model"() {
-        when: "The create action is executed"
-        controller.create()
+        when: "The index action is executed when error message is passed"
+        controller.index(null, "error", null)
 
         then: "The model is correctly created"
-        model.queryInstance != null
+        view == '/query/index'
+        model.queryInstance instanceof Query
+        model.queryInstance.hasErrors() ==  true
     }
 
-    void "Test the save action correctly persists an instance"() {
+    void "Test that correct field list is returned"() {
+        when: "populate field is called with wrong fields a null list is returned"
+        controller.populateFields("drug", "dummy")
+        then:
+        response.text == '[]'
 
-        when: "The save action is executed with an invalid instance"
-        request.contentType = FORM_CONTENT_TYPE
-        request.method = 'POST'
-        def query = new Query()
-        query.validate()
-        controller.save(query)
-
-        then: "The create view is rendered again with the correct model"
-        model.queryInstance != null
-        view == 'create'
-
-        when: "The save action is executed with a valid instance"
-        response.reset()
-        populateValidParams(params)
-        query = new Query(params)
-
-        controller.save(query)
-
-        then: "A redirect is issued to the show action"
-        response.redirectedUrl == '/query/show/1'
-        controller.flash.message != null
-        Query.count() == 1
     }
 
-    void "Test that the show action returns the correct model"() {
-        when: "The show action is executed with a null domain"
-        controller.show(null)
+    void "Test Field List for faers"(){
+        FieldList.create("faers", ['faerslist'], true)
 
-        then: "A 404 error is returned"
-        response.status == 404
+        when: "populate field is called with drug and event"
+        controller.populateFields("drug", "event")
+        then:
+        response.text == '[\'faerslist\']'
 
-        when: "A domain instance is passed to the show action"
-        populateValidParams(params)
-        def query = new Query(params)
-        controller.show(query)
-
-        then: "A model is populated containing the domain instance"
-        model.queryInstance == query
     }
 
-    void "Test that the edit action returns the correct model"() {
-        when: "The edit action is executed with a null domain"
-        controller.edit(null)
+    void "Test Field List for spl"(){
+        FieldList.create("spl", ['spllist'], true)
 
-        then: "A 404 error is returned"
-        response.status == 404
+        when: "populate field is called with drug and label"
+        controller.populateFields("drug", "label")
+        then:
+        response.text == '[\'spllist\']'
 
-        when: "A domain instance is passed to the edit action"
-        populateValidParams(params)
-        def query = new Query(params)
-        controller.edit(query)
-
-        then: "A model is populated containing the domain instance"
-        model.queryInstance == query
     }
 
-    void "Test the update action performs an update on a valid domain instance"() {
-        when: "Update is called for a domain instance that doesn't exist"
-        request.contentType = FORM_CONTENT_TYPE
-        request.method = 'PUT'
-        controller.update(null)
+    void "Test Field List for drug enforcement"(){
+        FieldList.create("res", ['reslist'], true)
 
-        then: "A 404 error is returned"
-        response.redirectedUrl == '/query/index'
-        flash.message != null
+        when: "populate field is called with drug and enforcement"
+        controller.populateFields("drug", "enforcement")
+        then:
+        response.text == '[\'reslist\']'
 
-
-        when: "An invalid domain instance is passed to the update action"
-        response.reset()
-        def query = new Query()
-        query.validate()
-        controller.update(query)
-
-        then: "The edit view is rendered again with the invalid instance"
-        view == 'edit'
-        model.queryInstance == query
-
-        when: "A valid domain instance is passed to the update action"
-        response.reset()
-        populateValidParams(params)
-        query = new Query(params).save(flush: true)
-        controller.update(query)
-
-        then: "A redirect is issues to the show action"
-        response.redirectedUrl == "/query/show/$query.id"
-        flash.message != null
     }
 
-    void "Test that the delete action deletes an instance if it exists"() {
-        when: "The delete action is called for a null instance"
-        request.contentType = FORM_CONTENT_TYPE
-        request.method = 'DELETE'
-        controller.delete(null)
+    void "Test Field List for device event"(){
+        FieldList.create("maude", ['maudelist'], true)
 
-        then: "A 404 is returned"
-        response.redirectedUrl == '/query/index'
-        flash.message != null
+        when: "populate field is called with device and event"
+        controller.populateFields("device", "event")
+        then:
+        response.text == '[\'maudelist\']'
 
-        when: "A domain instance is created"
-        response.reset()
-        populateValidParams(params)
-        def query = new Query(params).save(flush: true)
-
-        then: "It exists"
-        Query.count() == 1
-
-        when: "The domain instance is passed to the delete action"
-        controller.delete(query)
-
-        then: "The instance is deleted"
-        Query.count() == 0
-        response.redirectedUrl == '/query/index'
-        flash.message != null
     }
+
+    void "Test Field List for device enforcement"(){
+        FieldList.create("res", ['reslist'], true)
+
+        when: "populate field is called with device and enforcement"
+        controller.populateFields("device", "enforcement")
+        then:
+        response.text == '[\'reslist\']'
+
+    }
+
+
+    void "Test Field List for food enforcement"(){
+        FieldList.create("spl", ['spllist'], true)
+        FieldList.create("res", ['reslist'], true)
+        when: "populate field is called with food and enforcement"
+        controller.populateFields("food", "enforcement")
+        then:
+        response.text == '[\'reslist\']'
+    }
+
+
+    void "Test that search method is called improperly"() {
+
+        setup:
+        controller.queryService = queryService
+        queryService.transactionManager = Mock(PlatformTransactionManager) { getTransaction(_) >> Mock(TransactionStatus) }
+
+
+        when: "The search action is executed with invalid parameters"
+        params.category = 'drug'
+        params.subcategory = 'dummy'
+        params.fields_0='patient.drug.openfda.brand_name'
+        params.criteria_0='advil'
+        controller.search()
+
+        then: "Them the index action is forwarded"
+        view == '/query/index'
+        model.queryInstance.hasErrors() == true
+    }
+
+    void "Test that search method is called properly"() {
+
+        setup:
+        controller.queryService = queryService
+        queryService.transactionManager = Mock(PlatformTransactionManager) { getTransaction(_) >> Mock(TransactionStatus) }
+
+        when: "The search action is executed with valid parameters"
+        params.category = 'drug'
+        params.subcategory = 'event'
+        params.fields_0='patient.drug.openfda.brand_name'
+        params.criteria_0='advil'
+        controller.search()
+
+        then: "Them the index action is forwarded"
+        view == '/query/show'
+        model.disclaimer != null
+        model.queryResults != null
+    }
+
+
+    void "Test that search method is called properly and with count limit and skip"() {
+        setup:
+        controller.queryService = queryService
+        queryService.transactionManager = Mock(PlatformTransactionManager) { getTransaction(_) >> Mock(TransactionStatus) }
+
+        when: "The search action is executed with valid parameters"
+        params.category = 'drug'
+        params.subcategory = 'event'
+        params.fields_0='patient.drug.openfda.brand_name'
+        params.criteria_0='advil'
+        params.criteria_exact_0=true
+        params.fields_1='patient.patientsex'
+        params.criteria_1='1'
+        params.booleanOp_1='AND'
+        params.count='patient.reaction.reactionmeddrapt'
+        params.limit='5'
+        params.skil='10'
+        controller.search()
+
+        then: "Them the index action is forwarded"
+        view == '/query/show'
+        model.disclaimer != null
+        model.queryResults != null
+    }
+
+    void "Test that search method is called properly and with bogus limit and skip"() {
+        setup:
+        controller.queryService = queryService
+        queryService.transactionManager = Mock(PlatformTransactionManager) { getTransaction(_) >> Mock(TransactionStatus) }
+
+        when: "The search action is executed with valid parameters"
+        params.category = 'drug'
+        params.subcategory = 'event'
+        params.fields_0='patient.drug.openfda.brand_name'
+        params.criteria_0='advil'
+        params.criteria_exact_0=true
+        params.fields_1='patient.patientsex'
+        params.criteria_1='1'
+        params.booleanOp_1='AND'
+        params.count='patient.reaction.reactionmeddrapt'
+        params.limit='NaN'
+        params.skil='NaN'
+        controller.search()
+
+        then: "Them the index action is forwarded"
+        view == '/query/show'
+        model.disclaimer != null
+        model.queryResults != null
+    }
+
+
+
+    void "Test that medicineReactions throws an error when invalid medicine is passed"() {
+        setup:
+        controller.queryService = queryService
+        queryService.transactionManager = Mock(PlatformTransactionManager) { getTransaction(_) >> Mock(TransactionStatus) }
+
+        when: "The search action is executed with valid parameters"
+        params.category = 'drug'
+        params.subcategory = 'event'
+        params.medicine='bogus medicine'
+
+        controller.medicineReactions()
+
+        then: "Them the index action is forwarded"
+        view == '/query/index'
+        model.queryInstance.hasErrors() == true
+    }
+
+
+    void "Test that medicineReactions works when valid medicine is passed"() {
+        setup:
+        controller.queryService = queryService
+        queryService.transactionManager = Mock(PlatformTransactionManager) { getTransaction(_) >> Mock(TransactionStatus) }
+
+        when: "The search action is executed with valid parameters"
+        params.category = 'drug'
+        params.subcategory = 'event'
+        params.medicine='advil'
+
+        controller.medicineReactions()
+
+        then: "Them the index action is forwarded"
+        view == '/query/medicineReactions'
+        model.drugReactions != null
+        model.drugReactions.medicine == 'advil'
+
+    }
+
+    void "Test that interestingFacts throws an error when invalid medicine is passed"() {
+        setup:
+        controller.queryService = queryService
+        queryService.transactionManager = Mock(PlatformTransactionManager) { getTransaction(_) >> Mock(TransactionStatus) }
+
+        when: "The search action is executed with valid parameters"
+        params.category = 'drug'
+        params.subcategory = 'label'
+        params.medicine='bogus medicine'
+
+        controller.interestingFacts()
+
+        then: "Them the index action is forwarded"
+        view == '/query/index'
+        model.queryInstance.hasErrors() == true
+    }
+
+
+    void "Test that interestingFacts works when valid medicine is passed"() {
+        setup:
+        controller.queryService = queryService
+        queryService.transactionManager = Mock(PlatformTransactionManager) { getTransaction(_) >> Mock(TransactionStatus) }
+
+        when: "The search action is executed with valid parameters"
+        params.category = 'drug'
+        params.subcategory = 'label'
+        params.medicine='advil'
+
+        controller.interestingFacts()
+
+        then: "Them the index action is forwarded"
+        view == '/query/interestingFacts'
+        model.facts != null
+        model.facts.medicine == 'advil'
+        model.facts.message =='Information of interest about the drug'
+        model.facts.facts != null
+
+    }
+
+    void "Test that drugNames throws an error when invalid medicine is passed"() {
+        setup:
+        controller.queryService = queryService
+        queryService.transactionManager = Mock(PlatformTransactionManager) { getTransaction(_) >> Mock(TransactionStatus) }
+
+        when: "The search action is executed with valid parameters"
+        params.category = 'drug'
+        params.subcategory = 'label'
+        params.medicine='bogus medicine'
+
+        controller.drugNames()
+
+        then: "Them the index action is forwarded"
+        view == '/query/index'
+        model.queryInstance.hasErrors() == true
+    }
+
+
+    void "Test that drugNames works when valid medicine is passed"() {
+        setup:
+        controller.queryService = queryService
+        queryService.transactionManager = Mock(PlatformTransactionManager) { getTransaction(_) >> Mock(TransactionStatus) }
+
+        when: "The search action is executed with valid parameters"
+        params.category = 'drug'
+        params.subcategory = 'label'
+        params.medicine='advil'
+
+        controller.drugNames()
+
+        then: "Them the index action is forwarded"
+        view == '/query/interestingFacts'
+        model.facts != null
+        model.facts.medicine == 'advil'
+        model.facts.message == 'All the known names for the drug '
+        model.facts.facts != null
+
+    }
+
+
+    void "Test that drugFoodInteraction throws an error when no food is passed"() {
+        setup:
+        controller.queryService = queryService
+        queryService.transactionManager = Mock(PlatformTransactionManager) { getTransaction(_) >> Mock(TransactionStatus) }
+
+        when: "The search action is executed with valid parameters"
+        params.category = 'drug'
+        params.subcategory = 'label'
+        params.medicine='bogus medicine'
+
+        controller.drugFoodInteractions()
+
+        then: "Them the index action is forwarded"
+        view == '/query/index'
+        model.queryInstance.hasErrors() == true
+    }
+
+    void "Test that drugFoodInteraction throws an error when no medicine is passed"() {
+        setup:
+        controller.queryService = queryService
+        queryService.transactionManager = Mock(PlatformTransactionManager) { getTransaction(_) >> Mock(TransactionStatus) }
+
+        when: "The search action is executed with valid parameters"
+        params.category = 'drug'
+        params.subcategory = 'label'
+        params.food='bogus food'
+
+        controller.drugFoodInteractions()
+
+        then: "Them the index action is forwarded"
+        view == '/query/index'
+        model.queryInstance.hasErrors() == true
+    }
+
+
+    void "Test that drugFoodInteraction works even when invalid medicine is passed"() {
+        setup:
+        controller.queryService = queryService
+        queryService.transactionManager = Mock(PlatformTransactionManager) { getTransaction(_) >> Mock(TransactionStatus) }
+
+        when: "The search action is executed with valid parameters"
+        params.category = 'drug'
+        params.subcategory = 'label'
+        params.medicine='bogus'
+        params.food='bogus'
+
+        controller.drugFoodInteractions()
+
+        then: "Them the index action is forwarded"
+        view == '/query/drugInteractions'
+        model.drugInteractions != null
+        model.drugInteractions.medicine == 'bogus'
+        model.drugInteractions.otherDrugOrFood == 'bogus'
+        model.drugInteractions.interactions == null
+        model.drugInteractions.adverseReactions == null
+        model.boxedWarnings == null
+        model.warningAndPrecautions == null
+
+    }
+
+
 }

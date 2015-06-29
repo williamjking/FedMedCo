@@ -19,14 +19,14 @@
 
 		<div id="searchResults" class="panel panel-default">
 			<div class="panel-heading">
-				<h4 class="panel-title">Information of interest for the drug - ${facts?.medicine}</h4>
+				<h4 class="panel-title">${facts?.message} ${facts?.medicine}</h4>
 			</div>
 			<div class="panel-body">
 				<div class="table-responsive">
 					<table class="table table-striped">
 						<tbody>
 							<g:each in="${facts?.facts}">
-								<tr><th class="col-md-3">${it.key}</th><td class="col-md-8">${it.value}</td></tr>
+								<tr><th class="col-xs-1 col-sm-1 col-md-3">${it.key}</th><td class="col-xs-10 col-sm-10 col-md-8">${it.value}</td></tr>
 							</g:each>
 						</tbody>
 					</table>

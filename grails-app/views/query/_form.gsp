@@ -40,13 +40,13 @@
         <div class="panel-body">
             <div class="form-inline" id="default_field">
                 <div>
-                    <div class="input-group">
+                    <div class="input-group col-xs-5">
                         <span class="input-group-addon" id="basic-addon1" style="color:rgba(0,0,0,0)">AND</span>
-                        <select id="fieldsSelect_0" name="fields_0"></select>
+                        <select id="fieldsSelect_0" name="fields_0" class="form-control"></select>
                     </div>
 
                     <label for="criteria">
-                        <input type="text" id="criteria" size="20" name="criteria_0" value="" required="" placeholder="Search Criteria" />
+                        <input type="text" id="criteria" name="criteria_0" value="" required="" placeholder="Search Criteria" />
                     </label>
                     <label for="criteria_exact">
                         <input type="checkbox" id="criteria_exact" name="criteria_exact_0"/> Exact

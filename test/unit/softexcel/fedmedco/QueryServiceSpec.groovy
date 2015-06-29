@@ -55,4 +55,12 @@ class QueryServiceSpec extends Specification {
 
     }
 
+    void "test string with other printable characters"(){
+        when:
+        def response = service.replaceSpaceWithPlus('Serotonin Reuptake Inhibitor [EPC]')
+        then:
+        assert response == 'Serotonin+Reuptake+Inhibitor+[EPC]'
+
+    }
+
 }
