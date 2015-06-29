@@ -8,7 +8,7 @@ This directory contains supplementary resources used in the documentation of the
 
 ## Personas & Use Cases
 
-[Personas and User Scenarios](Personas_and_user_scenerios_for_18F.pdf)
+View the PDF containing our [Personas and User Scenarios](Personas_and_user_scenerios_for_18F.pdf).
 
 ## Screen Mockups
 
