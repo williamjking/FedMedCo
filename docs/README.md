@@ -6,9 +6,9 @@ This directory contains supplementary resources used in the documentation of the
 
 ![alt text](architecture.png "Architecture")
 
-## Use Cases
+## Personas & Use Cases
 
-## Personas
+[Personas and User Scenarios](Personas_and_user_scenerios_for_18F.pdf)
 
 ## Screen Mockups
 
