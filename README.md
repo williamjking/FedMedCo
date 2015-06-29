@@ -29,7 +29,7 @@ Provides a responsive human centered design interface that enables both novice a
 Lockheed Martin has provided a Minimum Viable Product (MVP) directed at three main categories of users: patients, pharmaceutical manufacturers, and regulatory agencies. The drug reaction and food to drug interaction features are primarily for patients seeking information about medications they are using. The interesting facts about drugs feature and the open query are for both pharmaceutical manufacturers and regulatory agencies who have pharmaceutical domain knowledge and are performing a deep dive.
 
 ## Design Documents
-![alt text](docs/architecture.png "Architecture")
+[Design Documents](docs/)
 * Architecture Diagrams
 * Use Cases
 * Personas
