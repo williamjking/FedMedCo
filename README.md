@@ -1,6 +1,6 @@
 # Agile Delivery Services (ADS 1) FedMedCo
 
-http://www.fedmedco.info
+## http://www.fedmedco.info
 
 Provides a responsive human centered design interface that enables both novice and experienced users to search the openFDA data to identify critical drug information and display results across multiple devices.
 
@@ -30,11 +30,9 @@ Provides a responsive human centered design interface that enables both novice a
 Lockheed Martin has provided a Minimum Viable Product (MVP) directed at three main categories of users: patients, pharmaceutical manufacturers, and regulatory agencies. The drug reaction and food to drug interaction features are primarily for patients seeking information about medications they are using. The interesting facts about drugs feature and the open query are for both pharmaceutical manufacturers and regulatory agencies who have pharmaceutical domain knowledge and are performing a deep dive.
 
 ## Design Documents
-[Architecture Diagrams](docs/#architecture-diagrams)
-* Architecture Diagrams
-* Use Cases
-* Personas
-* Screen Mockups
+* [Architecture Diagrams](docs/#architecture-diagrams)
+* [Personas & Use Cases](docs/#personas--use-cases)
+* [Screen Mockups](docs/#screen-mockups)
 
 ## Installation
 
