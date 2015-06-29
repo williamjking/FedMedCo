@@ -20,13 +20,15 @@ class QueryController {
                 render view:"index", model:[queryResults:queryResults]
             }
             else {
-                if (aQuery == null) aQuery = new Query()
-                aQuery.errors.rejectValue('queryField', 'an.error.message')
-                render view:"index", model:[queryInstance:aQuery]
+                if (aQuery == null) {
+					aQuery = new Query()			
+				}
+				aQuery.errors.rejectValue('queryField', 'an.error.message')		
+                render view:"index", model:[queryInstance:queryInstance, errorMessage:errorMessage]
             }
         } catch (Exception e) {
             log.error e.message, e
-            qQuery = new Query(params)
+            aQuery = new Query(params)
             aQuery.errors.rejectValue ('queryField', 'an.error.message')
             render view:"index", model:[queryInstance:aQuery]
         }
@@ -53,7 +55,6 @@ class QueryController {
 			fieldList = FieldList.findBySchemaName(name).fields
 		}
 		
-		log.info "Returning field list for category: " + category + ", subcategory: " + subcategory
 		render fieldList
 	}
 
@@ -117,20 +118,29 @@ class QueryController {
 
             def url = openFDAURLBase + openFDAURLPath + "?" + completeQuery.collect { it }.join('&')
 
-            def data = url.toURL().text
-            def parsedData = new JsonSlurper().parseText(data)
-
-            render view:"show", model: [
-                    disclaimer: parsedData?.meta?.disclaimer,
-                    lastUpdated: parsedData?.meta?.last_updated,
-                    totalResults: parsedData?.meta?.results?.total,
-                    queryResults: data
-            ]
+			def connection = url.toURL().openConnection()
+			if (connection.responseCode > 400) {
+				def data = connection.errorStream.text
+		        def parsedData = new JsonSlurper().parseText(data)
+				def errorMessage = parsedData?.error?.message
+	            Query queryParams = new Query()
+	            queryParams.errors.rejectValue('queryField', 'query.error.message', [errorMessage] as Object[], "")
+				render view:"index", model:[queryInstance:queryParams]
+			} else {
+				def data = connection.content.text
+		        def parsedData = new JsonSlurper().parseText(data)
+	            render view:"show", model: [
+	                    disclaimer: parsedData?.meta?.disclaimer,
+	                    lastUpdated: parsedData?.meta?.last_updated,
+	                    totalResults: parsedData?.meta?.results?.total,
+	                    queryResults: data
+	            ]
+					
+			}
 
         } catch (Exception ioe) {
             log.error ioe.message, ioe
             Query queryParams = new Query(params)
-            queryParams.errors.rejectValue ('queryField', 'an.error.message')
             forward (action: "index", params:[queryInstance: queryParams, errorMessage: ioe.message])
         }
     }
@@ -150,43 +160,52 @@ class QueryController {
                     '+patient.drug.openfda.pharm_class_epc:'+medicine+
                     '&count=patient.reaction.reactionmeddrapt.exact'
 
-            def data = new JsonSlurper().parse(medicineQuery.toURL())
-
-            def mapToAnalyzeData = [:]
-
-            data.results.each{mapToAnalyzeData.put(it.count, it.term)}
-            def min = mapToAnalyzeData.min {it.key}
-            def max = mapToAnalyzeData.max {it.key}
-
-            Integer oneThird = (max.key - min.key)/3;
-
-            Map lowerThird = mapToAnalyzeData.subMap(min.key..min.key+oneThird)
-            Map middleThird = mapToAnalyzeData.subMap(min.key+oneThird+1..min.key+oneThird+oneThird)
-            Map topThird = mapToAnalyzeData.subMap(min.key+oneThird+oneThird+1..max.key+1)
-
-            def topThreeReactions = []
-
-            def i = 0
-
-            topThird.reverseEach {
-                if (i<3) topThreeReactions.add(it.value)
-                i++
-            }
-
-            DrugReactions drugReactions = new DrugReactions()
-
-            drugReactions.medicine = params.medicine
-            drugReactions.totalReportedReactions = mapToAnalyzeData.size()
-            drugReactions.topThreeReactions =  topThreeReactions
-            drugReactions.severeReactions = topThird
-            drugReactions.moderateReactions = middleThird
-            drugReactions.mildReactions = lowerThird
-
-            render(view:'medicineReactions', model:[drugReactions:drugReactions])
+			def connection = medicineQuery.toURL().openConnection()
+			if (connection.responseCode > 400) {
+				def data = connection.errorStream.text
+				def parsedData = new JsonSlurper().parseText(data)
+				def errorMessage = parsedData?.error?.message
+				Query queryParams = new Query()
+				queryParams.errors.rejectValue('queryField', 'query.error.message', [errorMessage] as Object[], "")
+				render view:"index", model:[queryInstance:queryParams]
+			} else {
+	            def data = new JsonSlurper().parse(connection.content.text)
+	
+	            def mapToAnalyzeData = [:]
+	
+	            data.results.each{mapToAnalyzeData.put(it.count, it.term)}
+	            def min = mapToAnalyzeData.min {it.key}
+	            def max = mapToAnalyzeData.max {it.key}
+	
+	            Integer oneThird = (max.key - min.key)/3;
+	
+	            Map lowerThird = mapToAnalyzeData.subMap(min.key..min.key+oneThird)
+	            Map middleThird = mapToAnalyzeData.subMap(min.key+oneThird+1..min.key+oneThird+oneThird)
+	            Map topThird = mapToAnalyzeData.subMap(min.key+oneThird+oneThird+1..max.key+1)
+	
+	            def topThreeReactions = []
+	
+	            def i = 0
+	
+	            topThird.reverseEach {
+	                if (i<3) topThreeReactions.add(it.value)
+	                i++
+	            }
+	
+	            DrugReactions drugReactions = new DrugReactions()
+	
+	            drugReactions.medicine = params.medicine
+	            drugReactions.totalReportedReactions = mapToAnalyzeData.size()
+	            drugReactions.topThreeReactions =  topThreeReactions
+	            drugReactions.severeReactions = topThird
+	            drugReactions.moderateReactions = middleThird
+	            drugReactions.mildReactions = lowerThird
+	
+	            render(view:'medicineReactions', model:[drugReactions:drugReactions])
+			}
         } catch (Exception ioe) {
             log.error ioe.message, ioe
             Query queryParams = new Query(params)
-            queryParams.errors.rejectValue ('queryField', 'an.error.message')
             forward (action: "index", params:[queryInstance: queryParams, errorMessage: ioe.message])
         }
     }
@@ -205,33 +224,42 @@ class QueryController {
                     'openfda.generic_name:'+medicine+'+openfda.brand_name:'+medicine +
                     '+openfda.pharm_class_epc:'+medicine
 
-            def data = new JsonSlurper().parse(medicineQuery.toURL())
-            def facts = data.results
-
-            if (facts == null) throw new Exception ("Could not find any interesting data for the drug " + params.medicine)
-
-            InterestingFacts interestingFacts = new InterestingFacts()
-            interestingFacts.medicine = params.medicine
-
-
-            if (facts.purpose && facts.purpose[0])interestingFacts.facts['Purpose'] = facts.purpose[0][0]
-            if (facts.stop_use && facts.stop_use[0])interestingFacts.facts['Stop Using if'] = facts.stop_use[0][0]
-            if (facts.storage_and_handling && facts.storage_and_handling[0])interestingFacts.facts['Storage and Handling'] = facts.storage_and_handling[0][0]
-            if (facts.ask_doctor && facts.ask_doctor[0])interestingFacts.facts['What to ask a doctor'] = facts.ask_doctor[0][0]
-            else if (facts.ask_doctor_pharmasist && facts.ask_doctor_pharmacist[0])interestingFacts.facts['What to ask a pharmacist'] = facts.ask_doctor_pharmacist[0][0]
-            if (facts.boxed_warning && facts.boxed_warning[0])interestingFacts.facts['Serious Warnings'] = facts.boxed_warning[0][0]
-            if (facts.warnings_and_precautions && facts.warnings_and_precautions[0])interestingFacts.facts['Warnings and Precautions'] = facts.warnings_and_precautions[0][0]
-            else if (facts.warnings && facts.warnings[0])interestingFacts.facts['Warnings'] = facts.warnings[0][0]
-            else if (facts.precautions && facts.precautions[0])interestingFacts.facts['Precautions'] = facts.precautions[0][0]
-            if (facts.pregnancy_or_breast_feeding && facts.pregnancy_or_breast_feeding[0])interestingFacts.facts['Pregnancy or Breast Feeding'] = facts.pregnancy_or_breast_feeding[0][0]
-            else if (facts.pregnancy && facts.pregnancy[0])interestingFacts.facts['Pregnancy'] = facts.pregnancy[0][0]
-
-            render(view:'interestingFacts', model:[facts:interestingFacts])
+			def connection = medicineQuery.toURL().openConnection()
+			if (connection.responseCode > 400) {
+				def data = connection.errorStream.text
+				def parsedData = new JsonSlurper().parseText(data)
+				def errorMessage = parsedData?.error?.message
+				Query queryParams = new Query()
+				queryParams.errors.rejectValue('queryField', 'query.error.message', [errorMessage] as Object[], "")
+				render view:"index", model:[queryInstance:queryParams]
+			} else {
+				def data = new JsonSlurper().parse(connection.content.text)
+	            def facts = data.results
+	
+	            if (facts == null) throw new Exception ("Could not find any interesting data for the drug " + params.medicine)
+	
+	            InterestingFacts interestingFacts = new InterestingFacts()
+	            interestingFacts.medicine = params.medicine
+	
+	
+	            if (facts.purpose && facts.purpose[0])interestingFacts.facts['Purpose'] = facts.purpose[0][0]
+	            if (facts.stop_use && facts.stop_use[0])interestingFacts.facts['Stop Using if'] = facts.stop_use[0][0]
+	            if (facts.storage_and_handling && facts.storage_and_handling[0])interestingFacts.facts['Storage and Handling'] = facts.storage_and_handling[0][0]
+	            if (facts.ask_doctor && facts.ask_doctor[0])interestingFacts.facts['What to ask a doctor'] = facts.ask_doctor[0][0]
+	            else if (facts.ask_doctor_pharmasist && facts.ask_doctor_pharmacist[0])interestingFacts.facts['What to ask a pharmacist'] = facts.ask_doctor_pharmacist[0][0]
+	            if (facts.boxed_warning && facts.boxed_warning[0])interestingFacts.facts['Serious Warnings'] = facts.boxed_warning[0][0]
+	            if (facts.warnings_and_precautions && facts.warnings_and_precautions[0])interestingFacts.facts['Warnings and Precautions'] = facts.warnings_and_precautions[0][0]
+	            else if (facts.warnings && facts.warnings[0])interestingFacts.facts['Warnings'] = facts.warnings[0][0]
+	            else if (facts.precautions && facts.precautions[0])interestingFacts.facts['Precautions'] = facts.precautions[0][0]
+	            if (facts.pregnancy_or_breast_feeding && facts.pregnancy_or_breast_feeding[0])interestingFacts.facts['Pregnancy or Breast Feeding'] = facts.pregnancy_or_breast_feeding[0][0]
+	            else if (facts.pregnancy && facts.pregnancy[0])interestingFacts.facts['Pregnancy'] = facts.pregnancy[0][0]
+	
+	            render(view:'interestingFacts', model:[facts:interestingFacts])
+			}
         }
         catch (Exception ioe) {
             log.error ioe.message, ioe
             Query queryParams = new Query(params)
-            queryParams.errors.rejectValue('queryField', 'an.error.message')
             forward(action: "index", params: [queryInstance: queryParams, errorMessage: ioe.message])
         }
     }
