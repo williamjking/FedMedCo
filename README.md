@@ -53,6 +53,14 @@ Lockheed Martin has provided a Minimum Viable Product (MVP) directed at three ma
 4. Verify application running and can access each of the three queries
   1. I'm planning to get Z to automate this and execute it as part of the deployment monitoring process.
 
+## Deployment
+
+## Monitoring
+
+![alt text](docs/aws1.png "AWS Monitoring")
+![alt text](docs/aws2.png "AWS Monitoring")
+![alt text](docs/aws3.png "AWS Monitoring")
+
 ## API Reference
 
 [https://open.fda.gov/api/reference/](https://open.fda.gov/api/reference/)
