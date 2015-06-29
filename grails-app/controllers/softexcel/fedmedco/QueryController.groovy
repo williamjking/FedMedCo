@@ -79,7 +79,10 @@ class QueryController {
                         else assembleAllFields = assembleAllFields + '+AND+' +  value + ':' + criteria
                     }
                     catch (NullPointerException npe){
-                        log.error(npe.message, npe)
+
+                    }
+                    catch (Exception e){
+                        log.error(e.message, e)
                     }
                 }
             })
