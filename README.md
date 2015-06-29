@@ -29,7 +29,7 @@ Provides a responsive human centered design interface that enables both novice a
 Lockheed Martin has provided a Minimum Viable Product (MVP) directed at three main categories of users: patients, pharmaceutical manufacturers, and regulatory agencies. The drug reaction and food to drug interaction features are primarily for patients seeking information about medications they are using. The interesting facts about drugs feature and the open query are for both pharmaceutical manufacturers and regulatory agencies who have pharmaceutical domain knowledge and are performing a deep dive.
 
 ## Design Documents
-
+![alt text](docs/architecture.png "Architecture")
 * Architecture Diagrams
 * Use Cases
 * Personas
@@ -68,11 +68,7 @@ Lockheed Martin
 ## License
 
 All license agreements are Free and Open Source
-
 [http://www.apache.org/licenses/License-2.0](http://www.apache.org/licenses/License-2.0)
-
 [http://opensource.org/licenses/MIT](http://opensource.org/licenses/MIT)
-
 [http://www.gnu.org/licenses/gpl-3.0.en.html](http://www.gnu.org/licenses/gpl-3.0.en.html)
-
 [https://svn.apache.org/repos/asf/tiles/framework/trunk/OGNL-LICENSE.txt](https://svn.apache.org/repos/asf/tiles/framework/trunk/OGNL-LICENSE.txt)
