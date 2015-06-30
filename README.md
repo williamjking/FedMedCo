@@ -160,7 +160,7 @@ In a digital society the team wanted to ensure the security of the application g
 
 ## Continuous Integration
 
-Read more about our [Continuous Integration](docs/ContinuousIntegration.md).
+Our app is compiled, tests are run, and a code analysis is performed automatically by our [Jenkins continuous integration server](docs/ContinuousIntegration.md) every time updates are made to the git repository.
 
 ## Monitoring
 
