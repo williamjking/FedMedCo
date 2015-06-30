@@ -78,14 +78,12 @@ Lockheed Martin has provided a Minimum Viable Product (MVP) directed at three ma
 3. `cd ~/InstalledPrograms/`
 4. `unzip grails-2.5.0.zip`
 5. Set environment variables
-  
-  `GRAILS_HOME=/home/ec2-user/InstalledPrograms/grails-2.5.0`
-  
-  `export GRAILS_HOME`    
-  
-  `PATH=$PATH:$GRAILS_HOME/bin`
-  
-  `export PATH`
+  ```Shell
+  GRAILS_HOME=/home/ec2-user/InstalledPrograms/grails-2.5.0 
+  export GRAILS_HOME
+  PATH=$PATH:$GRAILS_HOME/bin
+  export PATH
+  ```
   
 ### Install git
   `sudo yum install git`
@@ -129,22 +127,15 @@ Lockheed Martin has provided a Minimum Viable Product (MVP) directed at three ma
   `git clone https://github.com/anuchandpamra/Fedmedco.git`
 
 ### Deploy to tomcat
-  
-  `cd FedMedCo`
-  
-  `git pull`
-  
-  `grails war`
-  
-  `sudo su`
-  
-  `mv target/FedMedCo.war /usr/share/tomcat8/webapps`
-  
-  `service tomcat8 restart`
-  
-  `tail -f /var/log/tomcat8/catalina.out`
-
-## Deployment
+  ```Shell
+  cd FedMedCo
+  git pull
+  grails war
+  sudo su
+  mv target/FedMedCo.war /usr/share/tomcat8/webapps
+  service tomcat8 restart
+  tail -f /var/log/tomcat8/catalina.out
+  ```
 
 ## Monitoring
 
@@ -165,7 +156,7 @@ Lockheed Martin
 ## License
 
 All license agreements are Free and Open Source
-[http://www.apache.org/licenses/License-2.0](http://www.apache.org/licenses/License-2.0)
-[http://opensource.org/licenses/MIT](http://opensource.org/licenses/MIT)
-[http://www.gnu.org/licenses/gpl-3.0.en.html](http://www.gnu.org/licenses/gpl-3.0.en.html)
-[https://svn.apache.org/repos/asf/tiles/framework/trunk/OGNL-LICENSE.txt](https://svn.apache.org/repos/asf/tiles/framework/trunk/OGNL-LICENSE.txt)
+* [Apache 2.0](http://www.apache.org/licenses/License-2.0)
+* [MIT](http://opensource.org/licenses/MIT)
+* [GPL-3.0](http://www.gnu.org/licenses/gpl-3.0.en.html)
+* [OpenSymphony 1.1](https://svn.apache.org/repos/asf/tiles/framework/trunk/OGNL-LICENSE.txt)
