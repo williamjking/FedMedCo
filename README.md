@@ -42,9 +42,9 @@ In a digital society the team wanted to ensure the security of the application g
 
 ## Design Documents
 
-* [Architecture Diagrams](docs/Docs.md#architecture-diagrams)
-* [Personas & Use Cases](docs/Docs.md#personas--use-cases)
-* [Screen Mockups](docs/Docs.md#screen-mockups)
+* [Architecture Diagrams](docs/Architecture.md)
+* [Personas & Use Cases](docs/UseCases.md)
+* [Screen Mockups](docs/ScreenMockups.md)
 
 ## Web Technologies
 
@@ -155,9 +155,13 @@ In a digital society the team wanted to ensure the security of the application g
   tail -f /var/log/tomcat8/catalina.out
   ```
 
+## Continuous Integration
+
+Read more about our [Continuous Integration](docs/ContinuousIntegration.md).
+
 ## Monitoring
 
-The application is monitored via the the Amazon Web Services (AWS) control panel. See screenshots of our [AWS Monitoring](docs/Docs.md#monitoring).
+The application is monitored via the the Amazon Web Services (AWS) control panel. See screenshots of our [AWS Monitoring](docs/Monitoring.md).
 
 ## API Reference
 

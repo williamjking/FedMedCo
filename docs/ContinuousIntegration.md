@@ -1,36 +1,4 @@
-# Supporting Documentation
-
-This directory contains supplementary resources used in the documentation of the application.
-
-## Architecture Diagrams
-
-![alt text](architecture.png "Architecture")
-
-## Personas & Use Cases
-
-View the PDF containing our [Personas and User Scenarios](Personas_and_user_scenerios_for_18F.pdf).
-
-## Screen Mockups
-
-![alt text](query1-input.png "Query Example")
-![alt text](query1-output.png "Query Example")
-![alt text](query2-input.png "Query Example")
-![alt text](query2-output1.png "Query Example")
-![alt text](query2-output2.png "Query Example")
-![alt text](query3-input.png "Query Example")
-![alt text](query3-output.png "Query Example")
-![alt text](query4-input.png "Query Example")
-![alt text](query4-output.png "Query Example")
-![alt text](query5-input.png "Query Example")
-![alt text](query5-output.png "Query Example")
-
-
-
-
-
-
-
-## Continuous Integration
+# Continuous Integration
 
 We use Jenkins for our continuous integration server. The following screenshot shows the overall build status / Job Page:
 * Shows linkages to GitHub, Sonar for Java and Grails, among the other default items.
@@ -51,9 +19,3 @@ We use the open source quality management platform SonarQube to analyze and meas
 * You can also see our modified Success Criteria, we updated a number of the quality gates built into the default groovy configuration based upon our preferences.
 
 ![alt text](sonarqube.png "SonarQube")
-
-## Monitoring
-
-![alt text](aws1.png "AWS Monitoring")
-![alt text](aws2.png "AWS Monitoring")
-![alt text](aws3.png "AWS Monitoring")
