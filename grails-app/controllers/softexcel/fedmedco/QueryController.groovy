@@ -24,7 +24,7 @@ class QueryController {
 					aQuery = new Query()			
 				}
 				aQuery.errors.rejectValue('queryField', 'an.error.message')		
-                render view:"index", model:[queryInstance:queryInstance, errorMessage:errorMessage]
+                render view:"index", model:[queryInstance:aQuery, errorMessage:errorMessage]
             }
         } catch (Exception e) {
             log.error e.message, e

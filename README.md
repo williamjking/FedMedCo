@@ -4,6 +4,10 @@
 
 Provides a responsive human centered design interface that enables both novice and experienced users to search the openFDA data to identify critical drug information and display results across multiple devices.
 
+Please login using the following information:
+user id: john
+password: password
+
 ## Features
 
 * Reported Drug Reactions
@@ -36,23 +40,79 @@ Lockheed Martin has provided a Minimum Viable Product (MVP) directed at three ma
 * [Personas & Use Cases](docs/#personas--use-cases)
 * [Screen Mockups](docs/#screen-mockups)
 
-## Installation
+## Installation instructions for Amazon Linux
+### Install JDK
 
-1. Start MongoDB
-2. Deploy WAR to Tomcat
-  1. Make sure Tomcat's default file limit is modified because it will not deploy otherwise, e.g. (.../webapps/manager/WEB-INF/web.xml)
-  ```xml
-    <multipart-config>
-      <!-- 50MB max -->
-      <max-file-size>92428800</max-file-size>
-      <max-request-size>92428800</max-request-size>
-      <file-size-threshold>0</file-size-threshold>
-    </multipart-config>
-  ```
-  2. The WAR is built automatically by Jenkins and archived as part of the build for easy access.
-3. Start application on Tomcat
-4. Verify application running and can access each of the three queries
-  1. I'm planning to get Z to automate this and execute it as part of the deployment monitoring process.
+1. Run command 'uname -a' to determine what Linux version is running on the box. i686 indicates a 32 bit OS and x86-64 indicates a 64bit OS.
+
+2. Download the right java package from Oracle (http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+  * jdk-8u45-linux-i586.tar.gz for 32 bit OS
+  * jdk-8u45-linux-x64.tar.gz for 64 bit OS
+
+3. Install in /opt
+  * sudo mkdir /opt/java
+
+3. Unzip the downloaded package
+  * cd /opt/java
+  * tar xzf jdk-8u45-linux-x64.tar.gz
+
+4. cd /opt/java/jdk1.8.0_45/
+5. sudo alternatives --install /usr/bin/java java /opt/java/jdk1.8.0_45/bin/java 2
+6. sudo alternatives --config java
+
+
+6. Modify your environment file (for example, for bash, modify .bashrc)
+
+JAVA_HOME=/opt/java/jdk1.8.0_45
+export JAVA_HOME
+
+
+### Install Grails
+1. Download Grails  from https://grails.org/download.html - Select 2.5.0 from "Previous Versions" drop down menu
+2. mkdir ~/grails
+3. cd ~/InstalledPrograms/
+4. unzip grails-2.5.0.zip
+5. Set environment variables
+  * GRAILS_HOME=/home/ec2-user/InstalledPrograms/grails-2.5.0
+  * export GRAILS_HOME    
+  * PATH=$PATH:$GRAILS_HOME/bin
+  * export PATH
+
+### Install git
+sudo yum install git
+
+### Install MongoDB
+  * sudo su
+  * cd /etc/yum.repos.d/
+  * vi mongodb-org-2.6.repo
+    * Add the following
+      [mongodb-org-3.0]
+      name=MongoDB Repository
+      baseurl=https://repo.mongodb.org/yum/amazon/2013.03/mongodb-org/3.0/x86_64/
+      gpgcheck=0
+      enabled=1
+  * Now install Mongod
+    sudo yum install -y mongodb-org-3.0.4 mongodb-org-server-3.0.4 mongodb-org-shell-3.0.4 mongodb-org-mongos-3.0.4 mongodb-org-tools-3.0.4
+
+  * Start MongoDB
+    sudo service mongod start
+
+### install tomcat8
+  * yum install tomcat8
+  * yum install tomcat8-webapps
+
+
+### Get the source code from git
+  * git clone https://github.com/anuchandpamra/Fedmedco.git
+
+### Deploy to tomcat
+  * cd FedMedCo
+  * git pull
+  * grails war
+  * sudo su
+  * mv target/FedMedCo.war /usr/share/tomcat8/webapps
+  * service tomcat8 start
+  * tail -f /var/log/tomcat8/catalina.out
 
 ## Deployment
 
