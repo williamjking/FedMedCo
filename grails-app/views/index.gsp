@@ -8,7 +8,7 @@
 
 	<div class="jumbotron hero-spacer">
 		<h1>Welcome to FedMedCo!</h1>
-		<p>A site to use and visualize data sets from OpenFDA.gov. The goal of OpenFDA is to provide easy access to public data. This website was created in response to GSA RFQ.
+		<p>A site to use and visualize data sets from OpenFDA.gov. The goal of OpenFDA is to provide easy access to public data. This website was created in response to GSA's Agile Delivery Services (ADS I) RFQ, 4QTFHS150004.
 
         <div class="text-center">
 		<sec:ifNotLoggedIn>

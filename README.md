@@ -2,11 +2,11 @@
 
 ## http://www.fedmedco.info
 
-Provides a responsive human centered design interface that enables both novice and experienced users to search the openFDA data to identify critical drug information and display results across multiple devices.
+This prototype provides a responsive human centered design interface that enables both novice and experienced users to search the openFDA data to identify critical drug information and display results across multiple devices.
 
 Please login using the following information:
-user id: john
-password: password
+  * user id: john
+  * password: password
 
 ## Overview
 
@@ -30,13 +30,13 @@ We identified the appropriate business and architectural epics that would provid
 
 We selected to utilize scrum as our core Agile management practice due to its structure, predefined business rhythms and associated artifacts. At the start of our one week sprint the team decomposed the user stories into 2-8 hour tasks to maximize transparency into delivery.  Each of the tasks was tracked within our Agile project management tool. At the start of each day the team had a virtual daily stand-up given the distributed nature of the team across multiple time zones.  
 
-We leveraged the architecture design developed by our solutions architect and rapidly set up the environment.  We made use of Apache Tomcat for our web server, Grails for a lightweight web framework,  HTML5/CSS3 couple with bootstrap to develop a presentation that would support responsive design; Sitemesh to provide HTML templates; MongoDB as a NoSQL database; and JQuery to pull out the needed data.
+We leveraged the architecture design developed by our solutions architect and rapidly set up the environment.  We made use of Apache Tomcat for our web server, Grails for a lightweight web framework,  HTML5/CSS3 couple with bootstrap to develop a presentation that would support responsive design; Sitemesh to provide HTML templates; MongoDB as a NoSQL database; and RESTful webservice to pull out the needed data.
 
-Once our environment was set up we instantiated continuous integration with GIT, gradle, Jenkins, and SonarQube. Technical excellence is a key aspect of Agile architecture therefore we wanted to ensure we managed technical debt from the start. Upon the completion of each build in Jenkins the team could rapidly see if they had increased technical debt into the baseline and make decisions from a position of knowledge regarding its cleanup. With the knowledge that social coding is closely linked to the ease of being able to extend the baseline we focused on ensuring our code was the highest quality possible.
+Once our environment was set up we instantiated continuous integration with GIT, Jenkins, and SonarQube. Technical excellence is a key aspect of Agile architecture therefore we wanted to ensure we managed technical debt from the start. Upon the completion of each build in Jenkins the team could rapidly see if they had increased technical debt into the baseline and make decisions from a position of knowledge regarding its cleanup. With the knowledge that social coding is closely linked to the ease of being able to extend the baseline we focused on ensuring our code was the highest quality possible.
 
 In order to realize the benefits of DevOps our team mapped the value stream to delivery at the start, leveraging Amazon Web Services (AWS) as our target environment. The team was able to deploy multiple times to AWS enabling us to remove bottlenecks early that we may not have found until the end of our time box. 
 
-Usability testing was critical to the success of our delivery and our FDA SME spent hours verifying the capabilities and ensuring they met the acceptance criteria. With the knowledge that the patient persona would utilize the site the most the team provided access to the site to a random number of employees at Lockheed Martin with various skillsets and backgrounds. These users were able to identify issues our SME had not considered such as if the end user typed something irrelevant such as “Dog” into the search. We updated the application to provide informative error messages to the user.
+Usability testing was critical to the success of our delivery and our FDA SME spent hours verifying the capabilities and ensuring they met the acceptance criteria. With the knowledge that the patient persona would utilize the site the most the team provided access to the site to a random number of employees at Lockheed Martin with various skillsets and backgrounds. These users were able to identify issues our SME had not considered such as if the end user typed something irrelevant such as `Dog` into the search. We updated the application to provide informative error messages to the user.
 
 In a digital society the team wanted to ensure the security of the application given the criticality of the data and the impact on the end user if the application was tampered with. The team had security scans done at multiple times during the course of the week to understand vulnerabilities being exposed and incorporating feedback to remove any security concerns.
 
@@ -170,6 +170,21 @@ The application is monitored via the the Amazon Web Services (AWS) control panel
 ## Contributors
 
 Lockheed Martin
+
+## Contact Information
+### Technical POC
+    Robin Yeman
+    1800 Jonathan Way
+    Reston VA 20190
+    Email: robin.yeman@lmco.com
+    571-535-5854
+    
+### Management POC
+    Phil Magrogan
+    2453 Dakota Lakes Dr. 
+    Oak Hill VA 20171
+    Email: phil.magrogan@lmco.com
+    703-336-2328
 
 ## License
 
