@@ -89,7 +89,7 @@ In a digital society the team wanted to ensure the security of the application g
 1. Download and install Grails from https://grails.org/download.html - Select 2.5.0 from "Previous Versions" drop down menu
   ```Shell
   mkdir ~/grails
-  cd ~/InstalledPrograms/
+  cd ~/grails/
   unzip grails-2.5.0.zip
   ```
 
@@ -107,10 +107,11 @@ In a digital society the team wanted to ensure the security of the application g
   ```
 
 ### Install MongoDB
+  Create a `/etc/yum.repos.d/mongodb-org-3.0.repo ` file so that you can install MongoDB directly, using `yum`.
   ```Shell
   sudo su
   cd /etc/yum.repos.d/
-  vi mongodb-org-2.6.repo
+  vi mongodb-org-3.0.repo
   ```
 
   * Add the following
