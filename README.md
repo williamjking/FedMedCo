@@ -30,9 +30,9 @@ We identified the appropriate business and architectural epics that would provid
 
 We selected to utilize scrum as our core Agile management practice due to its structure, predefined business rhythms and associated artifacts. At the start of our one week sprint the team decomposed the user stories into 2-8 hour tasks to maximize transparency into delivery.  Each of the tasks was tracked within our Agile project management tool. At the start of each day the team had a virtual daily stand-up given the distributed nature of the team across multiple time zones.  
 
-We leveraged the architecture design developed by our solutions architect and rapidly set up the environment.  We made use of Apache Tomcat for our web server, Grails for a lightweight web framework,  HTML5/CSS3 couple with bootstrap to develop a presentation that would support responsive design; Sitemesh to provide HTML templates; MongoDB as a NoSQL database; and JQuery to pull out the needed data.
+We leveraged the architecture design developed by our solutions architect and rapidly set up the environment.  We made use of Apache Tomcat for our web server, Grails for a lightweight web framework,  HTML5/CSS3 couple with bootstrap to develop a presentation that would support responsive design; Sitemesh to provide HTML templates; MongoDB as a NoSQL database; and RESTful webservice to pull out the needed data.
 
-Once our environment was set up we instantiated continuous integration with GIT, gradle, Jenkins, and SonarQube. Technical excellence is a key aspect of Agile architecture therefore we wanted to ensure we managed technical debt from the start. Upon the completion of each build in Jenkins the team could rapidly see if they had increased technical debt into the baseline and make decisions from a position of knowledge regarding its cleanup. With the knowledge that social coding is closely linked to the ease of being able to extend the baseline we focused on ensuring our code was the highest quality possible.
+Once our environment was set up we instantiated continuous integration with GIT, Jenkins, and SonarQube. Technical excellence is a key aspect of Agile architecture therefore we wanted to ensure we managed technical debt from the start. Upon the completion of each build in Jenkins the team could rapidly see if they had increased technical debt into the baseline and make decisions from a position of knowledge regarding its cleanup. With the knowledge that social coding is closely linked to the ease of being able to extend the baseline we focused on ensuring our code was the highest quality possible.
 
 In order to realize the benefits of DevOps our team mapped the value stream to delivery at the start, leveraging Amazon Web Services (AWS) as our target environment. The team was able to deploy multiple times to AWS enabling us to remove bottlenecks early that we may not have found until the end of our time box. 
 
@@ -180,7 +180,7 @@ Lockheed Martin
     571-535-5854
     
 ### Management POC
-    Name: Phil Magrogan
+    Phil Magrogan
     2453 Dakota Lakes Dr. 
     Oak Hill VA 20171
     Email: phil.magrogan@lmco.com
