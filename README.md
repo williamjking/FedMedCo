@@ -153,7 +153,7 @@ Lockheed Martin
 ## License
 
 All license agreements are Free and Open Source
-* [Apache 2.0](http://www.apache.org/licenses/License-2.0)
+* [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 * [MIT](http://opensource.org/licenses/MIT)
 * [GPL-3.0](http://www.gnu.org/licenses/gpl-3.0.en.html)
 * [OpenSymphony 1.1](https://svn.apache.org/repos/asf/tiles/framework/trunk/OGNL-LICENSE.txt)
