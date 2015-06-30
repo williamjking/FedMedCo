@@ -68,7 +68,7 @@ In a digital society the team wanted to ensure the security of the application g
 
 1. Run command `uname -a` to determine what Linux version is running on the box. i686 indicates a 32-bit OS and x86-64 indicates a 64-bit OS.
 
-2. Download the right java package from Oracle (http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+2. Download the correct distribution of the [Oracle JDK](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
   * jdk-8u45-linux-i586.tar.gz for 32-bit OS
   * jdk-8u45-linux-x64.tar.gz for 64-bit OS
 
@@ -89,7 +89,7 @@ In a digital society the team wanted to ensure the security of the application g
   ```
 
 ### Install Grails
-1. Download and install Grails from https://grails.org/download.html - Select 2.5.0 from "Previous Versions" drop down menu
+1. Download and install [Grails](https://grails.org/download.html) - Select 2.5.0 from "Previous Versions" drop down menu
   ```Shell
   mkdir ~/grails
   cd ~/grails/
