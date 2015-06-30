@@ -46,16 +46,12 @@ Lockheed Martin has provided a Minimum Viable Product (MVP) directed at three ma
 1. Run command `uname -a` to determine what Linux version is running on the box. i686 indicates a 32-bit OS and x86-64 indicates a 64-bit OS.
 
 2. Download the right java package from Oracle (http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
-  - jdk-8u45-linux-i586.tar.gz for 32 bit OS
-  - jdk-8u45-linux-x64.tar.gz for 64 bit OS
+  - jdk-8u45-linux-i586.tar.gz for 32-bit OS
+  - jdk-8u45-linux-x64.tar.gz for 64-bit OS
 
-3. Install in /opt
-   ```Shell
-   sudo mkdir /opt/java
-   ```
-
-4. Unzip and install the downloaded package
+3. Unzip and install the downloaded package in /opt
   ```Shell
+  sudo mkdir /opt/java
   cd /opt/java
   tar xzf jdk-8u45-linux-x64.tar.gz
   cd /opt/java/jdk1.8.0_45/
@@ -63,7 +59,7 @@ Lockheed Martin has provided a Minimum Viable Product (MVP) directed at three ma
   sudo alternatives --config java
   ```
 
-5. Modify your environment file (for example, for bash, modify .bashrc)
+4. Modify your environment file (for example, for bash, modify .bashrc)
   ```Shell
   JAVA_HOME=/opt/java/jdk1.8.0_45
   export JAVA_HOME
@@ -71,14 +67,15 @@ Lockheed Martin has provided a Minimum Viable Product (MVP) directed at three ma
 
 ### Install Grails
 1. Download and install Grails from https://grails.org/download.html - Select 2.5.0 from "Previous Versions" drop down menu
-   ```Shell
-   mkdir ~/grails
-   cd ~/InstalledPrograms/
-   unzip grails-2.5.0.zip
-   ```
+  ```Shell
+  mkdir ~/grails
+  cd ~/InstalledPrograms/
+  unzip grails-2.5.0.zip
+  ```
+
 2. Set environment variables
   ```Shell
-  GRAILS_HOME=/home/ec2-user/InstalledPrograms/grails-2.5.0 
+  GRAILS_HOME=/home/ec2-user/InstalledPrograms/grails-2.5.0
   export GRAILS_HOME
   PATH=$PATH:$GRAILS_HOME/bin
   export PATH
@@ -119,6 +116,7 @@ Lockheed Martin has provided a Minimum Viable Product (MVP) directed at three ma
   ```Shell
   yum install tomcat8
   yum install tomcat8-webapps
+  ```
 
 ### Get the source code from git
   ```Shell
