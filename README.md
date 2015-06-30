@@ -43,41 +43,40 @@ Lockheed Martin has provided a Minimum Viable Product (MVP) directed at three ma
 ## Installation instructions for Amazon Linux
 ### Install JDK
 
-1. Run command `uname -a`` to determine what Linux version is running on the box. i686 indicates a 32 bit OS and x86-64 indicates a 64bit OS.
+1. Run command `uname -a` to determine what Linux version is running on the box. i686 indicates a 32-bit OS and x86-64 indicates a 64-bit OS.
 
 2. Download the right java package from Oracle (http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
   - jdk-8u45-linux-i586.tar.gz for 32 bit OS
   - jdk-8u45-linux-x64.tar.gz for 64 bit OS
 
 3. Install in /opt
+   ```Shell
+   sudo mkdir /opt/java
+   ```
 
-   `sudo mkdir /opt/java`
+4. Unzip and install the downloaded package
+  ```Shell
+  cd /opt/java
+  tar xzf jdk-8u45-linux-x64.tar.gz
+  cd /opt/java/jdk1.8.0_45/
+  sudo alternatives --install /usr/bin/java java /opt/java/jdk1.8.0_45/bin/java
+  sudo alternatives --config java
+  ```
 
-3. Unzip the downloaded package
-
-  `cd /opt/java`
-
-  `tar xzf jdk-8u45-linux-x64.tar.gz`
-
-4. `cd /opt/java/jdk1.8.0_45/`
-5. `sudo alternatives --install /usr/bin/java java /opt/java/jdk1.8.0_45/bin/java 2`
-6. `sudo alternatives --config java`
-
-
-6. Modify your environment file (for example, for bash, modify .bashrc)
-  
-  `JAVA_HOME=/opt/java/jdk1.8.0_45`
-  
-  `export JAVA_HOME`
-  
-
+5. Modify your environment file (for example, for bash, modify .bashrc)
+  ```Shell
+  JAVA_HOME=/opt/java/jdk1.8.0_45
+  export JAVA_HOME
+  ```
 
 ### Install Grails
-1. Download Grails  from https://grails.org/download.html - Select 2.5.0 from "Previous Versions" drop down menu
-2. `mkdir ~/grails`
-3. `cd ~/InstalledPrograms/`
-4. `unzip grails-2.5.0.zip`
-5. Set environment variables
+1. Download and install Grails from https://grails.org/download.html - Select 2.5.0 from "Previous Versions" drop down menu
+   ```Shell
+   mkdir ~/grails
+   cd ~/InstalledPrograms/
+   unzip grails-2.5.0.zip
+   ```
+2. Set environment variables
   ```Shell
   GRAILS_HOME=/home/ec2-user/InstalledPrograms/grails-2.5.0 
   export GRAILS_HOME
@@ -86,45 +85,45 @@ Lockheed Martin has provided a Minimum Viable Product (MVP) directed at three ma
   ```
   
 ### Install git
-  `sudo yum install git`
+  ```Shell
+  sudo yum install git
+  ```
 
 ### Install MongoDB
-  
-  `sudo su`
-  
-  `cd /etc/yum.repos.d/`
-  
-  `vi mongodb-org-2.6.repo`  
+  ```Shell
+  sudo su
+  cd /etc/yum.repos.d/
+  vi mongodb-org-2.6.repo
+  ```
 
   * Add the following
-  
-     `[mongodb-org-3.0]`
-  
-     `name=MongoDB Repository`
-  
-     `baseurl=https://repo.mongodb.org/yum/amazon/2013.03/mongodb-org/3.0/x86_64/`
-  
-     `gpgcheck=0`
-  
-     `enabled=1`
+     ```Shell
+     [mongodb-org-3.0]
+     name=MongoDB Repository
+     baseurl=https://repo.mongodb.org/yum/amazon/2013.03/mongodb-org/3.0/x86_64/
+     gpgcheck=0
+     enabled=1
+     ```
      
   * Now install Mongod
-    
-    `sudo yum install -y mongodb-org-3.0.4 mongodb-org-server-3.0.4 mongodb-org-shell-3.0.4 mongodb-org-mongos-3.0.4 mongodb-org-tools-3.0.4`
+    ```Shell
+    sudo yum install -y mongodb-org-3.0.4 mongodb-org-server-3.0.4 mongodb-org-shell-3.0.4 mongodb-org-mongos-3.0.4 mongodb-org-tools-3.0.4
+    ```
 
   * Start MongoDB
-    
-    `sudo service mongod start`
+    ```Shell
+    sudo service mongod start
+    ```
 
 ### install tomcat8
-  
-  `yum install tomcat8`
-  
-  `yum install tomcat8-webapps`
+  ```Shell
+  yum install tomcat8
+  yum install tomcat8-webapps
 
 ### Get the source code from git
-  
-  `git clone https://github.com/anuchandpamra/Fedmedco.git`
+  ```Shell
+  git clone https://github.com/anuchandpamra/Fedmedco.git
+  ```
 
 ### Deploy to tomcat
   ```Shell
