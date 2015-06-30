@@ -40,6 +40,12 @@ Usability testing was critical to the success of our delivery and our FDA SME sp
 
 In a digital society the team wanted to ensure the security of the application given the criticality of the data and the impact on the end user if the application was tampered with. The team had security scans done at multiple times during the course of the week to understand vulnerabilities being exposed and incorporating feedback to remove any security concerns.
 
+## Design Documents
+
+* [Architecture Diagrams](docs/#architecture-diagrams)
+* [Personas & Use Cases](docs/#personas--use-cases)
+* [Screen Mockups](docs/#screen-mockups)
+
 ## Web Technologies
 
 |   | **Technology** | **Description** | **License** | **Version** | **Date** |
@@ -53,12 +59,6 @@ In a digital society the team wanted to ensure the security of the application g
 | 7. | JQuery | JavaScript library | MIT | 1.11.1 | 2014 |
 | 8. | Selenium | Web Testing | Apache 2 | 2.46 | 2015 |
 | 9. | Spock | Integration Test | Apache 2 | 0.7 | 2012 |
-
-## Design Documents
-
-* [Architecture Diagrams](docs/#architecture-diagrams)
-* [Personas & Use Cases](docs/#personas--use-cases)
-* [Screen Mockups](docs/#screen-mockups)
 
 ## Installation instructions for Amazon Linux
 ### Install JDK
