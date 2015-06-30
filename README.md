@@ -8,6 +8,10 @@ Please login using the following information:
 user id: john
 password: password
 
+## Overview
+
+Lockheed Martin has provided a Minimum Viable Product (MVP) directed at three main categories of users: patients, pharmaceutical manufacturers, and regulatory agencies. The drug reaction and food to drug interaction features are primarily for patients seeking information about medications they are using. The interesting facts about drugs feature and the open query are for both pharmaceutical manufacturers and regulatory agencies who have pharmaceutical domain knowledge and are performing a deep dive.
+
 ## Features
 
 * Reported Drug Reactions
@@ -32,7 +36,23 @@ password: password
 
 ## Approach
 
-Lockheed Martin has provided a Minimum Viable Product (MVP) directed at three main categories of users: patients, pharmaceutical manufacturers, and regulatory agencies. The drug reaction and food to drug interaction features are primarily for patients seeking information about medications they are using. The interesting facts about drugs feature and the open query are for both pharmaceutical manufacturers and regulatory agencies who have pharmaceutical domain knowledge and are performing a deep dive.
+Lockheed Martin, headquartered in Bethesda with over 113,000 employees and greater than 45B in sales, selected to put their best and brightest on the task for the 18F challenge. We are known for our engineering expertise in building complex systems, but not our agility in delivering rapid solutions.  We see this challenge as a step in the right direction in changing both government as well as our own corporate culture ensuring we are agile in delivering needed capabilities to the field.
+
+Beginning with the user in mind our team engaged an FDA subject matter expert (SME) to identify capabilities that would be valuable to the end users of FDA applications. Our team determined to focus on three main personas: patients, pharmaceutical manufacturers, and pharmaceutical regulators.  Our understanding of the data led us to believe that 80% of the usage would be patients looking for information regarding their medications. Our user interface developer paired with the FDA SME to develop personas, scenarios, screen mockups and use cases. Next we identified architecture and technology stack needed to deliver the use cases.  
+
+We identified the appropriate business and architectural epics that would provide the capabilities identified and then developed conditions of acceptance for those capabilities. We made use of VersionOne to track the sprint and associated metrics. The team then decomposed the epics into user stories and aligned them to the appropriate personas and linked them to test cases. Our team then set a time box of one week to complete the user stories to be delivered. Our product owner worked with the team to prioritize the user stories against business value ensuring we delivered in priority order. 
+
+We selected to utilize scrum as our core Agile management practice due to its structure, predefined business rhythms and associated artifacts. At the start of our one week sprint the team decomposed the user stories into 2-8 hour tasks to maximize transparency into delivery.  Each of the tasks was tracked within our Agile project management tool. At the start of each day the team had a virtual daily stand-up given the distributed nature of the team across multiple time zones.  
+
+We leveraged the architecture design developed by our solutions architect and rapidly set up the environment.  We made use of Apache Tomcat for our web server, Grails for a lightweight web framework,  HTML5/CSS3 couple with bootstrap to develop a presentation that would support responsive design; Sitemesh to provide HTML templates; MongoDB as a NoSQL database; and JQuery to pull out the needed data.
+
+Once our environment was set up we instantiated continuous integration with GIT, gradle, Jenkins, and SonarQube. Technical excellence is a key aspect of Agile architecture therefore we wanted to ensure we managed technical debt from the start. Upon the completion of each build in Jenkins the team could rapidly see if they had increased technical debt into the baseline and make decisions from a position of knowledge regarding its cleanup. With the knowledge that social coding is closely linked to the ease of being able to extend the baseline we focused on ensuring our code was the highest quality possible.
+
+In order to realize the benefits of DevOps our team mapped the value stream to delivery at the start, leveraging Amazon Web Services (AWS) as our target environment. The team was able to deploy multiple times to AWS enabling us to remove bottlenecks early that we may not have found until the end of our time box. 
+
+Usability testing was critical to the success of our delivery and our FDA SME spent hours verifying the capabilities and ensuring they met the acceptance criteria. With the knowledge that the patient persona would utilize the site the most the team provided access to the site to a random number of employees at Lockheed Martin with various skillsets and backgrounds. These users were able to identify issues our SME had not considered such as if the end user typed something irrelevant such as “Dog” into the search. We updated the application to provide informative error messages to the user.
+
+In a digital society the team wanted to ensure the security of the application given the criticality of the data and the impact on the end user if the application was tampered with. The team had security scans done at multiple times during the course of the week to understand vulnerabilities being exposed and incorporating feedback to remove any security concerns.
 
 ## Design Documents
 
