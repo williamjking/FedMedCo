@@ -42,9 +42,9 @@ In a digital society the team wanted to ensure the security of the application g
 
 ## Design Documents
 
-* [Architecture Diagrams](docs/#architecture-diagrams)
-* [Personas & Use Cases](docs/#personas--use-cases)
-* [Screen Mockups](docs/#screen-mockups)
+* [Architecture Diagrams](docs/Docs.md#architecture-diagrams)
+* [Personas & Use Cases](docs/Docs.md#personas--use-cases)
+* [Screen Mockups](docs/Docs.md#screen-mockups)
 
 ## Web Technologies
 
@@ -66,8 +66,8 @@ In a digital society the team wanted to ensure the security of the application g
 1. Run command `uname -a` to determine what Linux version is running on the box. i686 indicates a 32-bit OS and x86-64 indicates a 64-bit OS.
 
 2. Download the right java package from Oracle (http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
-  - jdk-8u45-linux-i586.tar.gz for 32-bit OS
-  - jdk-8u45-linux-x64.tar.gz for 64-bit OS
+  * jdk-8u45-linux-i586.tar.gz for 32-bit OS
+  * jdk-8u45-linux-x64.tar.gz for 64-bit OS
 
 3. Unzip and install the downloaded package in /opt
   ```Shell
@@ -157,7 +157,7 @@ In a digital society the team wanted to ensure the security of the application g
 
 ## Monitoring
 
-The application is monitored via the the Amazon Web Services (AWS) control panel. See screenshots of our [AWS Monitoring](docs/#monitoring).
+The application is monitored via the the Amazon Web Services (AWS) control panel. See screenshots of our [AWS Monitoring](docs/Docs.md#monitoring).
 
 ## API Reference
 
