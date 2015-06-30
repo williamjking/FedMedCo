@@ -2,11 +2,11 @@
 
 ## http://www.fedmedco.info
 
-Provides a responsive human centered design interface that enables both novice and experienced users to search the openFDA data to identify critical drug information and display results across multiple devices.
+This prototype provides a responsive human centered design interface that enables both novice and experienced users to search the openFDA data to identify critical drug information and display results across multiple devices.
 
 Please login using the following information:
-user id: john
-password: password
+  * user id: john
+  * password: password
 
 ## Overview
 
@@ -36,7 +36,7 @@ Once our environment was set up we instantiated continuous integration with GIT,
 
 In order to realize the benefits of DevOps our team mapped the value stream to delivery at the start, leveraging Amazon Web Services (AWS) as our target environment. The team was able to deploy multiple times to AWS enabling us to remove bottlenecks early that we may not have found until the end of our time box. 
 
-Usability testing was critical to the success of our delivery and our FDA SME spent hours verifying the capabilities and ensuring they met the acceptance criteria. With the knowledge that the patient persona would utilize the site the most the team provided access to the site to a random number of employees at Lockheed Martin with various skillsets and backgrounds. These users were able to identify issues our SME had not considered such as if the end user typed something irrelevant such as “Dog” into the search. We updated the application to provide informative error messages to the user.
+Usability testing was critical to the success of our delivery and our FDA SME spent hours verifying the capabilities and ensuring they met the acceptance criteria. With the knowledge that the patient persona would utilize the site the most the team provided access to the site to a random number of employees at Lockheed Martin with various skillsets and backgrounds. These users were able to identify issues our SME had not considered such as if the end user typed something irrelevant such as ï¿½Dogï¿½ into the search. We updated the application to provide informative error messages to the user.
 
 In a digital society the team wanted to ensure the security of the application given the criticality of the data and the impact on the end user if the application was tampered with. The team had security scans done at multiple times during the course of the week to understand vulnerabilities being exposed and incorporating feedback to remove any security concerns.
 
@@ -170,6 +170,21 @@ The application is monitored via the the Amazon Web Services (AWS) control panel
 ## Contributors
 
 Lockheed Martin
+
+## Contact Information
+### Technical POC
+    Robin Yeman
+    1800 Jonathan Way
+    Reston VA 20190
+    Email: robin.yeman@lmco.com
+    571-535-5854
+    
+### Management POC
+    Name: Phil Magrogan
+    2453 Dakota Lakes Dr. 
+    Oak Hill VA 20171
+    Email: phil.magrogan@lmco.com
+    703-336-2328
 
 ## License
 
