@@ -34,7 +34,7 @@ Lockheed Martin has provided a Minimum Viable Product (MVP) directed at three ma
 | 8. | Selenium | Web Testing | Apache 2 | 2.46 | 2015 |
 | 9. | Spock | Integration Test | Apache 2 | 0.7 | 2012 |
 
-## Approach
+## Description
 
 Lockheed Martin, headquartered in Bethesda with over 113,000 employees and greater than 45B in sales, selected to put their best and brightest on the task for the 18F challenge. We are known for our engineering expertise in building complex systems, but not our agility in delivering rapid solutions.  We see this challenge as a step in the right direction in changing both government as well as our own corporate culture ensuring we are agile in delivering needed capabilities to the field.
 
@@ -133,7 +133,7 @@ In a digital society the team wanted to ensure the security of the application g
     sudo service mongod start
     ```
 
-### install tomcat8
+### Install Tomcat 8
   ```Shell
   yum install tomcat8
   yum install tomcat8-webapps
@@ -144,7 +144,7 @@ In a digital society the team wanted to ensure the security of the application g
   git clone https://github.com/anuchandpamra/Fedmedco.git
   ```
 
-### Deploy to tomcat
+### Deploy to Tomcat
   ```Shell
   cd FedMedCo
   git pull
