@@ -20,20 +20,6 @@ Lockheed Martin has provided a Minimum Viable Product (MVP) directed at three ma
 * Open Query for search engine
 * Multi-Device compatibility
 
-## Web Technologies
-
-|   | **Technology** | **Description** | **License** | **Version** | **Date** |
-| --- | --- | --- | --- | --- | --- |
-| 1. | Grails | Web Framework | Apache 2 | 2.5 | 2015 |
-| 2. | Groovy | Language | Apache 2 | 2.4 | 2015 |
-| 3. | HTML5/CSS3 using Bootstrap | Presentation / Responsive design supporting multi-device | MIT | 3.3.4 | 2015 |
-| 4. | Sitemesh | HTML template framework based on Decoration Model | OpenSymphony(Apache) | 2.1.5 | 2015 |
-| 5. | GORM | Object relationship mapping | Apache 2 | 2.5.0 | 2015 |
-| 6. | MongoDB | NoSQL database JSON-like documents | GNU GPL | 3.0.4 | 2015 |
-| 7. | JQuery | JavaScript library | MIT | 1.11.1 | 2014 |
-| 8. | Selenium | Web Testing | Apache 2 | 2.46 | 2015 |
-| 9. | Spock | Integration Test | Apache 2 | 0.7 | 2012 |
-
 ## Description
 
 Lockheed Martin, headquartered in Bethesda with over 113,000 employees and greater than 45B in sales, selected to put their best and brightest on the task for the 18F challenge. We are known for our engineering expertise in building complex systems, but not our agility in delivering rapid solutions.  We see this challenge as a step in the right direction in changing both government as well as our own corporate culture ensuring we are agile in delivering needed capabilities to the field.
@@ -53,6 +39,20 @@ In order to realize the benefits of DevOps our team mapped the value stream to d
 Usability testing was critical to the success of our delivery and our FDA SME spent hours verifying the capabilities and ensuring they met the acceptance criteria. With the knowledge that the patient persona would utilize the site the most the team provided access to the site to a random number of employees at Lockheed Martin with various skillsets and backgrounds. These users were able to identify issues our SME had not considered such as if the end user typed something irrelevant such as “Dog” into the search. We updated the application to provide informative error messages to the user.
 
 In a digital society the team wanted to ensure the security of the application given the criticality of the data and the impact on the end user if the application was tampered with. The team had security scans done at multiple times during the course of the week to understand vulnerabilities being exposed and incorporating feedback to remove any security concerns.
+
+## Web Technologies
+
+|   | **Technology** | **Description** | **License** | **Version** | **Date** |
+| --- | --- | --- | --- | --- | --- |
+| 1. | Grails | Web Framework | Apache 2 | 2.5 | 2015 |
+| 2. | Groovy | Language | Apache 2 | 2.4 | 2015 |
+| 3. | HTML5/CSS3 using Bootstrap | Presentation / Responsive design supporting multi-device | MIT | 3.3.4 | 2015 |
+| 4. | Sitemesh | HTML template framework based on Decoration Model | OpenSymphony(Apache) | 2.1.5 | 2015 |
+| 5. | GORM | Object relationship mapping | Apache 2 | 2.5.0 | 2015 |
+| 6. | MongoDB | NoSQL database JSON-like documents | GNU GPL | 3.0.4 | 2015 |
+| 7. | JQuery | JavaScript library | MIT | 1.11.1 | 2014 |
+| 8. | Selenium | Web Testing | Apache 2 | 2.46 | 2015 |
+| 9. | Spock | Integration Test | Apache 2 | 0.7 | 2012 |
 
 ## Design Documents
 
