@@ -156,7 +156,7 @@ The application is monitored via the the Amazon Web Services (AWS) control panel
 
 ## Test
 
-[Latest Test Report](docs/test-reports/html/#all.html)
+Please download test-reports folder from [docs](docs) and open the index.html in your browser.
 
 ## Contributors
 
