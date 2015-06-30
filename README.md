@@ -53,15 +53,15 @@ In a digital society the team wanted to ensure the security of the application g
 | 1. | Grails | Web framework | Apache 2 | 2.5 | 2015 |
 | 2. | Groovy | Language | Apache 2 | 2.4 | 2015 |
 | 3. | HTML5/CSS3 using Bootstrap | Presentation / responsive design supporting multi-device | MIT | 3.3.4 | 2015 |
-| 4. | Sitemesh | HTML template framework based on Decoration Model | OpenSymphony (Apache) | 2.1.5 | 2015 |
-| 5. | GORM | Object relationship mapping | Apache 2 | 2.5.0 | 2015 |
-| 6. | Tomcat | Java servlet container | Apache 2 | 8.0.23 | 2015 |
+| 4. | JQuery | JavaScript library | MIT | 1.11.1 | 2014 |
+| 5. | Sitemesh | HTML template framework based on Decoration Model | OpenSymphony (Apache) | 2.1.5 | 2015 |
+| 6. | GORM | Object relationship mapping | Apache 2 | 2.5.0 | 2015 |
 | 7. | MongoDB | NoSQL database JSON-like documents | GNU AGPL v3 | 3.0.4 | 2015 |
-| 8. | JQuery | JavaScript library | MIT | 1.11.1 | 2014 |
+| 8. | Tomcat | Java servlet container | Apache 2 | 8.0.23 | 2015 |
 | 9. | Selenium | Web testing | Apache 2 | 2.46 | 2015 |
 | 10. | Spock | Integration test | Apache 2 | 0.7 | 2012 |
-| 11. | Jenkins | Continuous integration | MIT | 1.599 | 2015 |
-| 12. | SonarQube | Code quality analysis | GNU GPL v3 | 5.1.1 | 2015 |
+| 11. | SonarQube | Code quality analysis | GNU GPL v3 | 5.1.1 | 2015 |
+| 12. | Jenkins | Continuous integration | MIT | 1.599 | 2015 |
 
 ## Installation instructions for Amazon Linux
 ### Install JDK
