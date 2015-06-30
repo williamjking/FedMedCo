@@ -53,7 +53,7 @@ In a digital society the team wanted to ensure the security of the application g
 | 1. | Grails | Web framework | Apache 2 | 2.5 | 2015 |
 | 2. | Groovy | Language | Apache 2 | 2.4 | 2015 |
 | 3. | HTML5/CSS3 using Bootstrap | Presentation / responsive design supporting multi-device | MIT | 3.3.4 | 2015 |
-| 4. | Sitemesh | HTML template framework based on Decoration Model | OpenSymphony(Apache) | 2.1.5 | 2015 |
+| 4. | Sitemesh | HTML template framework based on Decoration Model | OpenSymphony (Apache) | 2.1.5 | 2015 |
 | 5. | GORM | Object relationship mapping | Apache 2 | 2.5.0 | 2015 |
 | 6. | Tomcat | Java servlet container | Apache 2 | 8.0.23 | 2015 |
 | 7. | MongoDB | NoSQL database JSON-like documents | GNU AGPL v3 | 3.0.4 | 2015 |
