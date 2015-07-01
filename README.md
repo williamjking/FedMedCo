@@ -40,11 +40,14 @@ Usability testing was critical to the success of our delivery and our FDA SME sp
 
 In a digital society the team wanted to ensure the security of the application given the criticality of the data and the impact on the end user if the application was tampered with. The team had security scans done at multiple times during the course of the week to understand vulnerabilities being exposed and incorporating feedback to remove any security concerns.
 
+## User Guide
+
+Learn how to use our application, including examples of sample queries to try, in our [user guide](docs/UserGuide.md).
+
 ## Design Documents
 
 * [Architecture Diagrams](docs/Architecture.md)
 * [Personas & Use Cases](docs/Personas_and_user_scenerios_for_18F.pdf)
-* [Screen Mockups](docs/ScreenMockups.md)
 
 ## Technologies
 
