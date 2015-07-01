@@ -31,7 +31,7 @@ $(function(){
         $('<div class="groupParent"> ' +
             '<input type="hidden" class="hiddenClass" id="booleanOp_'+fieldCounter+'" name="booleanOp_' + fieldCounter +'" value="AND"/>' +
             '<div class="input-group col-xs-7">'+
-            '<a href="#" name="'+fieldCounter+'" data-toggle="tooltip" title="Click to toggle" id="booleanSpan_'+fieldCounter+'" class="input-group-addon" aria-describedby="basic-addon1">AND</a>' +
+            '<a href="#" name="'+fieldCounter+'" data-toggle="tooltip" title="Click to toggle" id="booleanSpan_'+fieldCounter+'" class="input-group-addon booleanSpan" aria-describedby="basic-addon1">AND</a>' +
             '<select class="form-control" id="fieldsSelect_' + fieldCounter +'" name="fields_' + fieldCounter +'" aria-describedby="basic-addon1"></select>' +
              '</div>' +
             '<label for="criteria_'+fieldCounter+'" >' +
@@ -40,7 +40,7 @@ $(function(){
             '<label for="criteria_exact_'+fieldCounter+'">' +
             '<input type="checkbox" id="criteria_exact_'+fieldCounter+'" name="criteria_exact_' + fieldCounter +'"/> Exact' +
             '</label>' +
-            '<span title="Remove Fields" id="remove_additional_fields_'+fieldCounter+'" class="glyphicon glyphicon-remove-circle" aria-hidden="true">' +
+            '<span title="Remove Fields" id="remove_additional_fields_'+fieldCounter+'" class="glyphicon glyphicon-remove-circle remove_additional_fields" aria-hidden="true">' +
             '</span>' +
             '</div>'
         ).appendTo(additional_fields);
@@ -53,7 +53,7 @@ $(function(){
     });
 
 
-    $('#additional_fields').on('click', '#remove_additional_fields', function(){
+    $('#additional_fields').on('click', '.remove_additional_fields', function(){
         if( fieldCount > 0 ) {
             $(this).parents('div.groupParent').remove();
             fieldCount--;
@@ -63,7 +63,7 @@ $(function(){
     });
 
 
-    $('#additional_fields').on('click', '#booleanSpan', function(){
+    $('#additional_fields').on('click', '.booleanSpan', function(){
         var name = $(this).attr('name');
         if ($(this).html() == 'AND') {
             $(this).html('OR ');
