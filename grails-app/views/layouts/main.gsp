@@ -21,7 +21,7 @@
 		<div class="header clearfix">
 			<nav class="nav">
 				<ul class="nav-pills pull-right">
-					<li role="presentation"><a title="About" class="glyphicon glyphicon-home home" href="${createLink(uri: '/')}"></a></li>
+					<li role="presentation"><a title="Home" class="glyphicon glyphicon-home home" href="${createLink(uri: '/')}"></a></li>
 
 					<sec:ifNotLoggedIn>
 						<li role="presentation"><g:link title="Login" class="glyphicon glyphicon-log-in login" controller="login" action="auth"></g:link></li>
@@ -30,7 +30,7 @@
 						<li role="presentation"><a title="Logout" class="glyphicon glyphicon-log-out logout" href="${createLink(uri: '/j_spring_security_logout')}"></a></li>
 					</sec:ifLoggedIn>
 					<li role="presentation"><g:link title="Contact" class="glyphicon glyphicon-earphone contact" controller="contact"></g:link></li>
-					<li role="presentation"><a title="Help" class="glyphicon glyphicon-question-sign help" href="https://open.fda.gov" target="_blank"></a></li>
+					<li role="presentation"><g:link title="Help" class="glyphicon glyphicon-question-sign help" controller="help"></g:link></li>
 				</ul>
 			</nav>
 			<a class="logo" href="${createLink(uri: '/')}"><asset:image src="FedMedCo.png" alt="FedMedCo"/></a>
