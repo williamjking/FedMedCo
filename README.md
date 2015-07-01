@@ -110,14 +110,14 @@ In a digital society the team wanted to ensure the security of the application g
   ```
 
 ### Install MongoDB
-Create a `/etc/yum.repos.d/mongodb-org-3.0.repo ` file so that you can install MongoDB directly, using `yum`.
+1. Create a `/etc/yum.repos.d/mongodb-org-3.0.repo ` file so that you can install MongoDB directly, using `yum`.
   ```Shell
   sudo su
   cd /etc/yum.repos.d/
   vi mongodb-org-3.0.repo
   ```
 
-Add the following to mongodb-org-3.0.repo
+2. Add the following to mongodb-org-3.0.repo
   ```Shell
   [mongodb-org-3.0]
   name=MongoDB Repository
@@ -126,12 +126,12 @@ Add the following to mongodb-org-3.0.repo
   enabled=1
   ```
      
-Install Mongod
+3. Install Mongod
   ```Shell
   sudo yum install -y mongodb-org-3.0.4 mongodb-org-server-3.0.4 mongodb-org-shell-3.0.4 mongodb-org-mongos-3.0.4 mongodb-org-tools-3.0.4
   ```
 
-Start MongoDB
+4. Start MongoDB
   ```Shell
   sudo service mongod start
   ```
