@@ -1,4 +1,4 @@
-# Screen Mockups
+# User Guide
 
 There are five query types that can be run, selected by clicking on the desired query type. Below is a description of each with screen shots. 
 
