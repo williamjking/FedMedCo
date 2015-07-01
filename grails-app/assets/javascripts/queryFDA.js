@@ -31,16 +31,16 @@ $(function(){
         $('<div class="groupParent"> ' +
             '<input type="hidden" class="hiddenClass" id="booleanOp_'+fieldCounter+'" name="booleanOp_' + fieldCounter +'" value="AND"/>' +
             '<div class="input-group col-xs-7">'+
-            '<a href="#" name="'+fieldCounter+'" data-toggle="tooltip" title="Click to toggle" id="booleanSpan" class="input-group-addon" id="basic-addon1">AND</a>' +
+            '<a href="#" name="'+fieldCounter+'" data-toggle="tooltip" title="Click to toggle" id="booleanSpan_'+fieldCounter+'" class="input-group-addon" aria-describedby="basic-addon1">AND</a>' +
             '<select class="form-control" id="fieldsSelect_' + fieldCounter +'" name="fields_' + fieldCounter +'" aria-describedby="basic-addon1"></select>' +
              '</div>' +
-            '<label for="criteria">' +
-            '<input type="text" id="criteria" size="20" name="criteria_' + fieldCounter +'" value="" placeholder="Search Criteria" />' +
+            '<label for="criteria_'+fieldCounter+'" >' +
+            '<input type="text" id="criteria_'+fieldCounter+'" size="20" name="criteria_' + fieldCounter +'" value="" placeholder="Search Criteria" />' +
             '</label> ' +
-            '<label for="criteria_exact">' +
-            '<input type="checkbox" id="criteria_exact" name="criteria_exact_' + fieldCounter +'"/> Exact' +
+            '<label for="criteria_exact_'+fieldCounter+'">' +
+            '<input type="checkbox" id="criteria_exact_'+fieldCounter+'" name="criteria_exact_' + fieldCounter +'"/> Exact' +
             '</label>' +
-            '<span title="Remove Fields" id="remove_additional_fields" class="glyphicon glyphicon-remove-circle" aria-hidden="true">' +
+            '<span title="Remove Fields" id="remove_additional_fields_'+fieldCounter+'" class="glyphicon glyphicon-remove-circle" aria-hidden="true">' +
             '</span>' +
             '</div>'
         ).appendTo(additional_fields);

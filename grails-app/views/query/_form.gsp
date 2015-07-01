@@ -2,7 +2,7 @@
 
 
 <div class="form-group  ">
-    <label class="col-sm-2" for="search"  class="control-label">
+    <label class="col-sm-2" for="categorySelect"  class="control-label">
         <g:message code="category.label" default="Select a Category"></g:message>
     </label>
     <g:select id="categorySelect"
@@ -15,7 +15,7 @@
 </div>
 
 <div class="form-group  ">
-    <label class="col-sm-2" for="search"  class="control-label">
+    <label class="col-sm-2" for="subCategorySelect"  class="control-label">
         <g:message code="subcategory.label" default="Select a Sub Category"></g:message>
     </label>
     <select id="subCategorySelect" name="subcategory"></select>
@@ -41,15 +41,15 @@
             <div class="form-inline" id="default_field">
                 <div>
                     <div class="input-group col-xs-7">
-                        <span class="input-group-addon" id="basic-addon1" style="color:rgba(0,0,0,0)">AND</span>
+                        <span class="input-group-addon" aria-describedby="basic-addon1" style="color:rgba(0,0,0,0)">AND</span>
                         <select required="" id="fieldsSelect_0" name="fields_0" class="form-control"></select>
                     </div>
 
-                    <label for="criteria">
-                        <input type="text" id="criteria" name="criteria_0" value="" required="" placeholder="Search Criteria" />
+                    <label for="criteria_0">
+                        <input type="text" id="criteria_0" name="criteria_0" value="" required="" placeholder="Search Criteria" />
                     </label>
-                    <label for="criteria_exact">
-                        <input type="checkbox" id="criteria_exact" name="criteria_exact_0"/> Exact
+                    <label for="criteria_exact_0">
+                        <input type="checkbox" id="criteria_exact_0" name="criteria_exact_0"/> Exact
                     </label>
                 </div>
             </div>
