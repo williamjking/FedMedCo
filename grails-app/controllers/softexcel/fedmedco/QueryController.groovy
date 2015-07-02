@@ -357,16 +357,23 @@ class QueryController {
 	
 	private String getURLContent(String url) {
 		def connection = url.toURL().openConnection()
-		if (connection.responseCode > 400) {
-			def data = connection.errorStream.text
-			def parsedData = new JsonSlurper().parseText(data)
-			def errorMessage = parsedData?.error?.message
+		if (connection?.responseCode > 400) {
+            def errorMessage
+            if (connection?.errorStream != null){
+			    def data = connection.errorStream.text
+			    def parsedData = new JsonSlurper().parseText(data)
+			    errorMessage = parsedData?.error?.message
+            }
+            else{
+                errorMessage = 'openFDA service api.fda.gov is temporarily not available. Please try again later. '
+            }
+
 			Query queryParams = new Query()
 			queryParams.errors.rejectValue('queryField', 'query.error.message', [errorMessage] as Object[], "")
 			render view:"index", model:[queryInstance:queryParams]
 			return null
 		} else {
-			return connection.content.text
+			return connection?.content?.text
 		}
 	}
 }
