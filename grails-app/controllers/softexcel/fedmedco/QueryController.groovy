@@ -3,6 +3,7 @@ package softexcel.fedmedco
 import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
 import groovy.json.JsonSlurper
+import grails.converters.JSON
 
 
 @Secured(['ROLE_QUERY'])
@@ -345,6 +346,41 @@ class QueryController {
     }
 
 
+    def refreshPatientDeaths(){
+        try {
+            def data = getPatientDeathData(params.beginDate, params.endDate) as JSON
+            render data.toString()
+        } catch (Exception ioe) {
+            log.error ioe.message, ioe
+            Query queryParams = new Query(params)
+            queryParams.errors.rejectValue ('queryField', 'an.error.message')
+            render (view: "index", model:[queryInstance: queryParams, errorMessage: ioe.message])
+        }
+    }
+
+
+    def patientDeaths() {
+        try {
+            def data = getPatientDeathData(params.beginDate, params.endDate)
+            def fillKeysAsJSON = data.fillKeys as JSON
+            def patientData = data.queryResults as JSON
+
+
+            def dataAsJson = [fillKeys:fillKeysAsJSON.toString(),
+                    queryResults: patientData.toString(),
+                    beginDate: data.beginDate,
+                    endDate: data.endDate
+            ]
+            render view:"map", model: dataAsJson
+        } catch (Exception ioe) {
+            log.error ioe.message, ioe
+            Query queryParams = new Query(params)
+            queryParams.errors.rejectValue ('queryField', 'an.error.message')
+            render (view: "index", model:[queryInstance: queryParams, errorMessage: ioe.message])
+        }
+    }
+
+
     protected void notFound() {
         request.withFormat {
             form multipartForm {
@@ -376,4 +412,63 @@ class QueryController {
 			return connection?.content?.text
 		}
 	}
+
+
+    private def getColorMap(){
+        def colors = DataMap.hundredColorMap
+        if (colors == null) {
+            colors = [:]
+            def size = DataMap.hundredColors.size() - 1
+            DataMap.hundredColors.eachWithIndex { String entry, int i -> colors.put(size - i, entry) }
+            colors.put('defaultFill', '#8597C5')
+            colors.put('UNKNOWN', '#8597C5')
+            DataMap.hundredColorMap = colors
+        }
+        colors
+    }
+
+    private def getPatientDeathData(def beginDate, def endDate){
+        if (!beginDate || beginDate == '') beginDate = 2014
+        if (!endDate || endDate == '') endDate = 2015
+
+        if (beginDate.toInteger() >= endDate.toInteger()) beginDate = endDate.toInteger() - 1
+
+        def colors = getColorMap()
+
+        String category = 'drug'
+        String subCategory = 'event'
+        String deathsQuery = "https://api.fda.gov/" +
+                category +
+                '/' +
+                subCategory +
+                '.json?search=' +
+                'receivedate:['+beginDate+'0101+TO+'+endDate+'0101]+AND+_exists_:seriousnessdeath&count=occurcountry.exact'
+
+
+        def content = getURLContent(deathsQuery);
+        def rtrn = null
+        if (content != null) {
+            def data = new JsonSlurper().parseText(content)
+
+            def mapToAnalyzeData = [:]
+            def patientDeathData =[:]
+            data.results.each{mapToAnalyzeData.put(it.term, it.count)}
+            def totalDeaths = 0
+            mapToAnalyzeData.each{totalDeaths += it.value}
+
+            mapToAnalyzeData.each{k, v ->
+                if (DataMap.countryCodeMapping.containsKey(k)){
+                    def percentageOfTotalDeaths = Math.round((v/totalDeaths) * 100)
+                    def countryInfo = [fillKey:percentageOfTotalDeaths.toString(), numberOfThings: v]
+                    patientDeathData.put(DataMap.countryCodeMapping[k],countryInfo)
+                }
+            }
+
+            rtrn = [ "fillKeys": colors,
+              "queryResults": patientDeathData,
+              "beginDate":beginDate, "endDate":endDate
+            ]
+        }
+        rtrn
+    }
 }

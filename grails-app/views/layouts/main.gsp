@@ -14,6 +14,9 @@
 		<asset:stylesheet src="jumbotron-narrow.css"/>
 		<asset:javascript src="application.js"/>
 		<asset:javascript src="bootstrap.js"/>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+	<script src="http://datamaps.github.io/scripts/datamaps.world.min.js"></script>
 		<g:layoutHead/>
 	</head>
 	<body>

@@ -30,6 +30,27 @@
 
 		<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 			<div class="panel panel-default">
+				<div class="panel-heading" role="tab" id="headingMinusOne">
+					<h4 class="panel-title">
+						<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseMinusOne" aria-expanded="false" aria-controls="collapseMinusOne">
+							Adverse Events: Number of drug related patient casualties between two dates
+						</a>
+					</h4>
+				</div>
+				<div id="collapseMinusOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingMinusOne">
+					<div class="panel-body">
+						<g:form class="form-horizontal" url="[resource:contractorInstance, action:'patientDeaths']" >
+							<fieldset class="form">
+								<g:render template="dateSelector"/>
+							</fieldset>
+							<fieldset class="buttons">
+								<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Submit</button>
+							</fieldset>
+						</g:form>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
 				<div class="panel-heading" role="tab" id="headingZero">
 					<h4 class="panel-title">
 						<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseZero" aria-expanded="false" aria-controls="collapseZero">
