@@ -11,12 +11,11 @@
 		<title><g:layoutTitle default=" Welcome to ${meta(name: 'app.name')}"/></title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
   		<asset:stylesheet src="application.css"/>
-		<asset:stylesheet src="jumbotron-narrow.css"/>
 		<asset:javascript src="application.js"/>
 		<asset:javascript src="bootstrap.js"/>
-	<script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
-	<script src="http://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
-	<script src="http://datamaps.github.io/scripts/datamaps.world.min.js"></script>
+		<asset:javascript src="d3.min.js"/>
+		<asset:javascript src="topojson.min.js"/>
+		<asset:javascript src="datamaps.world.min.js"/>
 		<g:layoutHead/>
 	</head>
 	<body>

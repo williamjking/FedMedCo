@@ -19,6 +19,10 @@
 			</ul>
 		</nav>
 
+		<ul class="errors" role="alert" style="display:none;">
+			<li>Error in getting data from the server. Please try again later.</li>
+		</ul>
+
 		<h3 id="mapTitle" class="text-center">Drug related deaths reported throughout the world between ${beginDate} and ${endDate}</h3>
 	    <div class="col-md-8, col-md-offset-1">
 			<fieldset class="form">
@@ -48,6 +52,7 @@
 			});
 
 			$(window).on('resize', function() {
+				hideErrorMessage();
        			map.resize();
     		});
 
@@ -59,6 +64,7 @@
     		});
 
 			function getDeaths() {
+				hideErrorMessage();
 				$.ajax({
 					type: 'POST',
 					dataType:'JSON',
@@ -68,9 +74,18 @@
 					    map.updateChoropleth(data.queryResults);
                         $("#mapTitle").text("Drug related deaths reported throughout the world between "+ data.beginDate +" and " + data.endDate);
 					},
-					error: function(XMLHttpRequest,textStatus,errorThrown){}}
+					error: function(XMLHttpRequest,textStatus,errorThrown){
+						showErrorMessage();
+					}}
 				);
 			}
+
+			function hideErrorMessage(){
+        		$(".errors").hide();
+		    }
+			function showErrorMessage(){
+        		$(".errors").show();
+		    }
 
 		</g:javascript>
 	</body>

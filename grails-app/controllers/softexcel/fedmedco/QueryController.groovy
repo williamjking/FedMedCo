@@ -349,7 +349,13 @@ class QueryController {
     def refreshPatientDeaths(){
         try {
             def data = getPatientDeathData(params.beginDate, params.endDate) as JSON
-            render data.toString()
+            if (data == null){
+                response.status = 404
+                render ([error:"Unable to retrieve data"] as JSON).toString()
+            }
+            else {
+                render data.toString()
+            }
         } catch (Exception ioe) {
             log.error ioe.message, ioe
             Query queryParams = new Query(params)
@@ -362,16 +368,24 @@ class QueryController {
     def patientDeaths() {
         try {
             def data = getPatientDeathData(params.beginDate, params.endDate)
-            def fillKeysAsJSON = data.fillKeys as JSON
-            def patientData = data.queryResults as JSON
+            if (data == null){
+                def errorMessage = "Unable to retrieve data from the server. Please make sure valid data was provided to the server"
+                Query queryParams = new Query()
+                queryParams.errors.rejectValue('queryField', 'query.error.message', [errorMessage] as Object[], "")
+                render view:"index", model:[queryInstance:queryParams]
+            }
+            else {
+                def fillKeysAsJSON = data.fillKeys as JSON
+                def patientData = data.queryResults as JSON
 
 
-            def dataAsJson = [fillKeys:fillKeysAsJSON.toString(),
-                    queryResults: patientData.toString(),
-                    beginDate: data.beginDate,
-                    endDate: data.endDate
-            ]
-            render view:"map", model: dataAsJson
+                def dataAsJson = [fillKeys    : fillKeysAsJSON.toString(),
+                                  queryResults: patientData.toString(),
+                                  beginDate   : data.beginDate,
+                                  endDate     : data.endDate
+                ]
+                render view: "map", model: dataAsJson
+            }
         } catch (Exception ioe) {
             log.error ioe.message, ioe
             Query queryParams = new Query(params)
@@ -428,10 +442,10 @@ class QueryController {
     }
 
     private def getPatientDeathData(def beginDate, def endDate){
-        if (!beginDate || beginDate == '') beginDate = 2014
+        if (!beginDate || beginDate == '') beginDate = 2004
         if (!endDate || endDate == '') endDate = 2015
 
-        if (beginDate.toInteger() >= endDate.toInteger()) beginDate = endDate.toInteger() - 1
+        if (beginDate.toInteger() >= endDate.toInteger()) beginDate = 2000
 
         def colors = getColorMap()
 
