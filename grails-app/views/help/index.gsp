@@ -8,7 +8,25 @@
 
 	<p class="help-block text-justify">For details about the openFDA data set and query syntax, please visit <a title="Help" class="help" href="https://open.fda.gov" target="_blank">https://open.fda.gov</a> </p>
 
-	<p class="help-block text-justify">There are five query types that can be run, selected by clicking on the desired query type. Below is a description of each with screen shots. </p>
+	<p class="help-block text-justify">There are six query types that can be run, selected by clicking on the desired query type. Below is a description of each with screen shots. </p>
+
+	<h2 class="help-heading col-md-12 text-info">Find out patient deaths, by country, between two reporting years, related to adverse reaction from a drug.</h2>
+
+	<p class="help-block col-md-12 text-justify">Input: Starting year and ending year. Select the starting year and the ending year from the selection list</p>
+	<div class="col-md-8 col-md-offset-2">
+		<asset:image src="help/query0-input.png" alt="Select starting and ending year" class="img-responsive center-block img-thumbnail"/>
+	</div>
+
+
+	<p class="help-block col-md-12 text-justify">Output: A color coded world map that shows reported deaths by a country when the mouse is hovered over the country.</p>
+	<div class="col-md-8 col-md-offset-2">
+		<asset:image src="help/query0-output1.png" alt="A color coded world map" class="img-responsive center-block img-thumbnail"/>
+	</div>
+
+	<p class="help-block col-md-12 text-justify">The starting/ending years may be changed on the map itself to see the data reflected in real time.</p>
+	<div class="col-md-8 col-md-offset-2">
+		<asset:image src="help/query0-output2.png" alt="A color coded world map" class="img-responsive center-block img-thumbnail"/>
+	</div>
 
 	<h2 class="help-heading col-md-12 text-info">Find out all names for your medication.</h2>
 

@@ -1,6 +1,18 @@
 # User Guide
 
-There are five query types that can be run, selected by clicking on the desired query type. Below is a description of each with screen shots. 
+There are six query types that can be run, selected by clicking on the desired query type. Below is a description of each with screen shots. 
+
+## Find out patient deaths, by country, between two reporting years, related to adverse reaction from a drug.
+
+Input: Starting year and ending year. Select the starting year and the ending year from the selection list
+![alt text](query0-input.png "Query Example")
+
+Output: A color coded world map that shows reported deaths by a country when the mouse is hovered over the country.
+![alt text](query0-output1.png "Query Example")
+
+The starting/ending years may be changed on the map itself to see the data reflected in real time.
+
+![alt text](query0-output2.png "Query Example")
 
 ## Find out all names for your medication.
 
