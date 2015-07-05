@@ -384,15 +384,15 @@ class QueryControllerSpec extends Specification {
         controller.patientDeaths()
 
         then: "default dates are picked"
-        model.beginDate == 2004
-        model.endDate == 2015
+        model.beginDate == 2000
+        model.endDate == 2016
 
         when: "only end date is passed"
         params.endDate = '2008'
         controller.patientDeaths ()
 
         then: "the begin date is made default"
-        model.beginDate == 2004
+        model.beginDate == 2000
         model.endDate == '2008'
 
 
@@ -406,7 +406,7 @@ class QueryControllerSpec extends Specification {
 
         then: "the end date is made default"
         model.beginDate == '2003'
-        model.endDate == 2015
+        model.endDate == 2016
     }
 
     void "Test patientDeath method" (){

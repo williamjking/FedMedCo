@@ -443,8 +443,8 @@ class QueryController {
 
 
     private def getPatientDeathData(def beginDate, def endDate){
-        if (!beginDate || beginDate == '') beginDate = 2004
-        if (!endDate || endDate == '') endDate = 2015
+        if (!beginDate || beginDate == '') beginDate = 2000
+        if (!endDate || endDate == '') endDate = 2016
 
         if (beginDate.toInteger() >= endDate.toInteger()) beginDate = 2000
 
