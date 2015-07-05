@@ -432,14 +432,15 @@ class QueryController {
         def colors = DataMap.hundredColorMap
         if (colors == null) {
             colors = [:]
-            def size = DataMap.hundredColors.size() - 1
-            DataMap.hundredColors.eachWithIndex { String entry, int i -> colors.put(size - i, entry) }
-            colors.put('defaultFill', '#8597C5')
+            DataMap.colorGradient.eachWithIndex { String entry, int i -> colors.put(i, entry) }
+            colors.put('defaultFill', '#A0A0A0')
             colors.put('UNKNOWN', '#8597C5')
             DataMap.hundredColorMap = colors
         }
         colors
     }
+
+
 
     private def getPatientDeathData(def beginDate, def endDate){
         if (!beginDate || beginDate == '') beginDate = 2004
