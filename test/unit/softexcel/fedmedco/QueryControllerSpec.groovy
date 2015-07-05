@@ -2,6 +2,8 @@ package softexcel.fedmedco
 
 
 import grails.test.mixin.*
+import groovy.json.JsonSlurper
+import groovy.mock.interceptor.MockFor
 import org.springframework.transaction.PlatformTransactionManager
 import org.springframework.transaction.TransactionStatus
 import spock.lang.*
@@ -377,5 +379,58 @@ class QueryControllerSpec extends Specification {
 
     }
 
+    void "Test patientDeaths when no dates are provided" (){
+        when: "Np dates are passed"
+        controller.patientDeaths()
+
+        then: "default dates are picked"
+        model.beginDate == 2004
+        model.endDate == 2015
+
+        when: "only end date is passed"
+        params.endDate = '2008'
+        controller.patientDeaths ()
+
+        then: "the begin date is made default"
+        model.beginDate == 2004
+        model.endDate == '2008'
+
+
+
+    }
+
+    void "Test only begin date is passed"(){
+        when: "only begin date is passed"
+        params.beginDate = '2003'
+        controller.patientDeaths ()
+
+        then: "the end date is made default"
+        model.beginDate == '2003'
+        model.endDate == 2015
+    }
+
+    void "Test patientDeath method" (){
+        when:
+        params.beginDate = '2005'
+        params.endDate ='2009'
+        controller.patientDeaths()
+
+        then:
+        view == "/query/map"
+        model.beginDate == '2005'
+        model.endDate == '2009'
+        model.fillKeys != null
+    }
+
+    void "Test refreshDeath method"(){
+        when:
+        params.beginDate = '2005'
+        params.endDate ='2009'
+        controller.refreshPatientDeaths()
+
+        then:
+        response.json.beginDate == '2005'
+        response.json.endDate == '2009'
+    }
 
 }

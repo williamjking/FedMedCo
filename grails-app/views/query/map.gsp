@@ -24,7 +24,10 @@
 		</ul>
 
 		<h3 id="mapTitle" class="text-center">Drug related deaths reported throughout the world between ${beginDate} and ${endDate}</h3>
-	    <div class="col-md-8, col-md-offset-1">
+
+		<h5 class="col-sm-offset-1 text-center">Hover over (or click in case of mobile device) each country to see reported deaths. Change the start/end dates to refresh the map.</h5>
+
+		<div class="col-md-8, col-md-offset-1">
 			<fieldset class="form">
 				<g:render template="dateSelector"/>
 			</fieldset>
