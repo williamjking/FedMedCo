@@ -14,6 +14,7 @@ Lockheed Martin has provided a Minimum Viable Product (MVP) directed at three ma
 
 ## Features
 
+* Adverse Events - Drug related patient deaths
 * Reported Drug Reactions
 * Drug to Food Interaction
 * Interesting facts about drugs
