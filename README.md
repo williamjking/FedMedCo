@@ -57,14 +57,16 @@ Learn how to use our application, including examples of sample queries to try, i
 | 2. | Groovy | Language | Apache 2 | 2.4 | 2015 |
 | 3. | HTML5/CSS3 using Bootstrap | Presentation / responsive design supporting multi-device | MIT | 3.3.4 | 2015 |
 | 4. | JQuery | JavaScript library | MIT | 1.11.1 | 2014 |
-| 5. | Sitemesh | HTML template framework based on Decoration Model | OpenSymphony (Apache) | 2.1.5 | 2015 |
-| 6. | GORM | Object relationship mapping | Apache 2 | 2.5.0 | 2015 |
-| 7. | MongoDB | NoSQL database JSON-like documents | GNU AGPL v3 | 3.0.4 | 2015 |
-| 8. | Tomcat | Java servlet container | Apache 2 | 8.0.23 | 2015 |
-| 9. | Selenium | Web testing | Apache 2 | 2.46 | 2015 |
-| 10. | Spock | Integration test | Apache 2 | 0.7 | 2012 |
-| 11. | SonarQube | Code quality analysis | GNU GPL v3 | 5.1.1 | 2015 |
-| 12. | Jenkins | Continuous integration | MIT | 1.599 | 2015 |
+| 5. | D3js | JavaScript library for manipulating documents based on data| BSD | 3.5.3 | 2014 |
+| 6. | Datamaps | Customizable SVG map visualization Javascript library.| MIT | 0.4.0 | 2015 |
+| 7. | Sitemesh | HTML template framework based on Decoration Model | OpenSymphony (Apache) | 2.1.5 | 2015 |
+| 8. | GORM | Object relationship mapping | Apache 2 | 2.5.0 | 2015 |
+| 9. | MongoDB | NoSQL database JSON-like documents | GNU AGPL v3 | 3.0.4 | 2015 |
+| 10. | Tomcat | Java servlet container | Apache 2 | 8.0.23 | 2015 |
+| 11. | Selenium | Web testing | Apache 2 | 2.46 | 2015 |
+| 12. | Spock | Integration test | Apache 2 | 0.7 | 2012 |
+| 13. | SonarQube | Code quality analysis | GNU GPL v3 | 5.1.1 | 2015 |
+| 14. | Jenkins | Continuous integration | MIT | 1.599 | 2015 |
 
 ## Installation instructions for Amazon Linux
 ### Install JDK
@@ -203,3 +205,4 @@ All license agreements are Free and Open Source
 * [MIT](http://opensource.org/licenses/MIT)
 * [GPL-3.0](http://www.gnu.org/licenses/gpl-3.0.en.html)
 * [OpenSymphony 1.1](https://svn.apache.org/repos/asf/tiles/framework/trunk/OGNL-LICENSE.txt)
+* [BSD License](http://opensource.org/licenses/BSD-3-Clause)
