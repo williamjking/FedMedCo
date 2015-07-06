@@ -19,8 +19,8 @@
 				<strong>Lockheed martin</strong><br>
 				Information Systems & Global Solutions<br>
                 Phil Magrogan<br>
-                2453 Dakota Lakes Dr.<br>
-                Oak Hill VA 20171<br>
+                2345 Crystal Drive, Suite 300<br>
+                Arlington VA 22202<br>
 				<abbr title="Phone">P:</abbr> (703) 336-2328
 			</address>
 
