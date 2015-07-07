@@ -1,6 +1,6 @@
 # Agile Delivery Services (ADS 1) FedMedCo
 
-## http://www.fedmedco.info
+## http://www.fedmedco.info/FedMedCo
 
 This prototype provides a responsive human centered design interface that enables both novice and experienced users to search the openFDA data to identify critical drug information and display results across multiple devices.
 
