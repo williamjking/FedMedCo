@@ -333,7 +333,7 @@ class QueryController {
         catch(NullPointerException npe){
             log.error npe.message, npe
             Query queryParams = new Query(params)
-            queryParams.errors.rejectValue('queryField', 'required.fields.messaage')
+            queryParams.errors.rejectValue('queryField', 'required.fields.error')
             render(view: "index", model: [queryInstance: queryParams, errorMessage: npe.message])
         }
         catch (Exception e){
