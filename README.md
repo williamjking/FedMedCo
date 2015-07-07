@@ -150,7 +150,7 @@ Learn how to use our application, including examples of sample queries to try, i
 
 ### Get the source code from git
   ```Shell
-  git clone https://github.com/anuchandpamra/Fedmedco.git
+  git clone https://github.com/williamjking/Fedmedco.git
   ```
 
 ### Deploy to Tomcat
